@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CrafworkStructPlmDaoImpl">
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldsSQL">
+		SELECT
+		       csp.ID id,
+		       csp.CRAFWORK_NAME crafworkName,
+		       csp.MAC_TYPE macType,
+		       csp.IS_CHECK isCheck,
+		       csp.QUARTERS_EMP quartersEmp,
+		       csp.GRADE_EMP gradeEmp,
+		       csp.UNIT unit,
+		       csp.DELETED deleted,
+		       csp.COMPANY_ID companyId,
+		       csp.CREATE_TIME createTime,
+		       csp.CREATE_BY createBy,
+		       csp.MODIFY_TIME modifyTime,
+		       csp.MODIFY_BY modifyBy,
+		       qh.quarters_desc quarterName
+	</sql>
+    <!-- 分页查询（条件） -->
+    <sql id="pageCrafwork_condition">
+        <where>
+            <if test="entity.crafworkName != null and entity.crafworkName != ''">
+                AND csp.CRAFWORK_NAME like concat('%',#{entity.crafworkName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.macType != null and entity.macType != ''">
+                AND csp.MAC_TYPE like concat('%',#{entity.macType,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.isCheck != null">
+                AND csp.IS_CHECK = #{entity.isCheck,jdbcType=INTEGER}
+            </if>
+            <if test="entity.quartersEmp != null and entity.quartersEmp != ''">
+                AND csp.QUARTERS_EMP = #{entity.quartersEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.gradeEmp != null and entity.gradeEmp != ''">
+                AND csp.GRADE_EMP = #{entity.gradeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND csp.UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND csp.DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND csp.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="pageCrafwork_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM CRAFWORK_STRUCT_PLM csp
+        left join hcm.quarters_hcm qh on csp.QUARTERS_EMP = qh.quarters_no and qh.company_id = csp.company_id and qh.deleted = 'F'
+        <include refid="pageCrafwork_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="pageCrafwork_datas" parameterType="map" resultType="com.zhiyun.dto.CrafworkStructDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldsSQL"/>
+        FROM CRAFWORK_STRUCT_PLM csp
+        left join hcm.quarters_hcm qh on csp.QUARTERS_EMP = qh.quarters_no and qh.company_id = csp.company_id and qh.deleted = 'F'
+        <include refid="pageCrafwork_condition"/>
+        order by csp.id desc
+        <include refid="mybatis.pageEndSQL"/>
+
+    </select>
+
+    <select id="addGet" parameterType="com.zhiyun.dto.CrafworkStructDto" resultType="com.zhiyun.dto.CrafworkStructDto">
+        SELECT
+          cp.id id,
+          cp.crafwork_name crafworkName,
+          cp.unit unit,
+          cp.quarters_emp quartersEmp,
+          qh.quarters_desc quarterName
+        FROM crafwork_struct_plm cp
+        left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
+        WHERE cp.id NOT IN (SELECT tp.crafwork_id FROM prod_crafwork_path_plm tp WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR} AND cp.company_id = tp.company_id AND tp.deleted = 'F')
+        AND cp.deleted = 'F'
+        AND cp.company_id = #{companyId,jdbcType=BIGINT}
+        ORDER BY cp.create_time DESC
+    </select>
+
+    <select id="findCraf" parameterType="com.zhiyun.dto.CrafworkStructDto" resultType="com.zhiyun.dto.CrafworkStructDto">
+        SELECT
+          cp.id id,
+          cp.crafwork_name crafworkName,
+          cp.unit unit,
+          cp.quarters_emp quartersEmp,
+          qh.quarters_desc quarterName
+        FROM crafwork_struct_plm cp
+        left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
+        WHERE cp.id NOT IN (SELECT tp.crafwork_id FROM prod_crafwork_path_plm tp WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR} AND tp.path_no = #{pathNo,jdbcType=VARCHAR} AND cp.company_id = tp.company_id AND tp.deleted = 'F')
+        AND cp.deleted = 'F'
+        AND cp.company_id = #{companyId,jdbcType=BIGINT}
+    </select>
+
+</mapper>   

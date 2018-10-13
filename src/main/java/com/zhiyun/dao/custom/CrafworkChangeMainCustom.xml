@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CrafworkChangeMainDaoImpl">
+
+    <!-- 分页查询（条件） -->
+    <sql id="changePage_condition">
+        <where>
+            m.DELETED = 'F'
+            <if test="entity.voucherNo != null and entity.voucherNo != ''">
+                AND m.VOUCHER_NO = #{entity.voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.raiseDate != null">
+                AND m.RAISE_DATE = #{entity.raiseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.raiseUser != null and entity.raiseUser != ''">
+                AND m.RAISE_USER = #{entity.raiseUser,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.orgId != null">
+                AND m.ORG_ID = #{entity.orgId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.pathNo != null and entity.pathNo != ''">
+                AND m.PATH_NO = #{entity.pathNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND m.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="changePage_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM CRAFWORK_CHANGE_MAIN m
+        LEFT JOIN hcm.cas_org o ON o.id = m.org_id AND o.company_id = m.company_id AND o.deleted = 'F'
+        LEFT JOIN voucher_main_oa v ON v.voucher_no = m.voucher_no AND v.company_id = m.company_id AND v.deleted = 'F'
+        LEFT JOIN crm.dict_crm d ON d.`value` = v.is_finished
+        <include refid="changePage_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="changePage_datas" parameterType="map" resultType="com.zhiyun.dto.CrafworkChangeMainDto">
+        <include refid="mybatis.pageStartSQL"/>
+        SELECT
+        m.ID id,
+        m.VOUCHER_NO voucherNo,
+        m.RAISE_DATE raiseDate,
+        m.RAISE_USER raiseUser,
+        m.ORG_ID orgId,
+        o.org_name orgName,
+        d.label label,
+        m.PATH_NO pathNo,
+        m.DELETED deleted,
+        m.CREATE_TIME createTime,
+        m.CREATE_BY createBy,
+        m.COMPANY_ID companyId,
+        m.MODIFY_TIME modifyTime,
+        m.MODIFY_BY modifyBy
+        FROM CRAFWORK_CHANGE_MAIN m
+        LEFT JOIN hcm.cas_org o ON o.id = m.org_id AND o.company_id = m.company_id AND o.deleted = 'F'
+        LEFT JOIN voucher_main_oa v ON v.voucher_no = m.voucher_no AND v.company_id = m.company_id AND v.deleted = 'F'
+        LEFT JOIN crm.dict_crm d ON d.`value` = v.is_finished
+        <include refid="changePage_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+    <select id="findVoucher" parameterType="com.zhiyun.entity.CrafworkChangeMain" resultType="com.zhiyun.entity.CrafworkChangeMain">
+        SELECT
+        VOUCHER_NO voucherNo
+        FROM CRAFWORK_CHANGE_MAIN
+        WHERE company_id = #{companyId,jdbcType=BIGINT}
+        <if test="voucherNo != null and voucherNo != ''">
+            AND VOUCHER_NO like concat ('%',#{voucherNo,jdbcType=VARCHAR},'%')
+        </if>
+        AND deleted = 'F'
+    </select>
+
+    <select id="getOrg" parameterType="com.zhiyun.entity.CasOrg" resultType="com.zhiyun.entity.CasOrg">
+        SELECT
+        id id,
+        org_name orgName
+        FROM hcm.cas_org
+        WHERE company_id = #{companyId,jdbcType=BIGINT}
+        <if test="orgName != null and orgName != ''">
+            AND org_name like concat ('%',#{orgName,jdbcType=VARCHAR},'%')
+        </if>
+        AND deleted = 'F'
+    </select>
+</mapper>   

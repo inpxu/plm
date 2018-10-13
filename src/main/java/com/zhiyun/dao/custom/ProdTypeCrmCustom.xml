@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdTypeCrmDaoImpl">
+
+    <!--产品分类模糊查询下拉-->
+    <select id="getType" resultType="com.zhiyun.entity.ProdTypeCrm" parameterType="com.zhiyun.entity.ProdTypeCrm">
+        SELECT
+        id id,
+        type_desc typeDesc
+        FROM prod_type_crm
+        <where>
+            DELETED = 'F'
+            and COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            <if test="typeDesc != null and typeDesc != ''">
+                AND TYPE_DESC LIKE CONCAT ('%',#{typeDesc,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>   

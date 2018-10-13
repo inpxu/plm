@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.VoucherMainOaDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.VoucherMainOa">
+        INSERT INTO VOUCHER_MAIN_OA (
+        ID,
+        VOUCHER_NO,
+        RAISER,
+        RAISE_DATE,
+        HOPE_DATE,
+        EVENT_DESC,
+        VOUCHER_TYPE,
+        WKFLOW_ID,
+        CHECK_ADVICE,
+        CHECKS,
+        IS_FINISHED,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{voucherNo,jdbcType=VARCHAR},
+        #{raiser,jdbcType=VARCHAR},
+        #{raiseDate,jdbcType=TIMESTAMP},
+        #{hopeDate,jdbcType=TIMESTAMP},
+        #{eventDesc,jdbcType=VARCHAR},
+        #{voucherType,jdbcType=VARCHAR},
+        #{wkflowId,jdbcType=BIGINT},
+        #{checkAdvice,jdbcType=VARCHAR},
+        #{checks,jdbcType=VARCHAR},
+        #{isFinished,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_VOUCHER_MAIN_OA.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.VoucherMainOa">
+        UPDATE VOUCHER_MAIN_OA
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="raiser != null">
+                RAISER = #{raiser,jdbcType=VARCHAR},
+            </if>
+            <if test="raiseDate != null">
+                RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="hopeDate != null">
+                HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eventDesc != null">
+                EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="voucherType != null">
+                VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+            </if>
+            <if test="wkflowId != null">
+                WKFLOW_ID = #{wkflowId,jdbcType=BIGINT},
+            </if>
+            <if test="checkAdvice != null">
+                CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR},
+            </if>
+            <if test="checks != null">
+                CHECKS = #{checks,jdbcType=VARCHAR},
+            </if>
+            <if test="isFinished != null">
+                IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.VoucherMainOa">
+        UPDATE VOUCHER_MAIN_OA
+        <set>
+            VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            RAISER = #{raiser,jdbcType=VARCHAR},
+            RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP},
+            HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP},
+            EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+            VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+            WKFLOW_ID = #{wkflowId,jdbcType=BIGINT},
+            CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR},
+            CHECKS = #{checks,jdbcType=VARCHAR},
+            IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.VoucherMainOa">
+        UPDATE VOUCHER_MAIN_OA
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID           id,
+               VOUCHER_NO   voucherNo,
+               RAISER       raiser,
+               RAISE_DATE   raiseDate,
+               HOPE_DATE    hopeDate,
+               EVENT_DESC   eventDesc,
+               VOUCHER_TYPE voucherType,
+               WKFLOW_ID    wkflowId,
+               CHECK_ADVICE checkAdvice,
+               CHECKS       checks,
+               IS_FINISHED  isFinished,
+               REMARK       remark,
+               DELETED      deleted,
+               COMPANY_ID   companyId,
+               CREATE_TIME  createTime,
+               CREATE_BY    createBy,
+               MODIFY_TIME  modifyTime,
+               MODIFY_BY    modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.VoucherMainOa">
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.VoucherMainOa" resultType="com.zhiyun.entity.VoucherMainOa">
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null and voucherNo != ''">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="raiser != null and raiser != ''">
+                AND RAISER = #{raiser,jdbcType=VARCHAR}
+            </if>
+            <if test="raiseDate != null">
+                AND RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="hopeDate != null">
+                AND HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="eventDesc != null and eventDesc != ''">
+                AND EVENT_DESC = #{eventDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="voucherType != null and voucherType != ''">
+                AND VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR}
+            </if>
+            <if test="wkflowId != null">
+                AND WKFLOW_ID = #{wkflowId,jdbcType=BIGINT}
+            </if>
+            <if test="checkAdvice != null and checkAdvice != ''">
+                AND CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR}
+            </if>
+            <if test="checks != null and checks != ''">
+                AND CHECKS = #{checks,jdbcType=VARCHAR}
+            </if>
+            <if test="isFinished != null and isFinished != ''">
+                AND IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.VoucherMainOa">
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.voucherNo != null and entity.voucherNo != ''">
+                AND VOUCHER_NO = #{entity.voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.raiser != null and entity.raiser != ''">
+                AND RAISER = #{entity.raiser,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.raiseDate != null">
+                AND RAISE_DATE = #{entity.raiseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.hopeDate != null">
+                AND HOPE_DATE = #{entity.hopeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.eventDesc != null and entity.eventDesc != ''">
+                AND EVENT_DESC = #{entity.eventDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.voucherType != null and entity.voucherType != ''">
+                AND VOUCHER_TYPE = #{entity.voucherType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.wkflowId != null">
+                AND WKFLOW_ID = #{entity.wkflowId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.checkAdvice != null and entity.checkAdvice != ''">
+                AND CHECK_ADVICE = #{entity.checkAdvice,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.checks != null and entity.checks != ''">
+                AND CHECKS = #{entity.checks,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.isFinished != null and entity.isFinished != ''">
+                AND IS_FINISHED = #{entity.isFinished,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+                AND REMARK = #{entity.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM VOUCHER_MAIN_OA
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.VoucherMainOa">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM VOUCHER_MAIN_OA
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null and voucherNo != ''">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="raiser != null and raiser != ''">
+                AND RAISER = #{raiser,jdbcType=VARCHAR}
+            </if>
+            <if test="raiseDate != null">
+                AND RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="hopeDate != null">
+                AND HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="eventDesc != null and eventDesc != ''">
+                AND EVENT_DESC = #{eventDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="voucherType != null and voucherType != ''">
+                AND VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR}
+            </if>
+            <if test="wkflowId != null">
+                AND WKFLOW_ID = #{wkflowId,jdbcType=BIGINT}
+            </if>
+            <if test="checkAdvice != null and checkAdvice != ''">
+                AND CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR}
+            </if>
+            <if test="checks != null and checks != ''">
+                AND CHECKS = #{checks,jdbcType=VARCHAR}
+            </if>
+            <if test="isFinished != null and isFinished != ''">
+                AND IS_FINISHED = #{isFinished,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO VOUCHER_MAIN_OA (
+        ID,
+        VOUCHER_NO,
+        RAISER,
+        RAISE_DATE,
+        HOPE_DATE,
+        EVENT_DESC,
+        VOUCHER_TYPE,
+        WKFLOW_ID,
+        CHECK_ADVICE,
+        CHECKS,
+        IS_FINISHED,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ voucherNo,jdbcType=VARCHAR},
+        #{ raiser,jdbcType=VARCHAR},
+        #{ raiseDate,jdbcType=TIMESTAMP},
+        #{ hopeDate,jdbcType=TIMESTAMP},
+        #{ eventDesc,jdbcType=VARCHAR},
+        #{ voucherType,jdbcType=VARCHAR},
+        #{ wkflowId,jdbcType=BIGINT},
+        #{ checkAdvice,jdbcType=VARCHAR},
+        #{ checks,jdbcType=VARCHAR},
+        #{ isFinished,jdbcType=VARCHAR},
+        #{ remark,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_VOUCHER_MAIN_OA.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE VOUCHER_MAIN_OA
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="raiser != null">
+                RAISER = #{raiser,jdbcType=VARCHAR},
+            </if>
+            <if test="raiseDate != null">
+                RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="hopeDate != null">
+                HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eventDesc != null">
+                EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="voucherType != null">
+                VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+            </if>
+            <if test="wkflowId != null">
+                WKFLOW_ID = #{wkflowId,jdbcType=BIGINT},
+            </if>
+            <if test="checkAdvice != null">
+                CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR},
+            </if>
+            <if test="checks != null">
+                CHECKS = #{checks,jdbcType=VARCHAR},
+            </if>
+            <if test="isFinished != null">
+                IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

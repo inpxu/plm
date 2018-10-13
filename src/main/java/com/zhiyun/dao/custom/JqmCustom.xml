@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.JqmDaoImpl">
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.dto.JqmDto">
+        select ddtv.id                                                                                                                                                id,
+               ddtv.modelName                                                                                                                                         modelName,
+               ddtv.modelType                                                                                                                                         modelType,
+               ddtv.devName                                                                                                                                           devName,
+               ddtv.devType                                                                                                                                           devType,
+               ddtv.commcode                                                                                                                                          commcode,
+               ddp.alias                                                                                                                                              alias,
+               ddp.field_type                                                                                                                                         fieldType,
+               ddtv.companyId                                                                                                                                         companyId,
+               IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                        IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, ""))))) realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+          and ddtv.commcode = 'B0000005'
+          and ddp.alias = '当前长度'
+    </select>
+
+
+    <!-- 卡尔迈耶断纱记录 -->
+    <select id="broken" parameterType="map" resultType="map">
+        select
+        CAST(ddtv.`code` AS char) devCode,
+        CAST(ddtv.modelName AS char) modelName,
+        CAST(ddtv.devName AS char) devName,
+        CAST(ddtv.commcode AS char) commcode,
+        CAST(ddp.alias AS char) alias,
+        CAST(ddp.field_type AS char) fieldType,
+        CAST(ddtv.companyId AS char) companyId,
+        CAST(dmrt.modify_time AS char) modifyHour ,
+        CAST(HOUR(dmrt.modify_time) AS char) `hours` ,
+        CAST(IF(field_type='c',dmrt.c_value,IF(field_type='n',dmrt.n_value ,IF(field_type='s',dmrt.s_value ,IF(field_type='f',dmrt.f_value
+        ,IF(field_type='d',dmrt.d_value ,""))))) AS char) realValue
+        from machine.devcentre_monitor_real_time dmrt LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+        LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+        and devName like '卡尔%'
+        <!--  and ddp.alias in( '卷布轴剩余运行时间' ,'每分钟转数','当前班次') -->
+    </select>
+
+    <!-- 整经机开机率 -->
+    <select id="openRate" parameterType="map" resultType="map">
+        select CAST(ddtv.id AS char)                id,
+               CAST(ddtv.`code` AS char)            devCode,
+               CAST(ddtv.modelName AS char)         modelName,
+               CAST(ddtv.modelType AS char)         modelType,
+               CAST(ddtv.devName AS char)           devName,
+               CAST(ddtv.devType AS char)           devType,
+               CAST(ddtv.commcode AS char)          commcode,
+               CAST(ddp.alias AS char)              alias,
+               CAST(ddp.field_type AS char)         fieldType,
+               CAST(ddtv.companyId AS char)         companyId,
+               CAST(HOUR(dmrt.modify_time) AS char) modifyHour,
+               CAST(dmrt.modify_time AS char)       modifyTime,
+               CAST(IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                             IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, "")))))
+                    AS char)                        realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and devName like '%整经%'
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+    </select>
+
+    <!-- 卡尔迈耶班次开机率 -->
+    <select id="bcRate" parameterType="map" resultType="map">
+        select CAST(ddtv.id AS char)                id,
+               CAST(ddtv.`code` AS char)            devCode,
+               CAST(ddtv.modelName AS char)         modelName,
+               CAST(ddtv.modelType AS char)         modelType,
+               CAST(ddtv.devName AS char)           devName,
+               CAST(ddtv.devType AS char)           devType,
+               CAST(ddtv.commcode AS char)          commcode,
+               CAST(ddp.alias AS char)              alias,
+               CAST(ddp.field_type AS char)         fieldType,
+               CAST(ddtv.companyId AS char)         companyId,
+               CAST(HOUR(dmrt.modify_time) AS char) modifyHour,
+               CAST(dmrt.modify_time AS char)       modifyTime,
+               CAST(IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                             IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, "")))))
+                    AS char)                        realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+          and devName like '卡尔%'
+          and ddp.alias in ('设备效率', '当前班次', 'GB3经轴剩余运行时间', 'GB1经轴剩余运行时间', 'GB2经轴剩余运行时间', 'GB4经轴剩余运行时间')
+    </select>
+
+    <!-- 查询 -->
+    <select id="findDev" parameterType="com.zhiyun.entity.DevInfoJqm" resultType="com.zhiyun.entity.DevInfoJqm">
+        select
+        modelName,
+        devName,
+        `code`,
+        spec,
+        manufactory,
+        companyId,
+        status,
+        CONCAT(devName,'|',`code`) devInfo,
+        commcode commCode
+        FROM machine.devcentre_dev_view
+        <where>
+            <if test="devName != null and devName != ''">
+                AND ( devName like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' )
+                OR `code` like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' ))
+            </if>
+            <if test="code != null and code != ''">
+                AND `code` = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="modelName != null and modelName != ''">
+                AND modelName like CONCAT('%',#{modelName,jdbcType=VARCHAR},'%' )
+            </if>
+            <if test="spec != null and spec != ''">
+                AND spec = #{spec,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANYID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 查询 -->
+    <select id="findDevSet" parameterType="com.zhiyun.entity.DevInfoJqm" resultType="com.zhiyun.entity.DevInfoJqm">
+        select
+        ddv.modelName,
+        ddv.devName,
+        ddv.`code`,
+        ddv.spec,
+        ddv.manufactory,
+        ddv.companyId,
+        ddv.status,
+        CONCAT(ddv.devName,'|',ddv.`code`) devInfo
+        FROM machine_set_mes msm left join machine.devcentre_dev_view ddv on msm.mac_no = ddv.code
+        <where>
+            <if test="devName != null and devName != ''">
+                AND ( ddv.devName like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' )
+                OR ddv.`code` like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' ))
+            </if>
+            <if test="code != null and code != ''">
+                AND ddv.`code` = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="modelName != null and modelName != ''">
+                AND ddv.modelName like CONCAT('%',#{modelName,jdbcType=VARCHAR},'%' )
+            </if>
+            <if test="spec != null and spec != ''">
+                AND ddv.spec = #{spec,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND ddv.status = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND ddv.DELETED = #{deleted,jdbcType=VARCHAR}
+                AND msm.DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND ddv.COMPANYID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 查询 -->
+    <select id="findType" parameterType="com.zhiyun.entity.DevInfoJqm" resultType="com.zhiyun.entity.DevInfoJqm">
+        select
+        modelName
+        FROM machine.devcentre_dev_view
+        <where>
+            <if test="devName != null and devName != ''">
+                AND ( devName like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' )
+                OR `code` like CONCAT('%',#{devName,jdbcType=VARCHAR},'%' ))
+            </if>
+            <if test="code != null and code != ''">
+                AND `code` = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="modelName != null and modelName != ''">
+                AND modelName = #{modelName,jdbcType=VARCHAR}
+            </if>
+            <if test="spec != null and spec != ''">
+                AND spec = #{spec,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANYID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+        group by modelName
+    </select>
+</mapper>   

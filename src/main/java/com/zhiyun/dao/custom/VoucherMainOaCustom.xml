@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.VoucherMainOaDaoImpl">
+
+    <select id="getIsFinished" resultType="com.zhiyun.entity.VoucherMainOa" parameterType="com.zhiyun.entity.ProdCrafworkMainPlm">
+        SELECT v.is_finished isFinished
+        FROM voucher_main_oa v
+                 LEFT JOIN prod_crafwork_main_plm m ON m.voucher_no = v.voucher_no AND m.company_id = v.company_id AND v.deleted = 'F'
+        WHERE m.path_no = #{pathNo,jdbcType=VARCHAR}
+          AND m.company_id = #{companyId,jdbcType=BIGINT}
+          AND m.deleted = 'F'
+    </select>
+
+    <select id="getByVoucherNo" parameterType="map" resultType="com.zhiyun.entity.VoucherMainOa">
+        SELECT
+        ID id,
+        VOUCHER_NO voucherNo,
+        RAISER raiser,
+        RAISE_DATE raiseDate,
+        HOPE_DATE hopeDate,
+        EVENT_DESC eventDesc,
+        WKFLOW_ID wkflowId,
+        CHECK_ADVICE checkAdvice,
+        CHECKS checks,
+        VOUCHER_TYPE voucherType,
+        IS_FINISHED isFinished,
+        REMARK remark,
+        DELETED deleted,
+        COMPANY_ID companyId,
+        CREATE_TIME createTime,
+        CREATE_BY createBy,
+        MODIFY_TIME modifyTime,
+        MODIFY_BY modifyBy
+        FROM
+        VOUCHER_MAIN_OA vmo
+        WHERE
+        vmo.voucher_no = #{voucherNo,jdbcType=BIGINT}
+        AND DELETED = 'F'
+        <if test="companyId != null">
+            AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <update id="updateByVoucherNo" parameterType="com.zhiyun.entity.VoucherMainOa">
+        UPDATE VOUCHER_MAIN_OA
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="raiser != null">
+                RAISER = #{raiser,jdbcType=VARCHAR},
+            </if>
+            <if test="voucherType != null">
+                VOUCHER_TYPE = #{voucherType,jdbcType=VARCHAR},
+            </if>
+            <if test="raiseDate != null">
+                RAISE_DATE = #{raiseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="hopeDate != null">
+                HOPE_DATE = #{hopeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="eventDesc != null">
+                EVENT_DESC = #{eventDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="wkflowId != null">
+                WKFLOW_ID = #{wkflowId,jdbcType=BIGINT},
+            </if>
+            <if test="checkAdvice != null">
+                CHECK_ADVICE = #{checkAdvice,jdbcType=VARCHAR},
+            </if>
+            <if test="checks != null">
+                CHECKS = #{checks,jdbcType=VARCHAR},
+            </if>
+            <if test="isFinished != null">
+                IS_FINISHED = #{isFinished,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
+        <if test="deleted != null">
+            AND DELETED = #{deleted,jdbcType=VARCHAR}
+        </if>
+        <if test="companyId != null">
+            AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <update id="approve" parameterType="map">
+        update voucher_main_oa
+        set is_finished = '审批成功'
+        where company_id = #{companyId}
+          and deleted = 'F'
+          and voucher_no = #{voucherNo}
+    </update>
+</mapper>   

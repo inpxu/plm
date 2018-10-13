@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProductStorePlmDaoImpl">
+    <!-- 分页查询（条件） -->
+    <sql id="pg_condition">
+        <where>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND psp.PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodName != null and entity.prodName != ''">
+                AND (psp.PROD_NAME LIKE CONCAT ('%',#{entity.prodName,jdbcType=VARCHAR}, '%') or (psp.PROD_NO LIKE CONCAT
+                ('%',#{entity.prodNo,jdbcType=VARCHAR}, '%') )
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND psp.NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND psp.PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND psp.MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.typeId != null">
+                AND psp.TYPE_ID = #{entity.typeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND psp.UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.allowNo != null and entity.allowNo != ''">
+                AND psp.ALLOW_NO = #{entity.allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.patentNo != null and entity.patentNo != ''">
+                AND psp.PATENT_NO = #{entity.patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.sellNo != null and entity.sellNo != ''">
+                AND psp.SELL_NO = #{entity.sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.versionNo != null and entity.versionNo != ''">
+                AND psp.VERSION_NO = #{entity.versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null and entity.level != ''">
+                AND psp.LEVEL = #{entity.level,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.material != null and entity.material != ''">
+                AND psp.MATERIAL = #{entity.material,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.qualtyTime != null and entity.qualtyTime != ''">
+                AND psp.QUALTY_TIME = #{entity.qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodStatus != null and entity.prodStatus != ''">
+                AND psp.PROD_STATUS = #{entity.prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.rockPosition != null and entity.rockPosition != ''">
+                AND psp.ROCK_POSITION = #{entity.rockPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.storeId != null">
+                AND psp.STORE_ID = #{entity.storeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.curAmount != null">
+                AND psp.CUR_AMOUNT = #{entity.curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.factoryId != null">
+                AND psp.FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.waresNo != null and entity.waresNo != ''">
+                AND psp.WARES_NO = #{entity.waresNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.gram != null and entity.gram != ''">
+                AND psp.GRAM = #{entity.gram,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.hairLen != null and entity.hairLen != ''">
+                AND psp.HAIR_LEN = #{entity.hairLen,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.flex != null and entity.flex != ''">
+                AND psp.FLEX = #{entity.flex,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.clothType != null and entity.clothType != ''">
+                AND psp.CLOTH_TYPE = #{entity.clothType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.comb != null and entity.comb != ''">
+                AND psp.COMB = #{entity.comb,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+                AND psp.REMARK = #{entity.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND psp.DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND psp.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+    <!-- 查询字段 -->
+    <sql id="selectSQL">
+        SELECT psp.ID            id,
+               psp.PROD_NO       prodNo,
+               psp.PROD_NAME     prodName,
+               psp.NORMS         norms,
+               psp.PARAM         param,
+               psp.MODEL_DESC    modelDesc,
+               psp.TYPE_ID       typeId,
+               ptc.type_desc     typeDesc,
+               psp.UNIT          unit,
+               psp.ALLOW_NO      allowNo,
+               psp.PATENT_NO     patentNo,
+               psp.SELL_NO       sellNo,
+               psp.VERSION_NO    versionNo,
+               psp.LEVEL         level,
+               psp.MATERIAL      material,
+               psp.QUALTY_TIME   qualtyTime,
+               psp.PROD_STATUS   prodStatus,
+               psp.ROCK_POSITION rockPosition,
+               psp.STORE_ID      storeId,
+               ssi.store_name    storeName,
+               psp.CUR_AMOUNT    curAmount,
+               psp.FACTORY_ID    factoryId,
+               fsm.factory_name  factoryName,
+               psp.WARES_NO      waresNo,
+               psp.GRAM          gram,
+               psp.HAIR_LEN      hairLen,
+               psp.FLEX          flex,
+               psp.CLOTH_TYPE    clothType,
+               psp.COMB          comb,
+               psp.REMARK        remark,
+               psp.DELETED       deleted,
+               psp.COMPANY_ID    companyId,
+               psp.MODIFY_TIME   modifyTime,
+               psp.MODIFY_BY     modifyBy,
+               psp.CREATE_TIME   createTime,
+               psp.CREATE_BY     createBy
+    </sql>
+    <!-- 分页查询（计数） -->
+    <select id="pg_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PRODUCT_STORE_PLM psp
+        LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id
+        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
+        <include refid="pg_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="pg_datas" parameterType="map" resultType="com.zhiyun.dto.ProductStorePlmDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectSQL"/>
+        FROM PRODUCT_STORE_PLM psp
+        LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id AND ptc.deleted = 'F'
+        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
+        <include refid="pg_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <select id="getById" parameterType="com.zhiyun.entity.ProductStorePlm" resultType="com.zhiyun.dto.ProductStorePlmDto">
+        <include refid="selectSQL"/>
+        FROM PRODUCT_STORE_PLM psp
+        LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id AND ptc.deleted = 'F'
+        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
+        where psp.id = #{id,jdbcType=BIGINT}
+        AND psp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND psp.deleted = 'F'
+    </select>
+
+    <select id="prodDrop" parameterType="com.zhiyun.entity.ProductStorePlm" resultType="com.zhiyun.dto.ProductStorePlmDto">
+        SELECT
+        psp.PROD_NO prodNo,
+        psp.PROD_NAME prodName,
+        mp.PATH_NO pathNo,
+        mp.versions versions,
+        mp.status status
+        FROM PRODUCT_STORE_PLM psp
+        left join prod_crafwork_main_plm mp on mp.PROD_NO = psp.PROD_NO and mp.COMPANY_ID = psp.COMPANY_ID and mp.deleted = 'F'
+        where
+        psp.DELETED = 'F'
+        <if test="prodName != null and prodName != ''">
+            AND psp.PROD_NAME LIKE CONCAT ('%',#{prodName,jdbcType=VARCHAR}, '%')
+        </if>
+        AND psp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    </select>
+
+</mapper>   

@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdCrafworkParamPlmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        INSERT INTO PROD_CRAFWORK_PARAM_PLM (
+        ID,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        PARAM_NAME,
+        VALUES1,
+        VALUES2,
+        VALUES3,
+        MODIFY_TIME,
+        COMPANY_ID,
+        CREATE_BY,
+        CREATE_TIME,
+        DELETED,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{prodNo,jdbcType=VARCHAR},
+        #{midProdNo,jdbcType=VARCHAR},
+        #{crafworkId,jdbcType=BIGINT},
+        #{paramName,jdbcType=VARCHAR},
+        #{values1,jdbcType=VARCHAR},
+        #{values2,jdbcType=VARCHAR},
+        #{values3,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{companyId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=VARCHAR},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_CRAFWORK_PARAM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        UPDATE PROD_CRAFWORK_PARAM_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="paramName != null">
+                PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+            </if>
+            <if test="values1 != null">
+                VALUES1 = #{values1,jdbcType=VARCHAR},
+            </if>
+            <if test="values2 != null">
+                VALUES2 = #{values2,jdbcType=VARCHAR},
+            </if>
+            <if test="values3 != null">
+                VALUES3 = #{values3,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        UPDATE PROD_CRAFWORK_PARAM_PLM
+        <set>
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+            VALUES1 = #{values1,jdbcType=VARCHAR},
+            VALUES2 = #{values2,jdbcType=VARCHAR},
+            VALUES3 = #{values3,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        UPDATE PROD_CRAFWORK_PARAM_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               CRAFWORK_ID crafworkId,
+               PARAM_NAME  paramName,
+               VALUES1     values1,
+               VALUES2     values2,
+               VALUES3     values3,
+               MODIFY_TIME modifyTime,
+               COMPANY_ID  companyId,
+               CREATE_BY   createBy,
+               CREATE_TIME createTime,
+               DELETED     deleted,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm" resultType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="paramName != null and paramName != ''">
+                AND PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+            </if>
+            <if test="values1 != null and values1 != ''">
+                AND VALUES1 = #{values1,jdbcType=VARCHAR}
+            </if>
+            <if test="values2 != null and values2 != ''">
+                AND VALUES2 = #{values2,jdbcType=VARCHAR}
+            </if>
+            <if test="values3 != null and values3 != ''">
+                AND VALUES3 = #{values3,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.midProdNo != null and entity.midProdNo != ''">
+                AND MID_PROD_NO = #{entity.midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.crafworkId != null">
+                AND CRAFWORK_ID = #{entity.crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.paramName != null and entity.paramName != ''">
+                AND PARAM_NAME = #{entity.paramName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.values1 != null and entity.values1 != ''">
+                AND VALUES1 = #{entity.values1,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.values2 != null and entity.values2 != ''">
+                AND VALUES2 = #{entity.values2,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.values3 != null and entity.values3 != ''">
+                AND VALUES3 = #{entity.values3,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_CRAFWORK_PARAM_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkParamPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_PARAM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="paramName != null and paramName != ''">
+                AND PARAM_NAME = #{paramName,jdbcType=VARCHAR}
+            </if>
+            <if test="values1 != null and values1 != ''">
+                AND VALUES1 = #{values1,jdbcType=VARCHAR}
+            </if>
+            <if test="values2 != null and values2 != ''">
+                AND VALUES2 = #{values2,jdbcType=VARCHAR}
+            </if>
+            <if test="values3 != null and values3 != ''">
+                AND VALUES3 = #{values3,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PROD_CRAFWORK_PARAM_PLM (
+        ID,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        PARAM_NAME,
+        VALUES1,
+        VALUES2,
+        VALUES3,
+        MODIFY_TIME,
+        COMPANY_ID,
+        CREATE_BY,
+        CREATE_TIME,
+        DELETED,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ midProdNo,jdbcType=VARCHAR},
+        #{ crafworkId,jdbcType=BIGINT},
+        #{ paramName,jdbcType=VARCHAR},
+        #{ values1,jdbcType=VARCHAR},
+        #{ values2,jdbcType=VARCHAR},
+        #{ values3,jdbcType=VARCHAR},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_CRAFWORK_PARAM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PROD_CRAFWORK_PARAM_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="paramName != null">
+                PARAM_NAME = #{paramName,jdbcType=VARCHAR},
+            </if>
+            <if test="values1 != null">
+                VALUES1 = #{values1,jdbcType=VARCHAR},
+            </if>
+            <if test="values2 != null">
+                VALUES2 = #{values2,jdbcType=VARCHAR},
+            </if>
+            <if test="values3 != null">
+                VALUES3 = #{values3,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

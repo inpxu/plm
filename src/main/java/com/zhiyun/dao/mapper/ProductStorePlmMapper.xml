@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProductStorePlmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProductStorePlm">
+        INSERT INTO PRODUCT_STORE_PLM (
+        ID,
+        PROD_NO,
+        PROD_NAME,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        TYPE_ID,
+        UNIT,
+        ALLOW_NO,
+        PATENT_NO,
+        SELL_NO,
+        VERSION_NO,
+        LEVEL,
+        MATERIAL,
+        QUALTY_TIME,
+        PROD_STATUS,
+        ROCK_POSITION,
+        STORE_ID,
+        CUR_AMOUNT,
+        FACTORY_ID,
+        WARES_NO,
+        GRAM,
+        HAIR_LEN,
+        FLEX,
+        CLOTH_TYPE,
+        COMB,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY,
+        CREATE_TIME,
+        CREATE_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{prodNo,jdbcType=VARCHAR},
+        #{prodName,jdbcType=VARCHAR},
+        #{norms,jdbcType=VARCHAR},
+        #{param,jdbcType=VARCHAR},
+        #{modelDesc,jdbcType=VARCHAR},
+        #{typeId,jdbcType=BIGINT},
+        #{unit,jdbcType=VARCHAR},
+        #{allowNo,jdbcType=VARCHAR},
+        #{patentNo,jdbcType=VARCHAR},
+        #{sellNo,jdbcType=VARCHAR},
+        #{versionNo,jdbcType=VARCHAR},
+        #{level,jdbcType=VARCHAR},
+        #{material,jdbcType=VARCHAR},
+        #{qualtyTime,jdbcType=VARCHAR},
+        #{prodStatus,jdbcType=VARCHAR},
+        #{rockPosition,jdbcType=VARCHAR},
+        #{storeId,jdbcType=BIGINT},
+        #{curAmount,jdbcType=DECIMAL},
+        #{factoryId,jdbcType=BIGINT},
+        #{waresNo,jdbcType=VARCHAR},
+        #{gram,jdbcType=VARCHAR},
+        #{hairLen,jdbcType=VARCHAR},
+        #{flex,jdbcType=VARCHAR},
+        #{clothType,jdbcType=VARCHAR},
+        #{comb,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PRODUCT_STORE_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProductStorePlm">
+        UPDATE PRODUCT_STORE_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodName != null">
+                PROD_NAME = #{prodName,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                TYPE_ID = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="allowNo != null">
+                ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patentNo != null">
+                PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellNo != null">
+                SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="qualtyTime != null">
+                QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="prodStatus != null">
+                PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="rockPosition != null">
+                ROCK_POSITION = #{rockPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                STORE_ID = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="waresNo != null">
+                WARES_NO = #{waresNo,jdbcType=VARCHAR},
+            </if>
+            <if test="gram != null">
+                GRAM = #{gram,jdbcType=VARCHAR},
+            </if>
+            <if test="hairLen != null">
+                HAIR_LEN = #{hairLen,jdbcType=VARCHAR},
+            </if>
+            <if test="flex != null">
+                FLEX = #{flex,jdbcType=VARCHAR},
+            </if>
+            <if test="clothType != null">
+                CLOTH_TYPE = #{clothType,jdbcType=VARCHAR},
+            </if>
+            <if test="comb != null">
+                COMB = #{comb,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProductStorePlm">
+        UPDATE PRODUCT_STORE_PLM
+        <set>
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            PROD_NAME = #{prodName,jdbcType=VARCHAR},
+            NORMS = #{norms,jdbcType=VARCHAR},
+            PARAM = #{param,jdbcType=VARCHAR},
+            MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            TYPE_ID = #{typeId,jdbcType=BIGINT},
+            UNIT = #{unit,jdbcType=VARCHAR},
+            ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            LEVEL = #{level,jdbcType=VARCHAR},
+            MATERIAL = #{material,jdbcType=VARCHAR},
+            QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            ROCK_POSITION = #{rockPosition,jdbcType=VARCHAR},
+            STORE_ID = #{storeId,jdbcType=BIGINT},
+            CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            WARES_NO = #{waresNo,jdbcType=VARCHAR},
+            GRAM = #{gram,jdbcType=VARCHAR},
+            HAIR_LEN = #{hairLen,jdbcType=VARCHAR},
+            FLEX = #{flex,jdbcType=VARCHAR},
+            CLOTH_TYPE = #{clothType,jdbcType=VARCHAR},
+            COMB = #{comb,jdbcType=VARCHAR},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProductStorePlm">
+        UPDATE PRODUCT_STORE_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               PROD_NO       prodNo,
+               PROD_NAME     prodName,
+               NORMS         norms,
+               PARAM         param,
+               MODEL_DESC    modelDesc,
+               TYPE_ID       typeId,
+               UNIT          unit,
+               ALLOW_NO      allowNo,
+               PATENT_NO     patentNo,
+               SELL_NO       sellNo,
+               VERSION_NO    versionNo,
+               LEVEL         level,
+               MATERIAL      material,
+               QUALTY_TIME   qualtyTime,
+               PROD_STATUS   prodStatus,
+               ROCK_POSITION rockPosition,
+               STORE_ID      storeId,
+               CUR_AMOUNT    curAmount,
+               FACTORY_ID    factoryId,
+               WARES_NO      waresNo,
+               GRAM          gram,
+               HAIR_LEN      hairLen,
+               FLEX          flex,
+               CLOTH_TYPE    clothType,
+               COMB          comb,
+               REMARK        remark,
+               DELETED       deleted,
+               COMPANY_ID    companyId,
+               MODIFY_TIME   modifyTime,
+               MODIFY_BY     modifyBy,
+               CREATE_TIME   createTime,
+               CREATE_BY     createBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProductStorePlm">
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProductStorePlm" resultType="com.zhiyun.entity.ProductStorePlm">
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodName != null and prodName != ''">
+                AND PROD_NAME = #{prodName,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId != null">
+                AND TYPE_ID = #{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="allowNo != null and allowNo != ''">
+                AND ALLOW_NO = #{allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="patentNo != null and patentNo != ''">
+                AND PATENT_NO = #{patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="sellNo != null and sellNo != ''">
+                AND SELL_NO = #{sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="versionNo != null and versionNo != ''">
+                AND VERSION_NO = #{versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="qualtyTime != null and qualtyTime != ''">
+                AND QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="prodStatus != null and prodStatus != ''">
+                AND PROD_STATUS = #{prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="rockPosition != null and rockPosition != ''">
+                AND ROCK_POSITION = #{rockPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="storeId != null">
+                AND STORE_ID = #{storeId,jdbcType=BIGINT}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="waresNo != null and waresNo != ''">
+                AND WARES_NO = #{waresNo,jdbcType=VARCHAR}
+            </if>
+            <if test="gram != null and gram != ''">
+                AND GRAM = #{gram,jdbcType=VARCHAR}
+            </if>
+            <if test="hairLen != null and hairLen != ''">
+                AND HAIR_LEN = #{hairLen,jdbcType=VARCHAR}
+            </if>
+            <if test="flex != null and flex != ''">
+                AND FLEX = #{flex,jdbcType=VARCHAR}
+            </if>
+            <if test="clothType != null and clothType != ''">
+                AND CLOTH_TYPE = #{clothType,jdbcType=VARCHAR}
+            </if>
+            <if test="comb != null and comb != ''">
+                AND COMB = #{comb,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProductStorePlm">
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodName != null and entity.prodName != ''">
+                AND PROD_NAME = #{entity.prodName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.typeId != null">
+                AND TYPE_ID = #{entity.typeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.allowNo != null and entity.allowNo != ''">
+                AND ALLOW_NO = #{entity.allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.patentNo != null and entity.patentNo != ''">
+                AND PATENT_NO = #{entity.patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.sellNo != null and entity.sellNo != ''">
+                AND SELL_NO = #{entity.sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.versionNo != null and entity.versionNo != ''">
+                AND VERSION_NO = #{entity.versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null and entity.level != ''">
+                AND LEVEL = #{entity.level,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.material != null and entity.material != ''">
+                AND MATERIAL = #{entity.material,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.qualtyTime != null and entity.qualtyTime != ''">
+                AND QUALTY_TIME = #{entity.qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodStatus != null and entity.prodStatus != ''">
+                AND PROD_STATUS = #{entity.prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.rockPosition != null and entity.rockPosition != ''">
+                AND ROCK_POSITION = #{entity.rockPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.storeId != null">
+                AND STORE_ID = #{entity.storeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.curAmount != null">
+                AND CUR_AMOUNT = #{entity.curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.factoryId != null">
+                AND FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.waresNo != null and entity.waresNo != ''">
+                AND WARES_NO = #{entity.waresNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.gram != null and entity.gram != ''">
+                AND GRAM = #{entity.gram,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.hairLen != null and entity.hairLen != ''">
+                AND HAIR_LEN = #{entity.hairLen,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.flex != null and entity.flex != ''">
+                AND FLEX = #{entity.flex,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.clothType != null and entity.clothType != ''">
+                AND CLOTH_TYPE = #{entity.clothType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.comb != null and entity.comb != ''">
+                AND COMB = #{entity.comb,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+                AND REMARK = #{entity.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PRODUCT_STORE_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProductStorePlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PRODUCT_STORE_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodName != null and prodName != ''">
+                AND PROD_NAME = #{prodName,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId != null">
+                AND TYPE_ID = #{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="allowNo != null and allowNo != ''">
+                AND ALLOW_NO = #{allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="patentNo != null and patentNo != ''">
+                AND PATENT_NO = #{patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="sellNo != null and sellNo != ''">
+                AND SELL_NO = #{sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="versionNo != null and versionNo != ''">
+                AND VERSION_NO = #{versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="qualtyTime != null and qualtyTime != ''">
+                AND QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="prodStatus != null and prodStatus != ''">
+                AND PROD_STATUS = #{prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="rockPosition != null and rockPosition != ''">
+                AND ROCK_POSITION = #{rockPosition,jdbcType=VARCHAR}
+            </if>
+            <if test="storeId != null">
+                AND STORE_ID = #{storeId,jdbcType=BIGINT}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="waresNo != null and waresNo != ''">
+                AND WARES_NO = #{waresNo,jdbcType=VARCHAR}
+            </if>
+            <if test="gram != null and gram != ''">
+                AND GRAM = #{gram,jdbcType=VARCHAR}
+            </if>
+            <if test="hairLen != null and hairLen != ''">
+                AND HAIR_LEN = #{hairLen,jdbcType=VARCHAR}
+            </if>
+            <if test="flex != null and flex != ''">
+                AND FLEX = #{flex,jdbcType=VARCHAR}
+            </if>
+            <if test="clothType != null and clothType != ''">
+                AND CLOTH_TYPE = #{clothType,jdbcType=VARCHAR}
+            </if>
+            <if test="comb != null and comb != ''">
+                AND COMB = #{comb,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PRODUCT_STORE_PLM (
+        ID,
+        PROD_NO,
+        PROD_NAME,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        TYPE_ID,
+        UNIT,
+        ALLOW_NO,
+        PATENT_NO,
+        SELL_NO,
+        VERSION_NO,
+        LEVEL,
+        MATERIAL,
+        QUALTY_TIME,
+        PROD_STATUS,
+        ROCK_POSITION,
+        STORE_ID,
+        CUR_AMOUNT,
+        FACTORY_ID,
+        WARES_NO,
+        GRAM,
+        HAIR_LEN,
+        FLEX,
+        CLOTH_TYPE,
+        COMB,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY,
+        CREATE_TIME,
+        CREATE_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ prodName,jdbcType=VARCHAR},
+        #{ norms,jdbcType=VARCHAR},
+        #{ param,jdbcType=VARCHAR},
+        #{ modelDesc,jdbcType=VARCHAR},
+        #{ typeId,jdbcType=BIGINT},
+        #{ unit,jdbcType=VARCHAR},
+        #{ allowNo,jdbcType=VARCHAR},
+        #{ patentNo,jdbcType=VARCHAR},
+        #{ sellNo,jdbcType=VARCHAR},
+        #{ versionNo,jdbcType=VARCHAR},
+        #{ level,jdbcType=VARCHAR},
+        #{ material,jdbcType=VARCHAR},
+        #{ qualtyTime,jdbcType=VARCHAR},
+        #{ prodStatus,jdbcType=VARCHAR},
+        #{ rockPosition,jdbcType=VARCHAR},
+        #{ storeId,jdbcType=BIGINT},
+        #{ curAmount,jdbcType=DECIMAL},
+        #{ factoryId,jdbcType=BIGINT},
+        #{ waresNo,jdbcType=VARCHAR},
+        #{ gram,jdbcType=VARCHAR},
+        #{ hairLen,jdbcType=VARCHAR},
+        #{ flex,jdbcType=VARCHAR},
+        #{ clothType,jdbcType=VARCHAR},
+        #{ comb,jdbcType=VARCHAR},
+        #{ remark,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PRODUCT_STORE_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PRODUCT_STORE_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodName != null">
+                PROD_NAME = #{prodName,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                TYPE_ID = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="allowNo != null">
+                ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patentNo != null">
+                PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellNo != null">
+                SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="qualtyTime != null">
+                QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="prodStatus != null">
+                PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="rockPosition != null">
+                ROCK_POSITION = #{rockPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="storeId != null">
+                STORE_ID = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="waresNo != null">
+                WARES_NO = #{waresNo,jdbcType=VARCHAR},
+            </if>
+            <if test="gram != null">
+                GRAM = #{gram,jdbcType=VARCHAR},
+            </if>
+            <if test="hairLen != null">
+                HAIR_LEN = #{hairLen,jdbcType=VARCHAR},
+            </if>
+            <if test="flex != null">
+                FLEX = #{flex,jdbcType=VARCHAR},
+            </if>
+            <if test="clothType != null">
+                CLOTH_TYPE = #{clothType,jdbcType=VARCHAR},
+            </if>
+            <if test="comb != null">
+                COMB = #{comb,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

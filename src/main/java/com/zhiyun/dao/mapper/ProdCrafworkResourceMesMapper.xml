@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdCrafworkResourceMesDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        INSERT INTO PROD_CRAFWORK_RESOURCE_MES (
+        ID,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        RES_TYPE,
+        FILE_NAME,
+        RES_NAME,
+        RES_PATH,
+        RESOURCE,
+        REMARK,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{prodNo,jdbcType=VARCHAR},
+        #{midProdNo,jdbcType=VARCHAR},
+        #{crafworkId,jdbcType=BIGINT},
+        #{resType,jdbcType=VARCHAR},
+        #{fileName,jdbcType=VARCHAR},
+        #{resName,jdbcType=VARCHAR},
+        #{resPath,jdbcType=VARCHAR},
+        #{resource,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_CRAFWORK_RESOURCE_MES.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        UPDATE PROD_CRAFWORK_RESOURCE_MES
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="resType != null">
+                RES_TYPE = #{resType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                FILE_NAME = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="resName != null">
+                RES_NAME = #{resName,jdbcType=VARCHAR},
+            </if>
+            <if test="resPath != null">
+                RES_PATH = #{resPath,jdbcType=VARCHAR},
+            </if>
+            <if test="resource != null">
+                RESOURCE = #{resource,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        UPDATE PROD_CRAFWORK_RESOURCE_MES
+        <set>
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            RES_TYPE = #{resType,jdbcType=VARCHAR},
+            FILE_NAME = #{fileName,jdbcType=VARCHAR},
+            RES_NAME = #{resName,jdbcType=VARCHAR},
+            RES_PATH = #{resPath,jdbcType=VARCHAR},
+            RESOURCE = #{resource,jdbcType=VARCHAR},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        UPDATE PROD_CRAFWORK_RESOURCE_MES
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               CRAFWORK_ID crafworkId,
+               RES_TYPE    resType,
+               FILE_NAME   fileName,
+               RES_NAME    resName,
+               RES_PATH    resPath,
+               RESOURCE    resource,
+               REMARK      remark,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               COMPANY_ID  companyId,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProdCrafworkResourceMes" resultType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="resType != null and resType != ''">
+                AND RES_TYPE = #{resType,jdbcType=VARCHAR}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                AND FILE_NAME = #{fileName,jdbcType=VARCHAR}
+            </if>
+            <if test="resName != null and resName != ''">
+                AND RES_NAME = #{resName,jdbcType=VARCHAR}
+            </if>
+            <if test="resPath != null and resPath != ''">
+                AND RES_PATH = #{resPath,jdbcType=VARCHAR}
+            </if>
+            <if test="resource != null and resource != ''">
+                AND RESOURCE = #{resource,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.midProdNo != null and entity.midProdNo != ''">
+                AND MID_PROD_NO = #{entity.midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.crafworkId != null">
+                AND CRAFWORK_ID = #{entity.crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.resType != null and entity.resType != ''">
+                AND RES_TYPE = #{entity.resType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.fileName != null and entity.fileName != ''">
+                AND FILE_NAME = #{entity.fileName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.resName != null and entity.resName != ''">
+                AND RES_NAME = #{entity.resName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.resPath != null and entity.resPath != ''">
+                AND RES_PATH = #{entity.resPath,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.resource != null and entity.resource != ''">
+                AND RESOURCE = #{entity.resource,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+                AND REMARK = #{entity.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkResourceMes">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_CRAFWORK_RESOURCE_MES
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="resType != null and resType != ''">
+                AND RES_TYPE = #{resType,jdbcType=VARCHAR}
+            </if>
+            <if test="fileName != null and fileName != ''">
+                AND FILE_NAME = #{fileName,jdbcType=VARCHAR}
+            </if>
+            <if test="resName != null and resName != ''">
+                AND RES_NAME = #{resName,jdbcType=VARCHAR}
+            </if>
+            <if test="resPath != null and resPath != ''">
+                AND RES_PATH = #{resPath,jdbcType=VARCHAR}
+            </if>
+            <if test="resource != null and resource != ''">
+                AND RESOURCE = #{resource,jdbcType=VARCHAR}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PROD_CRAFWORK_RESOURCE_MES (
+        ID,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        RES_TYPE,
+        FILE_NAME,
+        RES_NAME,
+        RES_PATH,
+        RESOURCE,
+        REMARK,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ midProdNo,jdbcType=VARCHAR},
+        #{ crafworkId,jdbcType=BIGINT},
+        #{ resType,jdbcType=VARCHAR},
+        #{ fileName,jdbcType=VARCHAR},
+        #{ resName,jdbcType=VARCHAR},
+        #{ resPath,jdbcType=VARCHAR},
+        #{ resource,jdbcType=VARCHAR},
+        #{ remark,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_CRAFWORK_RESOURCE_MES.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PROD_CRAFWORK_RESOURCE_MES
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="resType != null">
+                RES_TYPE = #{resType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileName != null">
+                FILE_NAME = #{fileName,jdbcType=VARCHAR},
+            </if>
+            <if test="resName != null">
+                RES_NAME = #{resName,jdbcType=VARCHAR},
+            </if>
+            <if test="resPath != null">
+                RES_PATH = #{resPath,jdbcType=VARCHAR},
+            </if>
+            <if test="resource != null">
+                RESOURCE = #{resource,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

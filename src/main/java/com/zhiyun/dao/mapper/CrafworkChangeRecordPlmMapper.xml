@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CrafworkChangeRecordPlmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        INSERT INTO CRAFWORK_CHANGE_RECORD_PLM (
+        ID,
+        VOUCHER_NO,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        CHANGE_FLAG,
+        CHANGE_ITEM,
+        OLD_VALUE,
+        NEW_VALUE,
+        CHANGE_EMP,
+        UPD_DATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{voucherNo,jdbcType=VARCHAR},
+        #{prodNo,jdbcType=VARCHAR},
+        #{midProdNo,jdbcType=VARCHAR},
+        #{crafworkId,jdbcType=BIGINT},
+        #{changeFlag,jdbcType=VARCHAR},
+        #{changeItem,jdbcType=VARCHAR},
+        #{oldValue,jdbcType=VARCHAR},
+        #{newValue,jdbcType=VARCHAR},
+        #{changeEmp,jdbcType=VARCHAR},
+        #{updDate,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_CRAFWORK_CHANGE_RECORD_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        UPDATE CRAFWORK_CHANGE_RECORD_PLM
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="changeFlag != null">
+                CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="changeItem != null">
+                CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR},
+            </if>
+            <if test="oldValue != null">
+                OLD_VALUE = #{oldValue,jdbcType=VARCHAR},
+            </if>
+            <if test="newValue != null">
+                NEW_VALUE = #{newValue,jdbcType=VARCHAR},
+            </if>
+            <if test="changeEmp != null">
+                CHANGE_EMP = #{changeEmp,jdbcType=VARCHAR},
+            </if>
+            <if test="updDate != null">
+                UPD_DATE = #{updDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        UPDATE CRAFWORK_CHANGE_RECORD_PLM
+        <set>
+            VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR},
+            CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR},
+            OLD_VALUE = #{oldValue,jdbcType=VARCHAR},
+            NEW_VALUE = #{newValue,jdbcType=VARCHAR},
+            CHANGE_EMP = #{changeEmp,jdbcType=VARCHAR},
+            UPD_DATE = #{updDate,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        UPDATE CRAFWORK_CHANGE_RECORD_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               VOUCHER_NO  voucherNo,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               CRAFWORK_ID crafworkId,
+               CHANGE_FLAG changeFlag,
+               CHANGE_ITEM changeItem,
+               OLD_VALUE   oldValue,
+               NEW_VALUE   newValue,
+               CHANGE_EMP  changeEmp,
+               UPD_DATE    updDate,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               COMPANY_ID  companyId,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null and voucherNo != ''">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="changeFlag != null and changeFlag != ''">
+                AND CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="changeItem != null and changeItem != ''">
+                AND CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR}
+            </if>
+            <if test="oldValue != null and oldValue != ''">
+                AND OLD_VALUE = #{oldValue,jdbcType=VARCHAR}
+            </if>
+            <if test="newValue != null and newValue != ''">
+                AND NEW_VALUE = #{newValue,jdbcType=VARCHAR}
+            </if>
+            <if test="changeEmp != null and changeEmp != ''">
+                AND CHANGE_EMP = #{changeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="updDate != null">
+                AND UPD_DATE = #{updDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.voucherNo != null and entity.voucherNo != ''">
+                AND VOUCHER_NO = #{entity.voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.midProdNo != null and entity.midProdNo != ''">
+                AND MID_PROD_NO = #{entity.midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.crafworkId != null">
+                AND CRAFWORK_ID = #{entity.crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.changeFlag != null and entity.changeFlag != ''">
+                AND CHANGE_FLAG = #{entity.changeFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.changeItem != null and entity.changeItem != ''">
+                AND CHANGE_ITEM = #{entity.changeItem,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.oldValue != null and entity.oldValue != ''">
+                AND OLD_VALUE = #{entity.oldValue,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.newValue != null and entity.newValue != ''">
+                AND NEW_VALUE = #{entity.newValue,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.changeEmp != null and entity.changeEmp != ''">
+                AND CHANGE_EMP = #{entity.changeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.updDate != null">
+                AND UPD_DATE = #{entity.updDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM CRAFWORK_CHANGE_RECORD_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null and voucherNo != ''">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="changeFlag != null and changeFlag != ''">
+                AND CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR}
+            </if>
+            <if test="changeItem != null and changeItem != ''">
+                AND CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR}
+            </if>
+            <if test="oldValue != null and oldValue != ''">
+                AND OLD_VALUE = #{oldValue,jdbcType=VARCHAR}
+            </if>
+            <if test="newValue != null and newValue != ''">
+                AND NEW_VALUE = #{newValue,jdbcType=VARCHAR}
+            </if>
+            <if test="changeEmp != null and changeEmp != ''">
+                AND CHANGE_EMP = #{changeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="updDate != null">
+                AND UPD_DATE = #{updDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO CRAFWORK_CHANGE_RECORD_PLM (
+        ID,
+        VOUCHER_NO,
+        PROD_NO,
+        MID_PROD_NO,
+        CRAFWORK_ID,
+        CHANGE_FLAG,
+        CHANGE_ITEM,
+        OLD_VALUE,
+        NEW_VALUE,
+        CHANGE_EMP,
+        UPD_DATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ voucherNo,jdbcType=VARCHAR},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ midProdNo,jdbcType=VARCHAR},
+        #{ crafworkId,jdbcType=BIGINT},
+        #{ changeFlag,jdbcType=VARCHAR},
+        #{ changeItem,jdbcType=VARCHAR},
+        #{ oldValue,jdbcType=VARCHAR},
+        #{ newValue,jdbcType=VARCHAR},
+        #{ changeEmp,jdbcType=VARCHAR},
+        #{ updDate,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_CRAFWORK_CHANGE_RECORD_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE CRAFWORK_CHANGE_RECORD_PLM
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="changeFlag != null">
+                CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="changeItem != null">
+                CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR},
+            </if>
+            <if test="oldValue != null">
+                OLD_VALUE = #{oldValue,jdbcType=VARCHAR},
+            </if>
+            <if test="newValue != null">
+                NEW_VALUE = #{newValue,jdbcType=VARCHAR},
+            </if>
+            <if test="changeEmp != null">
+                CHANGE_EMP = #{changeEmp,jdbcType=VARCHAR},
+            </if>
+            <if test="updDate != null">
+                UPD_DATE = #{updDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

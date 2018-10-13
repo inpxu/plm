@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CasUserDaoImpl">
+    <!-- 新增space -->
+    <insert id="insertSpace" parameterType="com.zhiyun.entity.CasUser">
+        INSERT INTO `zhiyun_oa`.`oa_library_user_space` (ID_, USER_ID, SPACE_INIT_SIZE, SPACE_MAX_SIZE, SPACE_USED_SIZE)
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 1073741824, 10737418240, 53175910)
+
+    </insert>
+
+    <!-- 查询字段 -->
+    <sql id="cselectFieldSQL">
+        SELECT auth_authorization.cas_user.ID          id,
+               auth_authorization.cas_user.HEAD_IMG    headImg,
+               auth_authorization.cas_user.ORG_ID      orgId,
+               auth_authorization.cas_user.ACCOUNT     account,
+               auth_authorization.cas_user.NAME        `name`,
+               auth_authorization.cas_user.EMP_NO      empNo,
+               auth_authorization.cas_user.PHONE       phone,
+               auth_authorization.cas_user.EMAIL       email,
+               auth_authorization.cas_user.PASSWORD    `password`,
+               auth_authorization.cas_user.SLAT        slat,
+               auth_authorization.cas_user.POSITION    `position`,
+               auth_authorization.cas_user.IS_ABLE     isAble,
+               auth_authorization.cas_user.IS_ADMIN    isAdmin,
+               auth_authorization.cas_user.IS_CONTACTS isContacts,
+               auth_authorization.cas_user.DELETED     deleted,
+               auth_authorization.cas_user.COMPANY_ID  companyId,
+               auth_authorization.cas_user.CREATE_TIME createTime,
+               auth_authorization.cas_user.CREATE_BY   createBy,
+               auth_authorization.cas_user.MODIFY_TIME modifyTime,
+               auth_authorization.cas_user.MODIFY_BY   modifyBy
+    </sql>
+    <!-- 查询 -->
+    <select id="customeFind" parameterType="com.zhiyun.entity.CasUser" resultType="com.zhiyun.entity.CasUser">
+        <include refid="cselectFieldSQL"/>
+        FROM auth_authorization.cas_user
+        <where>
+            <if test="id != null">
+                AND auth_authorization.cas_user.ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="headImg != null and headImg != ''">
+                AND auth_authorization.cas_user.HEAD_IMG = #{headImg,jdbcType=VARCHAR}
+            </if>
+            <if test="orgId != null">
+                AND auth_authorization.cas_user.ORG_ID = #{orgId,jdbcType=BIGINT}
+            </if>
+            <if test="account != null and account != ''">
+                AND auth_authorization.cas_user.ACCOUNT = #{account,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null and name != ''">
+                AND auth_authorization.cas_user.NAME = #{name,jdbcType=VARCHAR}
+            </if>
+            <if test="empNo != null and name != ''">
+                AND auth_authorization.cas_user.EMP_NO = #{empNo,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null and phone != ''">
+                AND auth_authorization.cas_user.PHONE = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null and email != ''">
+                AND auth_authorization.cas_user.EMAIL = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null and password != ''">
+                AND auth_authorization.cas_user.PASSWORD = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="slat != null and slat != ''">
+                AND auth_authorization.cas_user.SLAT = #{slat,jdbcType=VARCHAR}
+            </if>
+            <if test="position != null and position != ''">
+                AND auth_authorization.cas_user.POSITION = #{position,jdbcType=VARCHAR}
+            </if>
+            <if test="isAble != null">
+                AND auth_authorization.cas_user.IS_ABLE = #{isAble,jdbcType=TINYINT}
+            </if>
+            <if test="isAdmin != null">
+                AND auth_authorization.cas_user.IS_ADMIN = #{isAdmin,jdbcType=TINYINT}
+            </if>
+            <if test="isContacts != null">
+                AND auth_authorization.cas_user.IS_CONTACTS = #{isContacts,jdbcType=TINYINT}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND auth_authorization.cas_user.DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND auth_authorization.cas_user.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+
+    <!--&lt;!&ndash;判断员工的部门是否存在&ndash;&gt;-->
+    <!--<select id="empOrgExist" resultType="com.zhiyun.entity.CasOrg" parameterType="com.zhiyun.entity.EmpFolderHcm">-->
+    <!--SELECT-->
+    <!--a.id-->
+    <!--FROM-->
+    <!--cas_org AS a-->
+    <!--INNER JOIN contact_org_to_emp AS b ON a.id = b.org_id-->
+    <!--INNER JOIN emp_folder_hcm AS c ON b.emp_folder_id = c.id-->
+    <!--WHERE-->
+    <!--a.deleted = 'F'-->
+    <!--AND a.company_id = #{companyId}-->
+    <!--AND c.emp_no = #{empNo}-->
+    <!--</select>-->
+</mapper>

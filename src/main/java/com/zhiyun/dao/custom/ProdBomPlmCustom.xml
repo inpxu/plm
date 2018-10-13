@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdBomPlmDaoImpl">
+    <select id="searchForProduct" resultType="com.zhiyun.dto.ProductStorePlmDto" parameterType="map">
+        SELECT
+        product_store_plm.id id,
+        product_store_plm.prod_name prodName,
+        product_store_plm.prod_no prodNo
+        # product_mid_plm.id midProductId,
+        # product_mid_plm.mid_prod_name midProdName,
+        # product_mid_plm.mid_prod_no midProdNo
+        FROM
+        product_store_plm
+        # LEFT JOIN product_mid_plm ON product_store_plm.prod_no = product_mid_plm.prod_no
+        # AND product_mid_plm.deleted = 'F'
+        WHERE
+        product_store_plm.company_id = #{companyId}
+        AND product_store_plm.deleted = 'F'
+        AND product_store_plm.prod_name=#{productName}
+        <!--<if test="bomCode!=null and bomCode!= '' ">-->
+        <!--OR product_mid_plm.mid_prod_no = #{bomCode}-->
+        <!--</if>-->
+    </select>
+    <!--<resultMap id="searchMap" type="com.zhiyun.dto.ProductStorePlmDto">-->
+    <!--<id javaType="long" column="id" property="id"/>-->
+    <!--<result column="prodName" property="prodName"/>-->
+    <!--<result column="prodNo" property="prodNo"/>-->
+    <!--<collection property="midProducts" ofType="com.zhiyun.entity.ProductMidPlm" javaType="ArrayList">-->
+    <!--<id column="midProductId" javaType="long" property="id"/>-->
+    <!--<result column="midProdName" property="midProdName"/>-->
+    <!--<result column="midProdNo" property="midProdNo"/>-->
+    <!--</collection>-->
+    <!--</resultMap>-->
+
+    <select id="findBomByPno" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
+        SELECT prod_bom_plm.bom_no         AS bomNo,
+               prod_bom_plm.versions,
+               prod_bom_plm.make_emp       AS makeEmp,
+               prod_bom_plm.bom_status     AS bomStatus,
+               prod_bom_plm.`status`,
+               prod_bom_plm.make_date      AS makeDate,
+               voucher_main_oa.is_finished AS voucherStatus,
+               product_store_plm.id        AS productId,
+               product_store_plm.prod_no   AS productNo,
+               product_store_plm.prod_name AS productName
+        FROM prod_bom_plm
+                 left JOIN voucher_main_oa ON voucher_main_oa.voucher_no = prod_bom_plm.voucher_no
+                                                  AND voucher_main_oa.deleted = 'F'
+                 INNER JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
+                                                     AND product_store_plm.deleted = 'F'
+        WHERE prod_bom_plm.deleted = 'F'
+          AND prod_bom_plm.company_id = #{companyId}
+          and prod_bom_plm.prod_no = #{productNo}
+    </select>
+    <select id="findBomByMpno" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
+        SELECT prod_bom_plm.bom_no     AS  bomNo,
+               prod_bom_plm.versions,
+               prod_bom_plm.make_emp   AS  makeEmp,
+               prod_bom_plm.bom_status AS  bomStatus,
+               prod_bom_plm.`status`,
+               prod_bom_plm.make_date  AS  makeDate,
+               voucher_main_oa.is_finished voucherStatus
+        FROM prod_bom_plm
+                 LEFT JOIN voucher_main_oa ON voucher_main_oa.voucher_no = prod_bom_plm.voucher_no
+                                                  AND voucher_main_oa.deleted = 'F'
+                                                  AND prod_bom_plm.company_id = #{companyId}
+                                                  and prod_bom_plm.mid_prod_no = #{midProductNo}
+    </select>
+
+    <update id="updateBom" parameterType="map">
+        update prod_bom_plm
+        set voucher_no = #{vocherNo}
+        where deleted = 'F'
+          and bom_no = #{bomCode}
+          and company_id = #{companyId}
+    </update>
+    <update id="startOrStopBom" parameterType="map">
+        update prod_bom_plm
+        set bom_status = #{bomStatus}
+        where deleted = 'F'
+          and company_id = #{companyId}
+          and bom_no = #{bomCode}
+    </update>
+    <select id="selectBeforeUpdate" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
+        select bom_status bomStatus
+        from prod_bom_plm
+        where deleted = 'F'
+          and company_id = #{companyId}
+          and bom_no = #{bomCode}
+
+    </select>
+    <select id="searchForCompnent" resultMap="searchComponentMap" parameterType="map">
+        SELECT
+        product_store_plm.id id,
+        product_store_plm.prod_name prodName,
+        product_store_plm.prod_no prodNo,
+        product_mid_plm.id midProductId,
+        product_mid_plm.mid_prod_name midProdName,
+        product_mid_plm.mid_prod_no midProdNo
+        FROM
+        product_store_plm
+        LEFT JOIN product_mid_plm ON product_store_plm.prod_no = product_mid_plm.prod_no
+        AND product_mid_plm.deleted = 'F'
+        WHERE
+        product_store_plm.company_id = #{companyId}
+        AND product_store_plm.deleted = 'F'
+        AND product_store_plm.prod_name=#{productName}
+        <if test="bomCode!=null and bomCode!= '' ">
+            OR product_mid_plm.mid_prod_no = #{bomCode}
+        </if>
+    </select>
+    <resultMap id="searchComponentMap" type="com.zhiyun.dto.ProductStorePlmDto">
+        <id javaType="long" column="id" property="id"/>
+        <result column="prodName" property="prodName"/>
+        <result column="prodNo" property="prodNo"/>
+        <collection property="midProducts" ofType="com.zhiyun.entity.ProductMidPlm" javaType="ArrayList">
+            <id column="midProductId" javaType="long" property="id"/>
+            <result column="midProdName" property="midProdName"/>
+            <result column="midProdNo" property="midProdNo"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="optionBomCodeAndProdName" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT matters_store_ios.id, matters_store_ios.matters_no mattersNo, matters_store_ios.matters_name mattersName
+        FROM matters_store_ios
+        WHERE deleted = 'F'
+          and is_midprod != 2
+          AND company_id = #{companyId}
+    </select>
+
+
+    <select id="findAllMidProductByPno" parameterType="map" resultType="com.zhiyun.dto.ProductMidPlmDto">
+        SELECT product_mid_plm.id, product_mid_plm.mid_prod_no midProdNo, product_mid_plm.mid_prod_name midProdName, product_mid_plm.amount
+        FROM product_mid_plm
+        WHERE deleted = 'F'
+          AND company_id = #{companyId}
+          AND parent_no = #{productNo}
+    </select>
+
+    <select id="findAllMattersFroProduct" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT prod_bom_detail_plm.id,
+               prod_bom_detail_plm.amount,
+               prod_bom_detail_plm.plm_desc                                                                     plmDesc,
+               backMatter.MATTERS_NO                                                                            backUpMatterNo,
+               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
+               CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
+               CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
+               matters_store_ios.versions,
+               matters_store_ios.unit
+        FROM prod_bom_detail_plm
+                 INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
+                                                     AND matters_store_ios.deleted = 'F'
+                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
+                                                                   AND matters_store_ios.deleted = 'F'
+        WHERE prod_bom_detail_plm.company_id = #{companyId}
+          AND prod_bom_detail_plm.deleted = 'F'
+          AND prod_bom_detail_plm.parent_no = #{productNo}
+    </select>
+
+    <select id="SearchBeforeAddMatters" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT s.ID                                             id,
+               CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)        mattersInfo,
+               s.MATTERS_NO                                     mattersNo,
+               CONCAT(s.NORMS, '/', s.PARAM, '/', s.MODEL_DESC) allInfo,
+               s.UNIT                                           unit,
+               s.WEIGHT                                         weight,
+               t.type_name                                      typeName
+        FROM MATTERS_STORE_IOS s
+                 LEFT JOIN matters_type_ios t ON s.TYPE_ID = t.id
+                                                     AND t.deleted = 'F'
+        WHERE s.deleted = 'F'
+          and s.is_midprod != 2
+          AND s.company_id = #{companyId}
+          AND (s.matters_no LIKE CONCAT('%', #{codeOrName}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName}, '%'))
+
+    </select>
+
+    <select id="findMidProduct" parameterType="map" resultType="com.zhiyun.dto.ProductMidPlmDto">
+        SELECT product_mid_plm.id, product_mid_plm.mid_prod_no midProdNo, product_mid_plm.mid_prod_name midProdName
+        FROM product_mid_plm
+        WHERE deleted = 'F'
+          AND company_id = #{companyId}
+          AND parent_no = #{parentNo}
+    </select>
+
+    <select id="findCommonBomByMatterName" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
+        SELECT prod_bom_plm.bom_no         AS bomNo,
+               prod_bom_plm.versions,
+               prod_bom_plm.make_emp       AS makeEmp,
+               prod_bom_plm.bom_status     AS bomStatus,
+               prod_bom_plm.`status`,
+               prod_bom_plm.make_date      AS makeDate,
+               voucher_main_oa.is_finished AS voucherStatus,
+               matters_store_ios.id,
+               matters_store_ios.matters_no   mattersNo,
+               matters_store_ios.matters_name mattersName
+        FROM prod_bom_plm
+                 LEFT JOIN voucher_main_oa ON voucher_main_oa.voucher_no = prod_bom_plm.voucher_no
+                                                  AND voucher_main_oa.deleted = 'F'
+                                                  AND voucher_main_oa.company_id = #{companyId}
+                 INNER JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
+                                                     AND matters_store_ios.deleted = 'F'
+                                                     AND matters_store_ios.company_id = #{companyId}
+                                                     and matters_store_ios.is_midprod = 1
+        WHERE prod_bom_plm.deleted = 'F'
+          AND prod_bom_plm.company_id = #{companyId}
+          AND matters_store_ios.matters_name LIKE CONCAT('%', #{matterName}, '%')
+    </select>
+
+    <select id="findCommonBomByBomCode" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
+        SELECT prod_bom_plm.bom_no         AS bomNo,
+               prod_bom_plm.versions,
+               prod_bom_plm.make_emp       AS makeEmp,
+               prod_bom_plm.bom_status     AS bomStatus,
+               prod_bom_plm.`status`,
+               prod_bom_plm.make_date      AS makeDate,
+               voucher_main_oa.is_finished AS voucherStatus,
+               product_store_plm.id        AS productId,
+               product_store_plm.prod_no   AS productNo,
+               product_store_plm.prod_name AS productName
+        FROM prod_bom_plm
+                 LEFT JOIN voucher_main_oa ON voucher_main_oa.voucher_no = prod_bom_plm.voucher_no
+                                                  AND voucher_main_oa.deleted = 'F'
+                 INNER JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
+                                                     AND product_store_plm.deleted = 'F'
+        WHERE prod_bom_plm.deleted = 'F'
+          AND prod_bom_plm.company_id = #{companyId}
+          AND prod_bom_plm.bom_no = #{bomCode}
+    </select>
+
+    <select id="findCommonBomByProdNo" resultType="com.zhiyun.dto.ProdBomPlmDto" parameterType="map">
+        SELECT prod_bom_plm.bom_no         AS bomNo,
+               prod_bom_plm.versions,
+               prod_bom_plm.make_emp       AS makeEmp,
+               prod_bom_plm.bom_status     AS bomStatus,
+               prod_bom_plm.`status`,
+               prod_bom_plm.make_date      AS makeDate,
+               voucher_main_oa.is_finished AS voucherStatus,
+               matters_store_ios.id,
+               matters_store_ios.matters_no   mattersNo,
+               matters_store_ios.matters_name mattersName
+        FROM prod_bom_plm
+                 LEFT JOIN voucher_main_oa ON voucher_main_oa.voucher_no = prod_bom_plm.voucher_no
+                                                  AND voucher_main_oa.deleted = 'F'
+                                                  AND voucher_main_oa.company_id = #{companyId}
+                 INNER JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
+                                                     AND matters_store_ios.deleted = 'F'
+                                                     AND matters_store_ios.company_id = #{companyId}
+        WHERE prod_bom_plm.deleted = 'F'
+          AND prod_bom_plm.company_id = #{companyId}
+          AND prod_bom_plm.prod_no = #{prodNo}
+    </select>
+
+    <select id="optionComponent" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT matters_store_ios.id, matters_store_ios.matters_no mattersNo, matters_store_ios.matters_name mattersName
+        FROM matters_store_ios
+        WHERE deleted = 'F'
+          and is_midprod =1
+          AND company_id = #{companyId}
+    </select>
+</mapper>

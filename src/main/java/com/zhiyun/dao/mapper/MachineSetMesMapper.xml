@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.MachineSetMesDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.MachineSetMes">
+        INSERT INTO mes_jingcai.MACHINE_SET_MES (
+        ID,
+        MAC_NO,
+        MAC_NAME,
+        FACTORY_ID,
+        ORG_ID,
+        MAC_TYPE,
+        CRAFWORK_ID,
+        LIABLE,
+        MIN_AMOUNT,
+        MIN_EMP,
+        IS_INSPECTION,
+        BRAND,
+        SPEC,
+        FIX_HOUR,
+        MAC_STATUS,
+        BARCODE,
+        QRCODE,
+        BUILDDATE,
+        LOSEDATE,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{macNo,jdbcType=VARCHAR},
+        #{macName,jdbcType=VARCHAR},
+        #{factoryId,jdbcType=BIGINT},
+        #{orgId,jdbcType=BIGINT},
+        #{macType,jdbcType=VARCHAR},
+        #{crafworkId,jdbcType=BIGINT},
+        #{liable,jdbcType=VARCHAR},
+        #{minAmount,jdbcType=DECIMAL},
+        #{minEmp,jdbcType=INTEGER},
+        #{isInspection,jdbcType=TINYINT},
+        #{brand,jdbcType=VARCHAR},
+        #{spec,jdbcType=VARCHAR},
+        #{fixHour,jdbcType=INTEGER},
+        #{macStatus,jdbcType=VARCHAR},
+        #{barcode,jdbcType=VARCHAR},
+        #{qrcode,jdbcType=VARCHAR},
+        #{builddate,jdbcType=TIMESTAMP},
+        #{losedate,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_mes_jingcai.MACHINE_SET_MES.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.MachineSetMes">
+        UPDATE mes_jingcai.MACHINE_SET_MES
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="macName != null">
+                MAC_NAME = #{macName,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                ORG_ID = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="macType != null">
+                MAC_TYPE = #{macType,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="liable != null">
+                LIABLE = #{liable,jdbcType=VARCHAR},
+            </if>
+            <if test="minAmount != null">
+                MIN_AMOUNT = #{minAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="minEmp != null">
+                MIN_EMP = #{minEmp,jdbcType=INTEGER},
+            </if>
+            <if test="isInspection != null">
+                IS_INSPECTION = #{isInspection,jdbcType=TINYINT},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                SPEC = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="fixHour != null">
+                FIX_HOUR = #{fixHour,jdbcType=INTEGER},
+            </if>
+            <if test="macStatus != null">
+                MAC_STATUS = #{macStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="barcode != null">
+                BARCODE = #{barcode,jdbcType=VARCHAR},
+            </if>
+            <if test="qrcode != null">
+                QRCODE = #{qrcode,jdbcType=VARCHAR},
+            </if>
+            <if test="builddate != null">
+                BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="losedate != null">
+                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.MachineSetMes">
+        UPDATE mes_jingcai.MACHINE_SET_MES
+        <set>
+            MAC_NO = #{macNo,jdbcType=VARCHAR},
+            MAC_NAME = #{macName,jdbcType=VARCHAR},
+            FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            ORG_ID = #{orgId,jdbcType=BIGINT},
+            MAC_TYPE = #{macType,jdbcType=VARCHAR},
+            CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            LIABLE = #{liable,jdbcType=VARCHAR},
+            MIN_AMOUNT = #{minAmount,jdbcType=DECIMAL},
+            MIN_EMP = #{minEmp,jdbcType=INTEGER},
+            IS_INSPECTION = #{isInspection,jdbcType=TINYINT},
+            BRAND = #{brand,jdbcType=VARCHAR},
+            SPEC = #{spec,jdbcType=VARCHAR},
+            FIX_HOUR = #{fixHour,jdbcType=INTEGER},
+            MAC_STATUS = #{macStatus,jdbcType=VARCHAR},
+            BARCODE = #{barcode,jdbcType=VARCHAR},
+            QRCODE = #{qrcode,jdbcType=VARCHAR},
+            BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+            LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.MachineSetMes">
+        UPDATE mes_jingcai.MACHINE_SET_MES
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               MAC_NO        macNo,
+               MAC_NAME      macName,
+               FACTORY_ID    factoryId,
+               ORG_ID        orgId,
+               MAC_TYPE      macType,
+               CRAFWORK_ID   crafworkId,
+               LIABLE        liable,
+               MIN_AMOUNT    minAmount,
+               MIN_EMP       minEmp,
+               IS_INSPECTION isInspection,
+               BRAND         brand,
+               SPEC          spec,
+               FIX_HOUR      fixHour,
+               MAC_STATUS    macStatus,
+               BARCODE       barcode,
+               QRCODE        qrcode,
+               BUILDDATE     builddate,
+               LOSEDATE      losedate,
+               DELETED       deleted,
+               COMPANY_ID    companyId,
+               CREATE_TIME   createTime,
+               CREATE_BY     createBy,
+               MODIFY_TIME   modifyTime,
+               MODIFY_BY     modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.MachineSetMes">
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.MachineSetMes" resultType="com.zhiyun.entity.MachineSetMes">
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="macName != null and macName != ''">
+                AND MAC_NAME = #{macName,jdbcType=VARCHAR}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="orgId != null">
+                AND ORG_ID = #{orgId,jdbcType=BIGINT}
+            </if>
+            <if test="macType != null and macType != ''">
+                AND MAC_TYPE = #{macType,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="liable != null and liable != ''">
+                AND LIABLE = #{liable,jdbcType=VARCHAR}
+            </if>
+            <if test="minAmount != null">
+                AND MIN_AMOUNT = #{minAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="minEmp != null">
+                AND MIN_EMP = #{minEmp,jdbcType=INTEGER}
+            </if>
+            <if test="isInspection != null">
+                AND IS_INSPECTION = #{isInspection,jdbcType=TINYINT}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="spec != null and spec != ''">
+                AND SPEC = #{spec,jdbcType=VARCHAR}
+            </if>
+            <if test="fixHour != null">
+                AND FIX_HOUR = #{fixHour,jdbcType=INTEGER}
+            </if>
+            <if test="macStatus != null and macStatus != ''">
+                AND MAC_STATUS = #{macStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                AND BARCODE = #{barcode,jdbcType=VARCHAR}
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                AND QRCODE = #{qrcode,jdbcType=VARCHAR}
+            </if>
+            <if test="builddate != null">
+                AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="losedate != null">
+                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.MachineSetMes">
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.macNo != null and entity.macNo != ''">
+                AND MAC_NO = #{entity.macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.macName != null and entity.macName != ''">
+                AND MAC_NAME = #{entity.macName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.factoryId != null">
+                AND FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.orgId != null">
+                AND ORG_ID = #{entity.orgId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.macType != null and entity.macType != ''">
+                AND MAC_TYPE = #{entity.macType,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.crafworkId != null">
+                AND CRAFWORK_ID = #{entity.crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.liable != null and entity.liable != ''">
+                AND LIABLE = #{entity.liable,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.minAmount != null">
+                AND MIN_AMOUNT = #{entity.minAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.minEmp != null">
+                AND MIN_EMP = #{entity.minEmp,jdbcType=INTEGER}
+            </if>
+            <if test="entity.isInspection != null">
+                AND IS_INSPECTION = #{entity.isInspection,jdbcType=TINYINT}
+            </if>
+            <if test="entity.brand != null and entity.brand != ''">
+                AND BRAND = #{entity.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.spec != null and entity.spec != ''">
+                AND SPEC = #{entity.spec,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.fixHour != null">
+                AND FIX_HOUR = #{entity.fixHour,jdbcType=INTEGER}
+            </if>
+            <if test="entity.macStatus != null and entity.macStatus != ''">
+                AND MAC_STATUS = #{entity.macStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.barcode != null and entity.barcode != ''">
+                AND BARCODE = #{entity.barcode,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.qrcode != null and entity.qrcode != ''">
+                AND QRCODE = #{entity.qrcode,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.builddate != null">
+                AND BUILDDATE = #{entity.builddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.losedate != null">
+                AND LOSEDATE = #{entity.losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM mes_jingcai.MACHINE_SET_MES
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.MachineSetMes">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM mes_jingcai.MACHINE_SET_MES
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="macNo != null and macNo != ''">
+                AND MAC_NO = #{macNo,jdbcType=VARCHAR}
+            </if>
+            <if test="macName != null and macName != ''">
+                AND MAC_NAME = #{macName,jdbcType=VARCHAR}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="orgId != null">
+                AND ORG_ID = #{orgId,jdbcType=BIGINT}
+            </if>
+            <if test="macType != null and macType != ''">
+                AND MAC_TYPE = #{macType,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="liable != null and liable != ''">
+                AND LIABLE = #{liable,jdbcType=VARCHAR}
+            </if>
+            <if test="minAmount != null">
+                AND MIN_AMOUNT = #{minAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="minEmp != null">
+                AND MIN_EMP = #{minEmp,jdbcType=INTEGER}
+            </if>
+            <if test="isInspection != null">
+                AND IS_INSPECTION = #{isInspection,jdbcType=TINYINT}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="spec != null and spec != ''">
+                AND SPEC = #{spec,jdbcType=VARCHAR}
+            </if>
+            <if test="fixHour != null">
+                AND FIX_HOUR = #{fixHour,jdbcType=INTEGER}
+            </if>
+            <if test="macStatus != null and macStatus != ''">
+                AND MAC_STATUS = #{macStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                AND BARCODE = #{barcode,jdbcType=VARCHAR}
+            </if>
+            <if test="qrcode != null and qrcode != ''">
+                AND QRCODE = #{qrcode,jdbcType=VARCHAR}
+            </if>
+            <if test="builddate != null">
+                AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="losedate != null">
+                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO mes_jingcai.MACHINE_SET_MES (
+        ID,
+        MAC_NO,
+        MAC_NAME,
+        FACTORY_ID,
+        ORG_ID,
+        MAC_TYPE,
+        CRAFWORK_ID,
+        LIABLE,
+        MIN_AMOUNT,
+        MIN_EMP,
+        IS_INSPECTION,
+        BRAND,
+        SPEC,
+        FIX_HOUR,
+        MAC_STATUS,
+        BARCODE,
+        QRCODE,
+        BUILDDATE,
+        LOSEDATE,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ macNo,jdbcType=VARCHAR},
+        #{ macName,jdbcType=VARCHAR},
+        #{ factoryId,jdbcType=BIGINT},
+        #{ orgId,jdbcType=BIGINT},
+        #{ macType,jdbcType=VARCHAR},
+        #{ crafworkId,jdbcType=BIGINT},
+        #{ liable,jdbcType=VARCHAR},
+        #{ minAmount,jdbcType=DECIMAL},
+        #{ minEmp,jdbcType=INTEGER},
+        #{ isInspection,jdbcType=TINYINT},
+        #{ brand,jdbcType=VARCHAR},
+        #{ spec,jdbcType=VARCHAR},
+        #{ fixHour,jdbcType=INTEGER},
+        #{ macStatus,jdbcType=VARCHAR},
+        #{ barcode,jdbcType=VARCHAR},
+        #{ qrcode,jdbcType=VARCHAR},
+        #{ builddate,jdbcType=TIMESTAMP},
+        #{ losedate,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_mes_jingcai.MACHINE_SET_MES.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE mes_jingcai.MACHINE_SET_MES
+        <set>
+            <if test="macNo != null">
+                MAC_NO = #{macNo,jdbcType=VARCHAR},
+            </if>
+            <if test="macName != null">
+                MAC_NAME = #{macName,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="orgId != null">
+                ORG_ID = #{orgId,jdbcType=BIGINT},
+            </if>
+            <if test="macType != null">
+                MAC_TYPE = #{macType,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="liable != null">
+                LIABLE = #{liable,jdbcType=VARCHAR},
+            </if>
+            <if test="minAmount != null">
+                MIN_AMOUNT = #{minAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="minEmp != null">
+                MIN_EMP = #{minEmp,jdbcType=INTEGER},
+            </if>
+            <if test="isInspection != null">
+                IS_INSPECTION = #{isInspection,jdbcType=TINYINT},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="spec != null">
+                SPEC = #{spec,jdbcType=VARCHAR},
+            </if>
+            <if test="fixHour != null">
+                FIX_HOUR = #{fixHour,jdbcType=INTEGER},
+            </if>
+            <if test="macStatus != null">
+                MAC_STATUS = #{macStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="barcode != null">
+                BARCODE = #{barcode,jdbcType=VARCHAR},
+            </if>
+            <if test="qrcode != null">
+                QRCODE = #{qrcode,jdbcType=VARCHAR},
+            </if>
+            <if test="builddate != null">
+                BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="losedate != null">
+                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

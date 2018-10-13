@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdDependPlmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProdDependPlm">
+        INSERT INTO PROD_DEPEND_PLM (
+        ID,
+        PROD_NO,
+        DEPEND_NO,
+        DEPEND_SRC,
+        DEPEND_NAME,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        DEP_NUMBER,
+        UNIT,
+        FAC_ADDR,
+        FACTORY,
+        MATERIAL,
+        LEVEL,
+        ALLOW_NO,
+        PATENT_NO,
+        SELL_NO,
+        VERSION_NO,
+        QUALTY_TIME,
+        LOSE_DATE,
+        PROD_STATUS,
+        CUR_AMOUNT,
+        FACTORY_ID,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{prodNo,jdbcType=VARCHAR},
+        #{dependNo,jdbcType=VARCHAR},
+        #{dependSrc,jdbcType=VARCHAR},
+        #{dependName,jdbcType=VARCHAR},
+        #{norms,jdbcType=VARCHAR},
+        #{param,jdbcType=VARCHAR},
+        #{modelDesc,jdbcType=VARCHAR},
+        #{depNumber,jdbcType=DECIMAL},
+        #{unit,jdbcType=CHAR},
+        #{facAddr,jdbcType=VARCHAR},
+        #{factory,jdbcType=VARCHAR},
+        #{material,jdbcType=VARCHAR},
+        #{level,jdbcType=VARCHAR},
+        #{allowNo,jdbcType=VARCHAR},
+        #{patentNo,jdbcType=VARCHAR},
+        #{sellNo,jdbcType=VARCHAR},
+        #{versionNo,jdbcType=VARCHAR},
+        #{qualtyTime,jdbcType=VARCHAR},
+        #{loseDate,jdbcType=TIMESTAMP},
+        #{prodStatus,jdbcType=VARCHAR},
+        #{curAmount,jdbcType=DECIMAL},
+        #{factoryId,jdbcType=BIGINT},
+        #{remark,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_DEPEND_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProdDependPlm">
+        UPDATE PROD_DEPEND_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dependNo != null">
+                DEPEND_NO = #{dependNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dependSrc != null">
+                DEPEND_SRC = #{dependSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="dependName != null">
+                DEPEND_NAME = #{dependName,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="depNumber != null">
+                DEP_NUMBER = #{depNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=CHAR},
+            </if>
+            <if test="facAddr != null">
+                FAC_ADDR = #{facAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="allowNo != null">
+                ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patentNo != null">
+                PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellNo != null">
+                SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="qualtyTime != null">
+                QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="loseDate != null">
+                LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prodStatus != null">
+                PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProdDependPlm">
+        UPDATE PROD_DEPEND_PLM
+        <set>
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            DEPEND_NO = #{dependNo,jdbcType=VARCHAR},
+            DEPEND_SRC = #{dependSrc,jdbcType=VARCHAR},
+            DEPEND_NAME = #{dependName,jdbcType=VARCHAR},
+            NORMS = #{norms,jdbcType=VARCHAR},
+            PARAM = #{param,jdbcType=VARCHAR},
+            MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            DEP_NUMBER = #{depNumber,jdbcType=DECIMAL},
+            UNIT = #{unit,jdbcType=CHAR},
+            FAC_ADDR = #{facAddr,jdbcType=VARCHAR},
+            FACTORY = #{factory,jdbcType=VARCHAR},
+            MATERIAL = #{material,jdbcType=VARCHAR},
+            LEVEL = #{level,jdbcType=VARCHAR},
+            ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            REMARK = #{remark,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProdDependPlm">
+        UPDATE PROD_DEPEND_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               PROD_NO     prodNo,
+               DEPEND_NO   dependNo,
+               DEPEND_SRC  dependSrc,
+               DEPEND_NAME dependName,
+               NORMS       norms,
+               PARAM       param,
+               MODEL_DESC  modelDesc,
+               DEP_NUMBER  depNumber,
+               UNIT        unit,
+               FAC_ADDR    facAddr,
+               FACTORY     factory,
+               MATERIAL    material,
+               LEVEL       level,
+               ALLOW_NO    allowNo,
+               PATENT_NO   patentNo,
+               SELL_NO     sellNo,
+               VERSION_NO  versionNo,
+               QUALTY_TIME qualtyTime,
+               LOSE_DATE   loseDate,
+               PROD_STATUS prodStatus,
+               CUR_AMOUNT  curAmount,
+               FACTORY_ID  factoryId,
+               REMARK      remark,
+               DELETED     deleted,
+               COMPANY_ID  companyId,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdDependPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProdDependPlm" resultType="com.zhiyun.entity.ProdDependPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="dependNo != null and dependNo != ''">
+                AND DEPEND_NO = #{dependNo,jdbcType=VARCHAR}
+            </if>
+            <if test="dependSrc != null and dependSrc != ''">
+                AND DEPEND_SRC = #{dependSrc,jdbcType=VARCHAR}
+            </if>
+            <if test="dependName != null and dependName != ''">
+                AND DEPEND_NAME = #{dependName,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="depNumber != null">
+                AND DEP_NUMBER = #{depNumber,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=CHAR}
+            </if>
+            <if test="facAddr != null and facAddr != ''">
+                AND FAC_ADDR = #{facAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="allowNo != null and allowNo != ''">
+                AND ALLOW_NO = #{allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="patentNo != null and patentNo != ''">
+                AND PATENT_NO = #{patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="sellNo != null and sellNo != ''">
+                AND SELL_NO = #{sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="versionNo != null and versionNo != ''">
+                AND VERSION_NO = #{versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="qualtyTime != null and qualtyTime != ''">
+                AND QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="loseDate != null">
+                AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="prodStatus != null and prodStatus != ''">
+                AND PROD_STATUS = #{prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdDependPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.dependNo != null and entity.dependNo != ''">
+                AND DEPEND_NO = #{entity.dependNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.dependSrc != null and entity.dependSrc != ''">
+                AND DEPEND_SRC = #{entity.dependSrc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.dependName != null and entity.dependName != ''">
+                AND DEPEND_NAME = #{entity.dependName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.depNumber != null">
+                AND DEP_NUMBER = #{entity.depNumber,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND UNIT = #{entity.unit,jdbcType=CHAR}
+            </if>
+            <if test="entity.facAddr != null and entity.facAddr != ''">
+                AND FAC_ADDR = #{entity.facAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.factory != null and entity.factory != ''">
+                AND FACTORY = #{entity.factory,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.material != null and entity.material != ''">
+                AND MATERIAL = #{entity.material,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null and entity.level != ''">
+                AND LEVEL = #{entity.level,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.allowNo != null and entity.allowNo != ''">
+                AND ALLOW_NO = #{entity.allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.patentNo != null and entity.patentNo != ''">
+                AND PATENT_NO = #{entity.patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.sellNo != null and entity.sellNo != ''">
+                AND SELL_NO = #{entity.sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.versionNo != null and entity.versionNo != ''">
+                AND VERSION_NO = #{entity.versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.qualtyTime != null and entity.qualtyTime != ''">
+                AND QUALTY_TIME = #{entity.qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.loseDate != null">
+                AND LOSE_DATE = #{entity.loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.prodStatus != null and entity.prodStatus != ''">
+                AND PROD_STATUS = #{entity.prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.curAmount != null">
+                AND CUR_AMOUNT = #{entity.curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.factoryId != null">
+                AND FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.remark != null and entity.remark != ''">
+                AND REMARK = #{entity.remark,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_DEPEND_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdDependPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_DEPEND_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="dependNo != null and dependNo != ''">
+                AND DEPEND_NO = #{dependNo,jdbcType=VARCHAR}
+            </if>
+            <if test="dependSrc != null and dependSrc != ''">
+                AND DEPEND_SRC = #{dependSrc,jdbcType=VARCHAR}
+            </if>
+            <if test="dependName != null and dependName != ''">
+                AND DEPEND_NAME = #{dependName,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="depNumber != null">
+                AND DEP_NUMBER = #{depNumber,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=CHAR}
+            </if>
+            <if test="facAddr != null and facAddr != ''">
+                AND FAC_ADDR = #{facAddr,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="allowNo != null and allowNo != ''">
+                AND ALLOW_NO = #{allowNo,jdbcType=VARCHAR}
+            </if>
+            <if test="patentNo != null and patentNo != ''">
+                AND PATENT_NO = #{patentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="sellNo != null and sellNo != ''">
+                AND SELL_NO = #{sellNo,jdbcType=VARCHAR}
+            </if>
+            <if test="versionNo != null and versionNo != ''">
+                AND VERSION_NO = #{versionNo,jdbcType=VARCHAR}
+            </if>
+            <if test="qualtyTime != null and qualtyTime != ''">
+                AND QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR}
+            </if>
+            <if test="loseDate != null">
+                AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="prodStatus != null and prodStatus != ''">
+                AND PROD_STATUS = #{prodStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="factoryId != null">
+                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+            </if>
+            <if test="remark != null and remark != ''">
+                AND REMARK = #{remark,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PROD_DEPEND_PLM (
+        ID,
+        PROD_NO,
+        DEPEND_NO,
+        DEPEND_SRC,
+        DEPEND_NAME,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        DEP_NUMBER,
+        UNIT,
+        FAC_ADDR,
+        FACTORY,
+        MATERIAL,
+        LEVEL,
+        ALLOW_NO,
+        PATENT_NO,
+        SELL_NO,
+        VERSION_NO,
+        QUALTY_TIME,
+        LOSE_DATE,
+        PROD_STATUS,
+        CUR_AMOUNT,
+        FACTORY_ID,
+        REMARK,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ dependNo,jdbcType=VARCHAR},
+        #{ dependSrc,jdbcType=VARCHAR},
+        #{ dependName,jdbcType=VARCHAR},
+        #{ norms,jdbcType=VARCHAR},
+        #{ param,jdbcType=VARCHAR},
+        #{ modelDesc,jdbcType=VARCHAR},
+        #{ depNumber,jdbcType=DECIMAL},
+        #{ unit,jdbcType=CHAR},
+        #{ facAddr,jdbcType=VARCHAR},
+        #{ factory,jdbcType=VARCHAR},
+        #{ material,jdbcType=VARCHAR},
+        #{ level,jdbcType=VARCHAR},
+        #{ allowNo,jdbcType=VARCHAR},
+        #{ patentNo,jdbcType=VARCHAR},
+        #{ sellNo,jdbcType=VARCHAR},
+        #{ versionNo,jdbcType=VARCHAR},
+        #{ qualtyTime,jdbcType=VARCHAR},
+        #{ loseDate,jdbcType=TIMESTAMP},
+        #{ prodStatus,jdbcType=VARCHAR},
+        #{ curAmount,jdbcType=DECIMAL},
+        #{ factoryId,jdbcType=BIGINT},
+        #{ remark,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_DEPEND_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PROD_DEPEND_PLM
+        <set>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dependNo != null">
+                DEPEND_NO = #{dependNo,jdbcType=VARCHAR},
+            </if>
+            <if test="dependSrc != null">
+                DEPEND_SRC = #{dependSrc,jdbcType=VARCHAR},
+            </if>
+            <if test="dependName != null">
+                DEPEND_NAME = #{dependName,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="depNumber != null">
+                DEP_NUMBER = #{depNumber,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=CHAR},
+            </if>
+            <if test="facAddr != null">
+                FAC_ADDR = #{facAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="allowNo != null">
+                ALLOW_NO = #{allowNo,jdbcType=VARCHAR},
+            </if>
+            <if test="patentNo != null">
+                PATENT_NO = #{patentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="sellNo != null">
+                SELL_NO = #{sellNo,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNo != null">
+                VERSION_NO = #{versionNo,jdbcType=VARCHAR},
+            </if>
+            <if test="qualtyTime != null">
+                QUALTY_TIME = #{qualtyTime,jdbcType=VARCHAR},
+            </if>
+            <if test="loseDate != null">
+                LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prodStatus != null">
+                PROD_STATUS = #{prodStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="factoryId != null">
+                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

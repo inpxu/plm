@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.MattersStoreIosDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.MattersStoreIos">
+        INSERT INTO MATTERS_STORE_IOS (
+        ID,
+        MATTERS_NO,
+        MATTERS_NAME,
+        TYPE_ID,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        BRAND,
+        MATERIAL,
+        LEVEL,
+        UNIT,
+        FACTORY,
+        CUR_AMOUNT,
+        ADV_AMOUNT,
+        PUR_AMOUNT,
+        WEIGHT,
+        METTER_WEI,
+        STORE_ID,
+        IOS_DESC,
+        VERSIONS,
+        IS_MIDPROD,
+        STATUS,
+        SECURE_STOCK,
+        BEF_DATE,
+        BULIDDATE,
+        LOSEDATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{mattersNo,jdbcType=VARCHAR},
+        #{mattersName,jdbcType=VARCHAR},
+        #{typeId,jdbcType=BIGINT},
+        #{norms,jdbcType=VARCHAR},
+        #{param,jdbcType=VARCHAR},
+        #{modelDesc,jdbcType=VARCHAR},
+        #{brand,jdbcType=VARCHAR},
+        #{material,jdbcType=VARCHAR},
+        #{level,jdbcType=VARCHAR},
+        #{unit,jdbcType=VARCHAR},
+        #{factory,jdbcType=VARCHAR},
+        #{curAmount,jdbcType=DECIMAL},
+        #{advAmount,jdbcType=DECIMAL},
+        #{purAmount,jdbcType=DECIMAL},
+        #{weight,jdbcType=DECIMAL},
+        #{metterWei,jdbcType=INTEGER},
+        #{storeId,jdbcType=BIGINT},
+        #{iosDesc,jdbcType=VARCHAR},
+        #{versions,jdbcType=VARCHAR},
+        #{isMidprod,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR},
+        #{secureStock,jdbcType=DECIMAL},
+        #{befDate,jdbcType=BIGINT},
+        #{buliddate,jdbcType=TIMESTAMP},
+        #{losedate,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_MATTERS_STORE_IOS.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.MattersStoreIos">
+        UPDATE MATTERS_STORE_IOS
+        <set>
+            <if test="mattersNo != null">
+                MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mattersName != null">
+                MATTERS_NAME = #{mattersName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                TYPE_ID = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="advAmount != null">
+                ADV_AMOUNT = #{advAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="purAmount != null">
+                PUR_AMOUNT = #{purAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="weight != null">
+                WEIGHT = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="metterWei != null">
+                METTER_WEI = #{metterWei,jdbcType=INTEGER},
+            </if>
+            <if test="storeId != null">
+                STORE_ID = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="iosDesc != null">
+                IOS_DESC = #{iosDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="versions != null">
+                VERSIONS = #{versions,jdbcType=VARCHAR},
+            </if>
+            <if test="isMidprod != null">
+                IS_MIDPROD = #{isMidprod,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="secureStock != null">
+                SECURE_STOCK = #{secureStock,jdbcType=DECIMAL},
+            </if>
+            <if test="befDate != null">
+                BEF_DATE = #{befDate,jdbcType=BIGINT},
+            </if>
+            <if test="buliddate != null">
+                BULIDDATE = #{buliddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="losedate != null">
+                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.MattersStoreIos">
+        UPDATE MATTERS_STORE_IOS
+        <set>
+            MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            MATTERS_NAME = #{mattersName,jdbcType=VARCHAR},
+            TYPE_ID = #{typeId,jdbcType=BIGINT},
+            NORMS = #{norms,jdbcType=VARCHAR},
+            PARAM = #{param,jdbcType=VARCHAR},
+            MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            BRAND = #{brand,jdbcType=VARCHAR},
+            MATERIAL = #{material,jdbcType=VARCHAR},
+            LEVEL = #{level,jdbcType=VARCHAR},
+            UNIT = #{unit,jdbcType=VARCHAR},
+            FACTORY = #{factory,jdbcType=VARCHAR},
+            CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            ADV_AMOUNT = #{advAmount,jdbcType=DECIMAL},
+            PUR_AMOUNT = #{purAmount,jdbcType=DECIMAL},
+            WEIGHT = #{weight,jdbcType=DECIMAL},
+            METTER_WEI = #{metterWei,jdbcType=INTEGER},
+            STORE_ID = #{storeId,jdbcType=BIGINT},
+            IOS_DESC = #{iosDesc,jdbcType=VARCHAR},
+            VERSIONS = #{versions,jdbcType=VARCHAR},
+            IS_MIDPROD = #{isMidprod,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=VARCHAR},
+            SECURE_STOCK = #{secureStock,jdbcType=DECIMAL},
+            BEF_DATE = #{befDate,jdbcType=BIGINT},
+            BULIDDATE = #{buliddate,jdbcType=TIMESTAMP},
+            LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.MattersStoreIos">
+        UPDATE MATTERS_STORE_IOS
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID           id,
+               MATTERS_NO   mattersNo,
+               MATTERS_NAME mattersName,
+               TYPE_ID      typeId,
+               NORMS        norms,
+               PARAM        param,
+               MODEL_DESC   modelDesc,
+               BRAND        brand,
+               MATERIAL     material,
+               LEVEL        level,
+               UNIT         unit,
+               FACTORY      factory,
+               CUR_AMOUNT   curAmount,
+               ADV_AMOUNT   advAmount,
+               PUR_AMOUNT   purAmount,
+               WEIGHT       weight,
+               METTER_WEI   metterWei,
+               STORE_ID     storeId,
+               IOS_DESC     iosDesc,
+               VERSIONS     versions,
+               IS_MIDPROD   isMidprod,
+               STATUS       status,
+               SECURE_STOCK secureStock,
+               BEF_DATE     befDate,
+               BULIDDATE    buliddate,
+               LOSEDATE     losedate,
+               DELETED      deleted,
+               CREATE_TIME  createTime,
+               CREATE_BY    createBy,
+               COMPANY_ID   companyId,
+               MODIFY_TIME  modifyTime,
+               MODIFY_BY    modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.MattersStoreIos" resultType="com.zhiyun.entity.MattersStoreIos">
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="mattersNo != null">
+                AND MATTERS_NO = #{mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="mattersName != null and mattersName != ''">
+                AND MATTERS_NAME = #{mattersName,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId != null">
+                AND TYPE_ID = #{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="advAmount != null">
+                AND ADV_AMOUNT = #{advAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="purAmount != null">
+                AND PUR_AMOUNT = #{purAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="weight != null">
+                AND WEIGHT = #{weight,jdbcType=DECIMAL}
+            </if>
+            <if test="metterWei != null">
+                AND METTER_WEI = #{metterWei,jdbcType=INTEGER}
+            </if>
+            <if test="storeId != null">
+                AND STORE_ID = #{storeId,jdbcType=BIGINT}
+            </if>
+            <if test="iosDesc != null and iosDesc != ''">
+                AND IOS_DESC = #{iosDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="versions != null and versions != ''">
+                AND VERSIONS = #{versions,jdbcType=VARCHAR}
+            </if>
+            <if test="isMidprod != null and isMidprod != ''">
+                AND IS_MIDPROD = #{isMidprod,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="secureStock != null">
+                AND SECURE_STOCK = #{secureStock,jdbcType=DECIMAL}
+            </if>
+            <if test="befDate != null">
+                AND BEF_DATE = #{befDate,jdbcType=BIGINT}
+            </if>
+            <if test="buliddate != null">
+                AND BULIDDATE = #{buliddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="losedate != null">
+                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.mattersNo != null">
+                AND MATTERS_NO = #{entity.mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.mattersName != null and entity.mattersName != ''">
+                AND MATTERS_NAME = #{entity.mattersName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.typeId != null">
+                AND TYPE_ID = #{entity.typeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.brand != null and entity.brand != ''">
+                AND BRAND = #{entity.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.material != null and entity.material != ''">
+                AND MATERIAL = #{entity.material,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null and entity.level != ''">
+                AND LEVEL = #{entity.level,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.factory != null and entity.factory != ''">
+                AND FACTORY = #{entity.factory,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.curAmount != null">
+                AND CUR_AMOUNT = #{entity.curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.advAmount != null">
+                AND ADV_AMOUNT = #{entity.advAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.purAmount != null">
+                AND PUR_AMOUNT = #{entity.purAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.weight != null">
+                AND WEIGHT = #{entity.weight,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.metterWei != null">
+                AND METTER_WEI = #{entity.metterWei,jdbcType=INTEGER}
+            </if>
+            <if test="entity.storeId != null">
+                AND STORE_ID = #{entity.storeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.iosDesc != null and entity.iosDesc != ''">
+                AND IOS_DESC = #{entity.iosDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.versions != null and entity.versions != ''">
+                AND VERSIONS = #{entity.versions,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.isMidprod != null and entity.isMidprod != ''">
+                AND IS_MIDPROD = #{entity.isMidprod,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.status != null and entity.status != ''">
+                AND STATUS = #{entity.status,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.secureStock != null">
+                AND SECURE_STOCK = #{entity.secureStock,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.befDate != null">
+                AND BEF_DATE = #{entity.befDate,jdbcType=BIGINT}
+            </if>
+            <if test="entity.buliddate != null">
+                AND BULIDDATE = #{entity.buliddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.losedate != null">
+                AND LOSEDATE = #{entity.losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM MATTERS_STORE_IOS
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM MATTERS_STORE_IOS
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="mattersNo != null">
+                AND MATTERS_NO = #{mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="mattersName != null and mattersName != ''">
+                AND MATTERS_NAME = #{mattersName,jdbcType=VARCHAR}
+            </if>
+            <if test="typeId != null">
+                AND TYPE_ID = #{typeId,jdbcType=BIGINT}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="material != null and material != ''">
+                AND MATERIAL = #{material,jdbcType=VARCHAR}
+            </if>
+            <if test="level != null and level != ''">
+                AND LEVEL = #{level,jdbcType=VARCHAR}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="factory != null and factory != ''">
+                AND FACTORY = #{factory,jdbcType=VARCHAR}
+            </if>
+            <if test="curAmount != null">
+                AND CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="advAmount != null">
+                AND ADV_AMOUNT = #{advAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="purAmount != null">
+                AND PUR_AMOUNT = #{purAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="weight != null">
+                AND WEIGHT = #{weight,jdbcType=DECIMAL}
+            </if>
+            <if test="metterWei != null">
+                AND METTER_WEI = #{metterWei,jdbcType=INTEGER}
+            </if>
+            <if test="storeId != null">
+                AND STORE_ID = #{storeId,jdbcType=BIGINT}
+            </if>
+            <if test="iosDesc != null and iosDesc != ''">
+                AND IOS_DESC = #{iosDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="versions != null and versions != ''">
+                AND VERSIONS = #{versions,jdbcType=VARCHAR}
+            </if>
+            <if test="isMidprod != null and isMidprod != ''">
+                AND IS_MIDPROD = #{isMidprod,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="secureStock != null">
+                AND SECURE_STOCK = #{secureStock,jdbcType=DECIMAL}
+            </if>
+            <if test="befDate != null">
+                AND BEF_DATE = #{befDate,jdbcType=BIGINT}
+            </if>
+            <if test="buliddate != null">
+                AND BULIDDATE = #{buliddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="losedate != null">
+                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO MATTERS_STORE_IOS (
+        ID,
+        MATTERS_NO,
+        MATTERS_NAME,
+        TYPE_ID,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        BRAND,
+        MATERIAL,
+        LEVEL,
+        UNIT,
+        FACTORY,
+        CUR_AMOUNT,
+        ADV_AMOUNT,
+        PUR_AMOUNT,
+        WEIGHT,
+        METTER_WEI,
+        STORE_ID,
+        IOS_DESC,
+        VERSIONS,
+        IS_MIDPROD,
+        STATUS,
+        SECURE_STOCK,
+        BEF_DATE,
+        BULIDDATE,
+        LOSEDATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ mattersNo,jdbcType=VARCHAR},
+        #{ mattersName,jdbcType=VARCHAR},
+        #{ typeId,jdbcType=BIGINT},
+        #{ norms,jdbcType=VARCHAR},
+        #{ param,jdbcType=VARCHAR},
+        #{ modelDesc,jdbcType=VARCHAR},
+        #{ brand,jdbcType=VARCHAR},
+        #{ material,jdbcType=VARCHAR},
+        #{ level,jdbcType=VARCHAR},
+        #{ unit,jdbcType=VARCHAR},
+        #{ factory,jdbcType=VARCHAR},
+        #{ curAmount,jdbcType=DECIMAL},
+        #{ advAmount,jdbcType=DECIMAL},
+        #{ purAmount,jdbcType=DECIMAL},
+        #{ weight,jdbcType=DECIMAL},
+        #{ metterWei,jdbcType=INTEGER},
+        #{ storeId,jdbcType=BIGINT},
+        #{ iosDesc,jdbcType=VARCHAR},
+        #{ versions,jdbcType=VARCHAR},
+        #{ isMidprod,jdbcType=VARCHAR},
+        #{ status,jdbcType=VARCHAR},
+        #{ secureStock,jdbcType=DECIMAL},
+        #{ befDate,jdbcType=BIGINT},
+        #{ buliddate,jdbcType=TIMESTAMP},
+        #{ losedate,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_MATTERS_STORE_IOS.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE MATTERS_STORE_IOS
+        <set>
+            <if test="mattersNo != null">
+                MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="mattersName != null">
+                MATTERS_NAME = #{mattersName,jdbcType=VARCHAR},
+            </if>
+            <if test="typeId != null">
+                TYPE_ID = #{typeId,jdbcType=BIGINT},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="material != null">
+                MATERIAL = #{material,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                LEVEL = #{level,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="factory != null">
+                FACTORY = #{factory,jdbcType=VARCHAR},
+            </if>
+            <if test="curAmount != null">
+                CUR_AMOUNT = #{curAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="advAmount != null">
+                ADV_AMOUNT = #{advAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="purAmount != null">
+                PUR_AMOUNT = #{purAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="weight != null">
+                WEIGHT = #{weight,jdbcType=DECIMAL},
+            </if>
+            <if test="metterWei != null">
+                METTER_WEI = #{metterWei,jdbcType=INTEGER},
+            </if>
+            <if test="storeId != null">
+                STORE_ID = #{storeId,jdbcType=BIGINT},
+            </if>
+            <if test="iosDesc != null">
+                IOS_DESC = #{iosDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="versions != null">
+                VERSIONS = #{versions,jdbcType=VARCHAR},
+            </if>
+            <if test="isMidprod != null">
+                IS_MIDPROD = #{isMidprod,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="secureStock != null">
+                SECURE_STOCK = #{secureStock,jdbcType=DECIMAL},
+            </if>
+            <if test="befDate != null">
+                BEF_DATE = #{befDate,jdbcType=BIGINT},
+            </if>
+            <if test="buliddate != null">
+                BULIDDATE = #{buliddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="losedate != null">
+                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

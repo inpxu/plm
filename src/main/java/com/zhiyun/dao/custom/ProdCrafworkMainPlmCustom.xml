@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdCrafworkMainPlmDaoImpl">
+
+    <select id="getVoucher" parameterType="com.zhiyun.entity.ProductMidPlm" resultType="com.zhiyun.entity.ProdCrafworkMainPlm">
+        SELECT m.voucher_no voucherNo
+        FROM prod_crafwork_main_plm m
+                 LEFT JOIN product_mid_plm i ON i.prod_no = m.prod_no AND i.company_id = m.company_id AND i.deleted = 'F'
+        WHERE i.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+          AND m.deleted = 'F'
+          AND m.company_id = #{companyId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getMain" parameterType="com.zhiyun.entity.ProdCrafworkMainPlm" resultType="com.zhiyun.dto.ProdCrafworkMainPlmDto">
+        SELECT m.prod_no       prodNo,
+               s.prod_name     prodName,
+               i.mid_prod_no   midProdNo,
+               i.mid_prod_name midProdName,
+               m.path_no       pathNo,
+               m.voucher_no    voucherNo,
+               m.raise_date    raiseDate,
+               m.raise_user    raiseUser,
+               m.`status`      `status`,
+               m.versions      versions,
+               o.org_name      orgName,
+               v.is_finished   isFinished,
+               d.label         label
+        FROM prod_crafwork_main_plm m
+                 LEFT JOIN product_mid_plm i ON i.prod_no = m.prod_no AND i.company_id = m.company_id AND i.deleted = 'F'
+                 LEFT JOIN product_store_plm s ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND s.deleted = 'F'
+                 LEFT JOIN hcm.cas_org o ON o.id = m.org_id AND o.company_id = m.company_id AND o.deleted = 'F'
+                 LEFT JOIN voucher_main_oa v ON v.voucher_no = m.voucher_no AND v.company_id = m.company_id AND v.deleted = 'F'
+                 LEFT JOIN crm.dict_crm d ON v.is_finished = d.`value`
+        WHERE m.deleted = 'F'
+          AND m.prod_no = #{prodNo,jdbcType=VARCHAR}
+          AND m.company_id = #{companyId,jdbcType=BIGINT}
+        GROUP BY i.prod_no
+    </select>
+
+    <select id="getStatus" resultType="com.zhiyun.dto.ProdCrafworkMainPlmDto" parameterType="com.zhiyun.dto.ProdCrafworkMainPlmDto">
+        SELECT
+        m.path_no pathNo,
+        s.prod_no prodNo,
+        i.mid_prod_no midProdNo,
+        v.voucher_no voucherNo,
+        v.is_finished isFinished,
+        d.label label
+        FROM product_store_plm s
+        LEFT JOIN prod_crafwork_main_plm m ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND m.deleted = 'F'
+        LEFT JOIN product_mid_plm i ON i.prod_no = m.prod_no AND i.company_id = m.company_id AND i.deleted = 'F'
+        LEFT JOIN voucher_main_oa v ON v.voucher_no = m.voucher_no AND v.company_id = m.company_id AND v.deleted = 'F'
+        LEFT JOIN crm.dict_crm d ON d.`value` = v.is_finished
+        WHERE s.company_id = #{companyId,jdbcType=BIGINT}
+        <if test="prodNo != null and prodNo != ''">
+            AND s.prod_no = #{prodNo,jdbcType=VARCHAR}
+        </if>
+        <if test="midProdNo != null and midProdNo != ''">
+            AND i.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+        </if>
+        <if test="pathNo != null and pathNo != ''">
+            AND m.path_no = #{pathNo,jdbcType=VARCHAR}
+        </if>
+        AND s.deleted = 'F'
+        GROUP BY m.path_no
+    </select>
+
+    <update id="enDis" parameterType="com.zhiyun.entity.ProdCrafworkMainPlm">
+        UPDATE prod_crafwork_main_plm
+        <set>
+            <if test="status != null and status != ''">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE PATH_NO = #{pathNo,jdbcType=VARCHAR}
+        AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND DELETED = 'F'
+    </update>
+
+    <select id="getPathMsg" resultType="com.zhiyun.dto.ProdCrafworkMainPlmDto" parameterType="com.zhiyun.dto.ProdCrafworkMainPlmDto">
+        SELECT
+        m.path_no pathNo,
+        concat_ws("/",m.prod_no,s.prod_name) midProdMsg,
+        concat_ws("/",m.prod_no,s.prod_name) prodMsg,
+        m.prod_no prodNo,
+        m.prod_no midProdNo
+        FROM prod_crafwork_main_plm m
+        LEFT JOIN product_store_plm s ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND s.deleted = 'F'
+        WHERE m.company_id = #{companyId,jdbcType=BIGINT}
+        AND m.status = 'true'
+        <if test="pathNo != null and pathNo != ''">
+            AND m.path_no LIKE CONCAT ('%',#{pathNo,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="prodNo != null and prodNo != ''">
+            AND m.PROD_NO = #{prodNo,jdbcType=VARCHAR}
+        </if>
+        AND m.deleted = 'F'
+    </select>
+
+    <select id="getProdMsg" resultType="com.zhiyun.dto.ProdCrafworkMainPlmDto" parameterType="com.zhiyun.dto.ProdCrafworkMainPlmDto">
+        SELECT
+        m.path_no pathNo,
+        concat_ws("/",m.prod_no,s.prod_name) midProdMsg,
+        concat_ws("/",m.prod_no,s.prod_name) prodMsg,
+        m.prod_no prodNo,
+        m.prod_no midProdNo
+        FROM prod_crafwork_main_plm m
+        LEFT JOIN product_store_plm s ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND s.deleted = 'F'
+        WHERE m.company_id = #{companyId,jdbcType=BIGINT}
+        AND m.status = 'true'
+        <if test="prodMsg != null and prodMsg != ''">
+            AND (s.PROD_NAME LIKE CONCAT ('%',#{prodMsg,jdbcType=VARCHAR},'%') or (m.PROD_NO LIKE CONCAT ('%',#{prodMsg,jdbcType=VARCHAR},'%')))
+        </if>
+        <if test="pathNo != null and pathNo != ''">
+            AND m.path_no = #{pathNo,jdbcType=VARCHAR}
+        </if>
+        <if test="prodNo != null and prodNo != ''">
+            AND m.PROD_NO = #{prodNo,jdbcType=VARCHAR}
+        </if>
+        AND m.deleted = 'F'
+    </select>
+
+    <select id="findMainMess" resultType="com.zhiyun.dto.ProdCrafworkMainPlmDto" parameterType="com.zhiyun.entity.ProdCrafworkMainPlm">
+        SELECT
+        m.id id,
+        concat_ws("/",m.prod_no,s.prod_name) prodMsg,
+        concat_ws("/",m.prod_no,s.prod_name) midProdMsg,
+        m.prod_no prodNo,
+        m.prod_no midProdNo,
+        m.versions versions,
+        m.PATH_NO pathNo
+        FROM prod_crafwork_main_plm m
+        LEFT JOIN product_store_plm s ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND s.deleted = 'F'
+        WHERE m.company_id = #{companyId,jdbcType=BIGINT}
+        AND m.status = 'true'
+        <if test="pathNo != null and pathNo != ''">
+            AND m.path_no = #{pathNo,jdbcType=VARCHAR}
+        </if>
+        <if test="prodNo != null and prodNo != ''">
+            AND m.PROD_NO = #{prodNo,jdbcType=VARCHAR}
+        </if>
+        AND m.deleted = 'F'
+    </select>
+</mapper>   

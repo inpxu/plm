@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.MachineSetMesDaoImpl">
+
+    <select id="getMac" resultType="com.zhiyun.dto.MachineSetMesDto" parameterType="com.zhiyun.entity.MachineSetMes">
+        SELECT m.mac_no                             macNo,
+               m.mac_name                           macName,
+               concat_ws("/", m.mac_no, m.mac_name) macMsg,
+               m.mac_type                           macType,
+               m.mac_status                         macStatus,
+               m.spec                               spec,
+               c.org_name                           orgName
+        FROM mes_jingcai.machine_set_mes m
+                 LEFT JOIN hcm.cas_org c ON c.id = m.org_id AND c.company_id = m.company_id AND c.deleted = 'F'
+        WHERE m.crafwork_id = #{crafworkId,jdbcType=BIGINT}
+          AND m.company_id = #{companyId,jdbcType=BIGINT}
+          AND m.deleted = 'F'
+    </select>
+
+</mapper>

@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.ProdBomDetailPlmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProdBomDetailPlm">
+        INSERT INTO PROD_BOM_DETAIL_PLM (
+        ID,
+        BOM_NO,
+        SERIAL,
+        MATTERS_NO,
+        PARENT_NO,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        MAT_VERSIONS,
+        AMOUNT,
+        UNIT,
+        CRAFWORK_ID,
+        BRAND,
+        BACKUP_MATTER,
+        SON_BOM_NO,
+        PLM_DESC,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{bomNo,jdbcType=VARCHAR},
+        #{serial,jdbcType=BIGINT},
+        #{mattersNo,jdbcType=VARCHAR},
+        #{parentNo,jdbcType=VARCHAR},
+        #{norms,jdbcType=VARCHAR},
+        #{param,jdbcType=VARCHAR},
+        #{modelDesc,jdbcType=VARCHAR},
+        #{matVersions,jdbcType=VARCHAR},
+        #{amount,jdbcType=DECIMAL},
+        #{unit,jdbcType=VARCHAR},
+        #{crafworkId,jdbcType=BIGINT},
+        #{brand,jdbcType=VARCHAR},
+        #{backupMatter,jdbcType=VARCHAR},
+        #{sonBomNo,jdbcType=VARCHAR},
+        #{plmDesc,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_BOM_DETAIL_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProdBomDetailPlm">
+        UPDATE PROD_BOM_DETAIL_PLM
+        <set>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serial != null">
+                SERIAL = #{serial,jdbcType=BIGINT},
+            </if>
+            <if test="mattersNo != null">
+                MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNo != null">
+                PARENT_NO = #{parentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="matVersions != null">
+                MAT_VERSIONS = #{matVersions,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="backupMatter != null">
+                BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR},
+            </if>
+            <if test="sonBomNo != null">
+                SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="plmDesc != null">
+                PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProdBomDetailPlm">
+        UPDATE PROD_BOM_DETAIL_PLM
+        <set>
+            BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            SERIAL = #{serial,jdbcType=BIGINT},
+            MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            PARENT_NO = #{parentNo,jdbcType=VARCHAR},
+            NORMS = #{norms,jdbcType=VARCHAR},
+            PARAM = #{param,jdbcType=VARCHAR},
+            MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            MAT_VERSIONS = #{matVersions,jdbcType=VARCHAR},
+            AMOUNT = #{amount,jdbcType=DECIMAL},
+            UNIT = #{unit,jdbcType=VARCHAR},
+            CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            BRAND = #{brand,jdbcType=VARCHAR},
+            BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR},
+            SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
+            PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProdBomDetailPlm">
+        UPDATE PROD_BOM_DETAIL_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               BOM_NO        bomNo,
+               SERIAL        serial,
+               MATTERS_NO    mattersNo,
+               PARENT_NO     parentNo,
+               NORMS         norms,
+               PARAM         param,
+               MODEL_DESC    modelDesc,
+               MAT_VERSIONS  matVersions,
+               AMOUNT        amount,
+               UNIT          unit,
+               CRAFWORK_ID   crafworkId,
+               BRAND         brand,
+               BACKUP_MATTER backupMatter,
+               SON_BOM_NO    sonBomNo,
+               PLM_DESC      plmDesc,
+               DELETED       deleted,
+               CREATE_TIME   createTime,
+               CREATE_BY     createBy,
+               COMPANY_ID    companyId,
+               MODIFY_TIME   modifyTime,
+               MODIFY_BY     modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdBomDetailPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProdBomDetailPlm" resultType="com.zhiyun.entity.ProdBomDetailPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="serial != null">
+                AND SERIAL = #{serial,jdbcType=BIGINT}
+            </if>
+            <if test="mattersNo != null and mattersNo != ''">
+                AND MATTERS_NO = #{mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="parentNo != null and parentNo != ''">
+                AND PARENT_NO = #{parentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="matVersions != null and matVersions != ''">
+                AND MAT_VERSIONS = #{matVersions,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                AND AMOUNT = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="backupMatter != null and backupMatter != ''">
+                AND BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR}
+            </if>
+            <if test="sonBomNo != null and sonBomNo != ''">
+                AND SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="plmDesc != null and plmDesc != ''">
+                AND PLM_DESC = #{plmDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdBomDetailPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.bomNo != null and entity.bomNo != ''">
+                AND BOM_NO = #{entity.bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.serial != null">
+                AND SERIAL = #{entity.serial,jdbcType=BIGINT}
+            </if>
+            <if test="entity.mattersNo != null and entity.mattersNo != ''">
+                AND MATTERS_NO = #{entity.mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.parentNo != null and entity.parentNo != ''">
+                AND PARENT_NO = #{entity.parentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.matVersions != null and entity.matVersions != ''">
+                AND MAT_VERSIONS = #{entity.matVersions,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.amount != null">
+                AND AMOUNT = #{entity.amount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.crafworkId != null">
+                AND CRAFWORK_ID = #{entity.crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.brand != null and entity.brand != ''">
+                AND BRAND = #{entity.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.backupMatter != null and entity.backupMatter != ''">
+                AND BACKUP_MATTER = #{entity.backupMatter,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.sonBomNo != null and entity.sonBomNo != ''">
+                AND SON_BOM_NO = #{entity.sonBomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.plmDesc != null and entity.plmDesc != ''">
+                AND PLM_DESC = #{entity.plmDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_BOM_DETAIL_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdBomDetailPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_DETAIL_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="serial != null">
+                AND SERIAL = #{serial,jdbcType=BIGINT}
+            </if>
+            <if test="mattersNo != null and mattersNo != ''">
+                AND MATTERS_NO = #{mattersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="parentNo != null and parentNo != ''">
+                AND PARENT_NO = #{parentNo,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="param != null and param != ''">
+                AND PARAM = #{param,jdbcType=VARCHAR}
+            </if>
+            <if test="modelDesc != null and modelDesc != ''">
+                AND MODEL_DESC = #{modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="matVersions != null and matVersions != ''">
+                AND MAT_VERSIONS = #{matVersions,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                AND AMOUNT = #{amount,jdbcType=DECIMAL}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="crafworkId != null">
+                AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+            </if>
+            <if test="brand != null and brand != ''">
+                AND BRAND = #{brand,jdbcType=VARCHAR}
+            </if>
+            <if test="backupMatter != null and backupMatter != ''">
+                AND BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR}
+            </if>
+            <if test="sonBomNo != null and sonBomNo != ''">
+                AND SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="plmDesc != null and plmDesc != ''">
+                AND PLM_DESC = #{plmDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PROD_BOM_DETAIL_PLM (
+        ID,
+        BOM_NO,
+        SERIAL,
+        MATTERS_NO,
+        PARENT_NO,
+        NORMS,
+        PARAM,
+        MODEL_DESC,
+        MAT_VERSIONS,
+        AMOUNT,
+        UNIT,
+        CRAFWORK_ID,
+        BRAND,
+        BACKUP_MATTER,
+        SON_BOM_NO,
+        PLM_DESC,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ bomNo,jdbcType=VARCHAR},
+        #{ serial,jdbcType=BIGINT},
+        #{ mattersNo,jdbcType=VARCHAR},
+        #{ parentNo,jdbcType=VARCHAR},
+        #{ norms,jdbcType=VARCHAR},
+        #{ param,jdbcType=VARCHAR},
+        #{ modelDesc,jdbcType=VARCHAR},
+        #{ matVersions,jdbcType=VARCHAR},
+        #{ amount,jdbcType=DECIMAL},
+        #{ unit,jdbcType=VARCHAR},
+        #{ crafworkId,jdbcType=BIGINT},
+        #{ brand,jdbcType=VARCHAR},
+        #{ backupMatter,jdbcType=VARCHAR},
+        #{ sonBomNo,jdbcType=VARCHAR},
+        #{ plmDesc,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_BOM_DETAIL_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PROD_BOM_DETAIL_PLM
+        <set>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="serial != null">
+                SERIAL = #{serial,jdbcType=BIGINT},
+            </if>
+            <if test="mattersNo != null">
+                MATTERS_NO = #{mattersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="parentNo != null">
+                PARENT_NO = #{parentNo,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="param != null">
+                PARAM = #{param,jdbcType=VARCHAR},
+            </if>
+            <if test="modelDesc != null">
+                MODEL_DESC = #{modelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="matVersions != null">
+                MAT_VERSIONS = #{matVersions,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="crafworkId != null">
+                CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT},
+            </if>
+            <if test="brand != null">
+                BRAND = #{brand,jdbcType=VARCHAR},
+            </if>
+            <if test="backupMatter != null">
+                BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR},
+            </if>
+            <if test="sonBomNo != null">
+                SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="plmDesc != null">
+                PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

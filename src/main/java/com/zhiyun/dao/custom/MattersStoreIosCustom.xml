@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.MattersStoreIosDaoImpl">
+    <!-- 查询字段 -->
+    <sql id="selectField">
+        SELECT s.ID                                                                id,
+               CONCAT(
+                   s.MATTERS_NO,
+                   ' ',
+                   s.MATTERS_NAME
+                       )                                                           mattersInfo,
+               s.MATTERS_NO                                                        mattersNo,
+               s.MATTERS_NAME                                                      mattersName,
+               s.TYPE_ID                                                           typeId,
+               CONCAT(
+                   s.NORMS,
+                   '/',
+                   s.PARAM,
+                   '/',
+                   s.MODEL_DESC
+                       )                                                           allInfo,
+               s.NORMS                                                             norms,
+               s.PARAM                                                             param,
+               s.MODEL_DESC                                                        modelDesc,
+               s.BRAND                                                             brand,
+               s.MATERIAL                                                          material,
+               s.LEVEL                                                             LEVEL,
+               s.UNIT                                                              unit,
+               s.FACTORY                                                           factory,
+               s.CUR_AMOUNT                                                        curAmount,
+               s.ADV_AMOUNT                                                        advAmount,
+               s.PUR_AMOUNT                                                        purAmount,
+               s.WEIGHT                                                            weight,
+               s.METTER_WEI                                                        metterWei,
+               s.STORE_ID                                                          storeId,
+               s.IOS_DESC                                                          iosDesc,
+               s.VERSIONS                                                          versions,
+               s.IS_MIDPROD                                                        isMidprodId,
+               s.STATUS                                                            statusId,
+               IF(s.IS_MIDPROD = '0', '原料', IF(s.IS_MIDPROD = '1', '公用组件', '半成品')) isMidprod,
+               IF(s.STATUS = '0', '缺货', IF(s.STATUS = '1', '正常供货', '关闭'))          STATUS,
+               s.SECURE_STOCK                                                      secureStock,
+               s.BEF_DATE                                                          befDate,
+               s.BULIDDATE                                                         buliddate,
+               s.LOSEDATE                                                          losedate,
+               s.DELETED                                                           deleted,
+               s.CREATE_TIME                                                       createTime,
+               s.CREATE_BY                                                         createBy,
+               s.COMPANY_ID                                                        companyId,
+               s.MODIFY_TIME                                                       modifyTime,
+               s.MODIFY_BY                                                         modifyBy,
+               t.type_name                                                         typeName
+    </sql>
+    <!-- 分页查询（条件） -->
+    <sql id="select_condition">
+        <where>
+            <if test="entity.mattersNo != null">
+                AND s.MATTERS_NO like CONCAT('%',#{entity.mattersNo,jdbcType=VARCHAR},'%')
+                OR s.MATTERS_NAME like CONCAT('%',#{entity.mattersNo,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.typeName != null and entity.typeName != ''">
+                AND t.type_name like CONCAT('%',#{entity.typeName,jdbcType=VARCHAR},'%')
+            </if>
+            <if test="entity.typeId != null">
+                AND s.TYPE_ID = #{entity.typeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND s.NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.param != null and entity.param != ''">
+                AND s.PARAM = #{entity.param,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.modelDesc != null and entity.modelDesc != ''">
+                AND s.MODEL_DESC = #{entity.modelDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.brand != null and entity.brand != ''">
+                AND s.BRAND = #{entity.brand,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.material != null and entity.material != ''">
+                AND s.MATERIAL = #{entity.material,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.level != null and entity.level != ''">
+                AND s.LEVEL = #{entity.level,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND s.UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.factory != null and entity.factory != ''">
+                AND s.FACTORY = #{entity.factory,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.curAmount != null">
+                AND s.CUR_AMOUNT = #{entity.curAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.advAmount != null">
+                AND s.ADV_AMOUNT = #{entity.advAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.purAmount != null">
+                AND s.PUR_AMOUNT = #{entity.purAmount,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.weight != null">
+                AND s.WEIGHT = #{entity.weight,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.metterWei != null">
+                AND s.METTER_WEI = #{entity.metterWei,jdbcType=INTEGER}
+            </if>
+            <if test="entity.storeId != null">
+                AND s.STORE_ID = #{entity.storeId,jdbcType=BIGINT}
+            </if>
+            <if test="entity.iosDesc != null and entity.iosDesc != ''">
+                AND s.IOS_DESC = #{entity.iosDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.versions != null and entity.versions != ''">
+                AND s.VERSIONS = #{entity.versions,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.isMidprod != null and entity.isMidprod != ''">
+                AND s.IS_MIDPROD = #{entity.isMidprod,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.status != null and entity.status != ''">
+                AND s.STATUS = #{entity.status,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.secureStock != null">
+                AND s.SECURE_STOCK = #{entity.secureStock,jdbcType=DECIMAL}
+            </if>
+            <if test="entity.befDate != null">
+                AND s.BEF_DATE = #{entity.befDate,jdbcType=BIGINT}
+            </if>
+            <if test="entity.buliddate != null">
+                AND s.BULIDDATE = #{entity.buliddate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.losedate != null">
+                AND s.LOSEDATE = #{entity.losedate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND s.DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND s.COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="select_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM MATTERS_STORE_IOS s LEFT JOIN matters_type_ios t ON s.TYPE_ID=t.id and t.deleted='F'
+        <include refid="select_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="select_datas" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectField"/>
+        FROM MATTERS_STORE_IOS s LEFT JOIN matters_type_ios t ON s.TYPE_ID=t.id and t.deleted='F'
+        <include refid="select_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="getMatter" parameterType="com.zhiyun.dto.MattersStoreDto" resultType="com.zhiyun.entity.MattersStoreIos">
+        <include refid="selectField"/>
+        FROM MATTERS_STORE_IOS s LEFT JOIN matters_type_ios t ON s.TYPE_ID=t.id and t.deleted='F'
+        where
+        s.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        <if test="mattersName != null and mattersName != ''">
+            AND (s.MATTERS_NAME LIKE CONCAT ('%',#{mattersName,jdbcType=VARCHAR}, '%')or s.MATTERS_NO LIKE CONCAT ('%',#{mattersName,jdbcType=VARCHAR}, '%'))
+        </if>
+        AND s.DELETED = 'F'
+    </select>
+
+</mapper>   

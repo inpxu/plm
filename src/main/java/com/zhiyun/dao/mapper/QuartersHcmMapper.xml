@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.QuartersHcmDaoImpl">
+
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.QuartersHcm">
+        INSERT INTO hcm.QUARTERS_HCM (
+        ID,
+        QUARTERS_NO,
+        QUARTERS_DESC,
+        FUN_DESC,
+        HIRES,
+        QU_QUIRE,
+        EDUCATIONAL,
+        SKILL,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{quartersNo,jdbcType=VARCHAR},
+        #{quartersDesc,jdbcType=VARCHAR},
+        #{funDesc,jdbcType=VARCHAR},
+        #{hires,jdbcType=INTEGER},
+        #{quQuire,jdbcType=VARCHAR},
+        #{educational,jdbcType=VARCHAR},
+        #{skill,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_hcm.QUARTERS_HCM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.QuartersHcm">
+        UPDATE hcm.QUARTERS_HCM
+        <set>
+            <if test="quartersNo != null">
+                QUARTERS_NO = #{quartersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="quartersDesc != null">
+                QUARTERS_DESC = #{quartersDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="funDesc != null">
+                FUN_DESC = #{funDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="hires != null">
+                HIRES = #{hires,jdbcType=INTEGER},
+            </if>
+            <if test="quQuire != null">
+                QU_QUIRE = #{quQuire,jdbcType=VARCHAR},
+            </if>
+            <if test="educational != null">
+                EDUCATIONAL = #{educational,jdbcType=VARCHAR},
+            </if>
+            <if test="skill != null">
+                SKILL = #{skill,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.QuartersHcm">
+        UPDATE hcm.QUARTERS_HCM
+        <set>
+            QUARTERS_NO = #{quartersNo,jdbcType=VARCHAR},
+            QUARTERS_DESC = #{quartersDesc,jdbcType=VARCHAR},
+            FUN_DESC = #{funDesc,jdbcType=VARCHAR},
+            HIRES = #{hires,jdbcType=INTEGER},
+            QU_QUIRE = #{quQuire,jdbcType=VARCHAR},
+            EDUCATIONAL = #{educational,jdbcType=VARCHAR},
+            SKILL = #{skill,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.QuartersHcm">
+        UPDATE hcm.QUARTERS_HCM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID            id,
+               QUARTERS_NO   quartersNo,
+               QUARTERS_DESC quartersDesc,
+               FUN_DESC      funDesc,
+               HIRES         hires,
+               QU_QUIRE      quQuire,
+               EDUCATIONAL   educational,
+               SKILL         skill,
+               DELETED       deleted,
+               COMPANY_ID    companyId,
+               CREATE_TIME   createTime,
+               CREATE_BY     createBy,
+               MODIFY_TIME   modifyTime,
+               MODIFY_BY     modifyBy
+    </sql>
+
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.QuartersHcm">
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.QuartersHcm" resultType="com.zhiyun.entity.QuartersHcm">
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="quartersNo != null and quartersNo != ''">
+                AND QUARTERS_NO = #{quartersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="quartersDesc != null and quartersDesc != ''">
+                AND QUARTERS_DESC = #{quartersDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="funDesc != null and funDesc != ''">
+                AND FUN_DESC = #{funDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="hires != null">
+                AND HIRES = #{hires,jdbcType=INTEGER}
+            </if>
+            <if test="quQuire != null and quQuire != ''">
+                AND QU_QUIRE = #{quQuire,jdbcType=VARCHAR}
+            </if>
+            <if test="educational != null and educational != ''">
+                AND EDUCATIONAL = #{educational,jdbcType=VARCHAR}
+            </if>
+            <if test="skill != null and skill != ''">
+                AND SKILL = #{skill,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.QuartersHcm">
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.quartersNo != null and entity.quartersNo != ''">
+                AND QUARTERS_NO = #{entity.quartersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.quartersDesc != null and entity.quartersDesc != ''">
+                AND QUARTERS_DESC = #{entity.quartersDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.funDesc != null and entity.funDesc != ''">
+                AND FUN_DESC = #{entity.funDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.hires != null">
+                AND HIRES = #{entity.hires,jdbcType=INTEGER}
+            </if>
+            <if test="entity.quQuire != null and entity.quQuire != ''">
+                AND QU_QUIRE = #{entity.quQuire,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.educational != null and entity.educational != ''">
+                AND EDUCATIONAL = #{entity.educational,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.skill != null and entity.skill != ''">
+                AND SKILL = #{entity.skill,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM hcm.QUARTERS_HCM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.QuartersHcm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM hcm.QUARTERS_HCM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="quartersNo != null and quartersNo != ''">
+                AND QUARTERS_NO = #{quartersNo,jdbcType=VARCHAR}
+            </if>
+            <if test="quartersDesc != null and quartersDesc != ''">
+                AND QUARTERS_DESC = #{quartersDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="funDesc != null and funDesc != ''">
+                AND FUN_DESC = #{funDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="hires != null">
+                AND HIRES = #{hires,jdbcType=INTEGER}
+            </if>
+            <if test="quQuire != null and quQuire != ''">
+                AND QU_QUIRE = #{quQuire,jdbcType=VARCHAR}
+            </if>
+            <if test="educational != null and educational != ''">
+                AND EDUCATIONAL = #{educational,jdbcType=VARCHAR}
+            </if>
+            <if test="skill != null and skill != ''">
+                AND SKILL = #{skill,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO hcm.QUARTERS_HCM (
+        ID,
+        QUARTERS_NO,
+        QUARTERS_DESC,
+        FUN_DESC,
+        HIRES,
+        QU_QUIRE,
+        EDUCATIONAL,
+        SKILL,
+        DELETED,
+        COMPANY_ID,
+        CREATE_TIME,
+        CREATE_BY,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ quartersNo,jdbcType=VARCHAR},
+        #{ quartersDesc,jdbcType=VARCHAR},
+        #{ funDesc,jdbcType=VARCHAR},
+        #{ hires,jdbcType=INTEGER},
+        #{ quQuire,jdbcType=VARCHAR},
+        #{ educational,jdbcType=VARCHAR},
+        #{ skill,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_hcm.QUARTERS_HCM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE hcm.QUARTERS_HCM
+        <set>
+            <if test="quartersNo != null">
+                QUARTERS_NO = #{quartersNo,jdbcType=VARCHAR},
+            </if>
+            <if test="quartersDesc != null">
+                QUARTERS_DESC = #{quartersDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="funDesc != null">
+                FUN_DESC = #{funDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="hires != null">
+                HIRES = #{hires,jdbcType=INTEGER},
+            </if>
+            <if test="quQuire != null">
+                QU_QUIRE = #{quQuire,jdbcType=VARCHAR},
+            </if>
+            <if test="educational != null">
+                EDUCATIONAL = #{educational,jdbcType=VARCHAR},
+            </if>
+            <if test="skill != null">
+                SKILL = #{skill,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>   

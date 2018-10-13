@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyun.dao.impl.CarfworkOutputMaterPlmDaoImpl">
+
+    <select id="getMidOut" resultType="com.zhiyun.dto.CarfworkOutputMaterPlmDto" parameterType="com.zhiyun.entity.CarfworkOutputMaterPlm">
+        SELECT o.id                                           id,
+               o.output_amt                                   outputAmt,
+               concat_ws("/", m.prod_no, m.prod_name)         prodMsg,
+               o.prod_no                                      prodNo,
+               concat_ws("/", m.mid_prod_no, m.mid_prod_name) midProdMsg,
+               o.mid_prod_no                                  midProdNo,
+               concat_ws("/", m.param, m.norms, m.MODEL_DESC) syntheticField,
+               m.unit                                         unit
+        FROM carfwork_output_mater_plm o
+                 LEFT JOIN product_mid_plm m ON m.prod_no = o.prod_no AND m.mid_prod_no = o.mid_prod_no AND m.company_id = o.company_id AND m.deleted = 'F'
+        WHERE o.prod_no = #{prodNo,jdbcType=VARCHAR}
+          AND o.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+          AND o.crafwork_no = #{crafworkNo,jdbcType=BIGINT}
+          AND o.company_id = #{companyId,jdbcType=BIGINT}
+          AND o.deleted = 'F'
+    </select>
+
+    <select id="getProdOut" resultType="com.zhiyun.dto.CarfworkOutputMaterPlmDto" parameterType="com.zhiyun.entity.CarfworkOutputMaterPlm">
+        SELECT o.id                                           id,
+               o.output_amt                                   outputAmt,
+               concat_ws("/", m.prod_no, m.prod_name)         prodMsg,
+               o.prod_no                                      prodNo,
+               concat_ws("/", m.prod_no, m.prod_name)         midProdMsg,
+               o.prod_no                                      midProdNo,
+               concat_ws("/", m.param, m.norms, m.MODEL_DESC) syntheticField,
+               m.unit                                         unit
+        FROM carfwork_output_mater_plm o
+                 LEFT JOIN product_store_plm m ON m.prod_no = o.prod_no AND m.company_id = o.company_id AND m.deleted = 'F'
+        WHERE o.prod_no = #{prodNo,jdbcType=VARCHAR}
+          AND o.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+          AND o.crafwork_no = #{crafworkNo,jdbcType=BIGINT}
+          AND o.company_id = #{companyId,jdbcType=BIGINT}
+          AND o.deleted = 'F'
+    </select>
+</mapper>   

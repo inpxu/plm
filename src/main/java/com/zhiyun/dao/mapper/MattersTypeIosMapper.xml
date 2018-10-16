@@ -89,26 +89,27 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.MattersTypeIos">
-        UPDATE MATTERS_TYPE_IOS
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE MATTERS_TYPE_IOS
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID          id,
-               TYPE_NO     typeNo,
-               TYPE_NAME   typeName,
-               REMARK      remark,
-               DELETED     deleted,
-               CREATE_TIME createTime,
-               CREATE_BY   createBy,
-               COMPANY_ID  companyId,
-               MODIFY_TIME modifyTime,
-               MODIFY_BY   modifyBy
-    </sql>
+		SELECT 
+		       ID id,
+		       TYPE_NO typeNo,
+		       TYPE_NAME typeName,
+		       REMARK remark,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       COMPANY_ID companyId,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.MattersTypeIos">

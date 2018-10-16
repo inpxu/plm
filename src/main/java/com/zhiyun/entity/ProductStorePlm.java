@@ -19,85 +19,85 @@ import javax.validation.constraints.Pattern;
  */
 public class ProductStorePlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 6550303336488627768L;
+    private static final long serialVersionUID = 3255885144690672734L;
 
     // ~~~~实体属性
     // 产品编码
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品编码字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "产品编码字段过长")
     private String prodNo;
     // 产品名称
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品名称字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "产品名称字段过长")
     private String prodName;
     // 规格
-    @Pattern(regexp = "[\\s\\S]{0,40}", message = "规格字段过长")
+    @Pattern(regexp = "[\\S]{0,40}", message = "规格字段过长")
     private String norms;
     // 参数
-    @Pattern(regexp = "[\\s\\S]{0,400}", message = "参数字段过长")
+    @Pattern(regexp = "[\\S]{0,400}", message = "参数字段过长")
     private String param;
     // 型号
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "型号字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "型号字段过长")
     private String modelDesc;
     // 所属分类
     @Max(value = 9223372036854775807L, message = "所属分类字段过长")
     private Long typeId;
     // 计量单位
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "计量单位字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "计量单位字段过长")
     private String unit;
     // 许可号
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "许可号字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "许可号字段过长")
     private String allowNo;
     // 专利号
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "专利号字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "专利号字段过长")
     private String patentNo;
     // 发行号
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "发行号字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "发行号字段过长")
     private String sellNo;
     // 版本号
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "版本号字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "版本号字段过长")
     private String versionNo;
     // 等级
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "等级字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "等级字段过长")
     private String level;
     // 材质
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "材质字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "材质字段过长")
     private String material;
     // 保质期限
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "保质期限字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "保质期限字段过长")
     private String qualtyTime;
     // 产品状态
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "产品状态字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "产品状态字段过长")
     private String prodStatus;
     // 仓储位置
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "仓储位置字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "仓储位置字段过长")
     private String rockPosition;
     // 仓库id
     @Max(value = 9223372036854775807L, message = "仓库id字段过长")
     private Long storeId;
     // 当前库存量
-    private Double curAmount;
+    private java.math.BigDecimal curAmount;
     // 生产场地
     @Max(value = 9223372036854775807L, message = "生产场地字段过长")
     private Long factoryId;
     // 商品编码
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "商品编码字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "商品编码字段过长")
     private String waresNo;
     // 克重分类
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "克重分类字段过长")
+    @Pattern(regexp = "[\\S]{0,1}", message = "克重分类字段过长")
     private String gram;
     // 毛长
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "毛长字段过长")
+    @Pattern(regexp = "[\\S]{0,1}", message = "毛长字段过长")
     private String hairLen;
     // 弹性
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "弹性字段过长")
+    @Pattern(regexp = "[\\S]{0,1}", message = "弹性字段过长")
     private String flex;
     // 布种
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "布种字段过长")
+    @Pattern(regexp = "[\\S]{0,1}", message = "布种字段过长")
     private String clothType;
     // 梳节数
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "梳节数字段过长")
+    @Pattern(regexp = "[\\S]{0,1}", message = "梳节数字段过长")
     private String comb;
     // 备注
-    @Pattern(regexp = "[\\s\\S]{0,40}", message = "备注字段过长")
+    @Pattern(regexp = "[\\S]{0,40}", message = "备注字段过长")
     private String remark;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
@@ -354,14 +354,14 @@ public class ProductStorePlm extends BaseEntity<Long> {
     /**
      * 当前库存量
      */
-    public Double getCurAmount() {
+    public java.math.BigDecimal getCurAmount() {
         return this.curAmount;
     }
 
     /**
      * 当前库存量
      */
-    public void setCurAmount(Double curAmount) {
+    public void setCurAmount(java.math.BigDecimal curAmount) {
         this.curAmount = curAmount;
     }
 
@@ -480,6 +480,7 @@ public class ProductStorePlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -487,6 +488,7 @@ public class ProductStorePlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

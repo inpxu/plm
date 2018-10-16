@@ -24,6 +24,8 @@ public interface VoucherMainOaService extends BaseService<VoucherMainOa, Long> {
     // 路线变更审核
     void audit(CrafworkChangeMain crafworkChangeMain);
 
-    void examine(String voucherNo,boolean isPass);
+    void examine(String voucherNo, boolean isPass);
+
+
 
 }

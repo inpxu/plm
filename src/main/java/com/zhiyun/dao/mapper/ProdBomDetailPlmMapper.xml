@@ -43,7 +43,7 @@
         #{brand,jdbcType=VARCHAR},
         #{backupMatter,jdbcType=VARCHAR},
         #{sonBomNo,jdbcType=VARCHAR},
-        #{plmDesc,jdbcType=VARCHAR},
+        #{plmDesc,jdbcType=TEXT},
         #{deleted,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
         #{createBy,jdbcType=VARCHAR},
@@ -106,7 +106,7 @@
                 SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
             </if>
             <if test="plmDesc != null">
-                PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+                PLM_DESC = #{plmDesc,jdbcType=TEXT},
             </if>
             <if test="deleted != null">
                 DELETED = #{deleted,jdbcType=VARCHAR},
@@ -148,7 +148,7 @@
             BRAND = #{brand,jdbcType=VARCHAR},
             BACKUP_MATTER = #{backupMatter,jdbcType=VARCHAR},
             SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
-            PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+            PLM_DESC = #{plmDesc,jdbcType=TEXT},
             DELETED = #{deleted,jdbcType=VARCHAR},
             CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
             CREATE_BY = #{createBy,jdbcType=VARCHAR},
@@ -161,38 +161,39 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.ProdBomDetailPlm">
-        UPDATE PROD_BOM_DETAIL_PLM
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE PROD_BOM_DETAIL_PLM
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID            id,
-               BOM_NO        bomNo,
-               SERIAL        serial,
-               MATTERS_NO    mattersNo,
-               PARENT_NO     parentNo,
-               NORMS         norms,
-               PARAM         param,
-               MODEL_DESC    modelDesc,
-               MAT_VERSIONS  matVersions,
-               AMOUNT        amount,
-               UNIT          unit,
-               CRAFWORK_ID   crafworkId,
-               BRAND         brand,
-               BACKUP_MATTER backupMatter,
-               SON_BOM_NO    sonBomNo,
-               PLM_DESC      plmDesc,
-               DELETED       deleted,
-               CREATE_TIME   createTime,
-               CREATE_BY     createBy,
-               COMPANY_ID    companyId,
-               MODIFY_TIME   modifyTime,
-               MODIFY_BY     modifyBy
-    </sql>
+		SELECT 
+		       ID id,
+		       BOM_NO bomNo,
+		       SERIAL serial,
+		       MATTERS_NO mattersNo,
+		       PARENT_NO parentNo,
+		       NORMS norms,
+		       PARAM param,
+		       MODEL_DESC modelDesc,
+		       MAT_VERSIONS matVersions,
+		       AMOUNT amount,
+		       UNIT unit,
+		       CRAFWORK_ID crafworkId,
+		       BRAND brand,
+		       BACKUP_MATTER backupMatter,
+		       SON_BOM_NO sonBomNo,
+		       PLM_DESC plmDesc,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       COMPANY_ID companyId,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdBomDetailPlm">
@@ -253,7 +254,7 @@
                 AND SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR}
             </if>
             <if test="plmDesc != null and plmDesc != ''">
-                AND PLM_DESC = #{plmDesc,jdbcType=VARCHAR}
+                AND PLM_DESC = #{plmDesc,jdbcType=TEXT}
             </if>
             <if test="deleted != null and deleted != ''">
                 AND DELETED = #{deleted,jdbcType=VARCHAR}
@@ -317,7 +318,7 @@
                 AND SON_BOM_NO = #{entity.sonBomNo,jdbcType=VARCHAR}
             </if>
             <if test="entity.plmDesc != null and entity.plmDesc != ''">
-                AND PLM_DESC = #{entity.plmDesc,jdbcType=VARCHAR}
+                AND PLM_DESC = #{entity.plmDesc,jdbcType=TEXT}
             </if>
             <if test="entity.deleted != null and entity.deleted != ''">
                 AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
@@ -402,7 +403,7 @@
                 AND SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR}
             </if>
             <if test="plmDesc != null and plmDesc != ''">
-                AND PLM_DESC = #{plmDesc,jdbcType=VARCHAR}
+                AND PLM_DESC = #{plmDesc,jdbcType=TEXT}
             </if>
             <if test="deleted != null and deleted != ''">
                 AND DELETED = #{deleted,jdbcType=VARCHAR}
@@ -455,7 +456,7 @@
         #{ brand,jdbcType=VARCHAR},
         #{ backupMatter,jdbcType=VARCHAR},
         #{ sonBomNo,jdbcType=VARCHAR},
-        #{ plmDesc,jdbcType=VARCHAR},
+        #{ plmDesc,jdbcType=TEXT},
         #{ deleted,jdbcType=VARCHAR},
         #{ createTime,jdbcType=TIMESTAMP},
         #{ createBy,jdbcType=VARCHAR},
@@ -518,7 +519,7 @@
                 SON_BOM_NO = #{sonBomNo,jdbcType=VARCHAR},
             </if>
             <if test="plmDesc != null">
-                PLM_DESC = #{plmDesc,jdbcType=VARCHAR},
+                PLM_DESC = #{plmDesc,jdbcType=TEXT},
             </if>
             <if test="deleted != null">
                 DELETED = #{deleted,jdbcType=VARCHAR},

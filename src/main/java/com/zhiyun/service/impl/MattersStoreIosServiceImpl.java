@@ -59,7 +59,7 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
             throw new BusinessException("该物料编码已重复，请重新输入");
         }
         mattersStoreIos.setCompanyId(UserHolder.getCompanyId());
-//        mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
+        mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
         //新增
         this.mattersStoreIosDao.insert(mattersStoreIos);
     }
@@ -104,8 +104,8 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
                         this.productMidPlmDao.update(mid);
                     }
                 }
-//                mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
-//                mattersStoreIos.setIsMidprod(mattersStoreIos.getIsMidprodId());
+                mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
+                mattersStoreIos.setIsMidprod(mattersStoreIos.getIsMidprodId());
                 //修改物料库
                 this.mattersStoreIosDao.update(mattersStoreIos);
             }

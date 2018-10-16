@@ -179,41 +179,42 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.ProdCrafworkPathPlm">
-        UPDATE PROD_CRAFWORK_PATH_PLM
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE PROD_CRAFWORK_PATH_PLM
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID            id,
-               VOUCHER_NO    voucherNo,
-               PATH_NO       pathNo,
-               MID_PROD_NO   midProdNo,
-               CRAFWORK_ID   crafworkId,
-               CRAFWORK_DESC crafworkDesc,
-               PRICE         price,
-               QUARTERS_EMP  quartersEmp,
-               MODEL_NO      modelNo,
-               BEF_CRAFWORK  befCrafwork,
-               CARF_SEQ      carfSeq,
-               UNIT          unit,
-               MAC_MINUTES   macMinutes,
-               EMP_MINUTES   empMinutes,
-               IS_CHECK      isCheck,
-               DAY_AMOUNT    dayAmount,
-               START_DATE    startDate,
-               END_DATE      endDate,
-               REMARK        remark,
-               DELETED       deleted,
-               COMPANY_ID    companyId,
-               CREATE_TIME   createTime,
-               CREATE_BY     createBy,
-               MODIFY_TIME   modifyTime,
-               MODIFY_BY     modifyBy
-    </sql>
+		SELECT 
+		       ID id,
+		       VOUCHER_NO voucherNo,
+		       PATH_NO pathNo,
+		       MID_PROD_NO midProdNo,
+		       CRAFWORK_ID crafworkId,
+		       CRAFWORK_DESC crafworkDesc,
+		       PRICE price,
+		       QUARTERS_EMP quartersEmp,
+		       MODEL_NO modelNo,
+		       BEF_CRAFWORK befCrafwork,
+		       CARF_SEQ carfSeq,
+		       UNIT unit,
+		       MAC_MINUTES macMinutes,
+		       EMP_MINUTES empMinutes,
+		       IS_CHECK isCheck,
+		       DAY_AMOUNT dayAmount,
+		       START_DATE startDate,
+		       END_DATE endDate,
+		       REMARK remark,
+		       DELETED deleted,
+		       COMPANY_ID companyId,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkPathPlm">

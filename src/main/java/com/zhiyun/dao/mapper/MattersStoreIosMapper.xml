@@ -221,48 +221,49 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.MattersStoreIos">
-        UPDATE MATTERS_STORE_IOS
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE MATTERS_STORE_IOS
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID           id,
-               MATTERS_NO   mattersNo,
-               MATTERS_NAME mattersName,
-               TYPE_ID      typeId,
-               NORMS        norms,
-               PARAM        param,
-               MODEL_DESC   modelDesc,
-               BRAND        brand,
-               MATERIAL     material,
-               LEVEL        level,
-               UNIT         unit,
-               FACTORY      factory,
-               CUR_AMOUNT   curAmount,
-               ADV_AMOUNT   advAmount,
-               PUR_AMOUNT   purAmount,
-               WEIGHT       weight,
-               METTER_WEI   metterWei,
-               STORE_ID     storeId,
-               IOS_DESC     iosDesc,
-               VERSIONS     versions,
-               IS_MIDPROD   isMidprod,
-               STATUS       status,
-               SECURE_STOCK secureStock,
-               BEF_DATE     befDate,
-               BULIDDATE    buliddate,
-               LOSEDATE     losedate,
-               DELETED      deleted,
-               CREATE_TIME  createTime,
-               CREATE_BY    createBy,
-               COMPANY_ID   companyId,
-               MODIFY_TIME  modifyTime,
-               MODIFY_BY    modifyBy
-    </sql>
+		SELECT 
+		       ID id,
+		       MATTERS_NO mattersNo,
+		       MATTERS_NAME mattersName,
+		       TYPE_ID typeId,
+		       NORMS norms,
+		       PARAM param,
+		       MODEL_DESC modelDesc,
+		       BRAND brand,
+		       MATERIAL material,
+		       LEVEL level,
+		       UNIT unit,
+		       FACTORY factory,
+		       CUR_AMOUNT curAmount,
+		       ADV_AMOUNT advAmount,
+		       PUR_AMOUNT purAmount,
+		       WEIGHT weight,
+		       METTER_WEI metterWei,
+		       STORE_ID storeId,
+		       IOS_DESC iosDesc,
+		       VERSIONS versions,
+		       IS_MIDPROD isMidprod,
+		       STATUS status,
+		       SECURE_STOCK secureStock,
+		       BEF_DATE befDate,
+		       BULIDDATE buliddate,
+		       LOSEDATE losedate,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       COMPANY_ID companyId,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">

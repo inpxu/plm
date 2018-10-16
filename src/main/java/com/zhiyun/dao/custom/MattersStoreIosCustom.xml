@@ -3,54 +3,55 @@
 <mapper namespace="com.zhiyun.dao.impl.MattersStoreIosDaoImpl">
     <!-- 查询字段 -->
     <sql id="selectField">
-        SELECT s.ID                                                                id,
-               CONCAT(
-                   s.MATTERS_NO,
-                   ' ',
-                   s.MATTERS_NAME
-                       )                                                           mattersInfo,
-               s.MATTERS_NO                                                        mattersNo,
-               s.MATTERS_NAME                                                      mattersName,
-               s.TYPE_ID                                                           typeId,
-               CONCAT(
-                   s.NORMS,
-                   '/',
-                   s.PARAM,
-                   '/',
-                   s.MODEL_DESC
-                       )                                                           allInfo,
-               s.NORMS                                                             norms,
-               s.PARAM                                                             param,
-               s.MODEL_DESC                                                        modelDesc,
-               s.BRAND                                                             brand,
-               s.MATERIAL                                                          material,
-               s.LEVEL                                                             LEVEL,
-               s.UNIT                                                              unit,
-               s.FACTORY                                                           factory,
-               s.CUR_AMOUNT                                                        curAmount,
-               s.ADV_AMOUNT                                                        advAmount,
-               s.PUR_AMOUNT                                                        purAmount,
-               s.WEIGHT                                                            weight,
-               s.METTER_WEI                                                        metterWei,
-               s.STORE_ID                                                          storeId,
-               s.IOS_DESC                                                          iosDesc,
-               s.VERSIONS                                                          versions,
-               s.IS_MIDPROD                                                        isMidprodId,
-               s.STATUS                                                            statusId,
-               IF(s.IS_MIDPROD = '0', '原料', IF(s.IS_MIDPROD = '1', '公用组件', '半成品')) isMidprod,
-               IF(s.STATUS = '0', '缺货', IF(s.STATUS = '1', '正常供货', '关闭'))          STATUS,
-               s.SECURE_STOCK                                                      secureStock,
-               s.BEF_DATE                                                          befDate,
-               s.BULIDDATE                                                         buliddate,
-               s.LOSEDATE                                                          losedate,
-               s.DELETED                                                           deleted,
-               s.CREATE_TIME                                                       createTime,
-               s.CREATE_BY                                                         createBy,
-               s.COMPANY_ID                                                        companyId,
-               s.MODIFY_TIME                                                       modifyTime,
-               s.MODIFY_BY                                                         modifyBy,
-               t.type_name                                                         typeName
-    </sql>
+		SELECT
+	s.ID id,
+	CONCAT(
+		s.MATTERS_NO,
+		'/',
+		s.MATTERS_NAME
+	) mattersInfo,
+	s.MATTERS_NO mattersNo,
+	s.MATTERS_NAME mattersName,
+	s.TYPE_ID typeId,
+	CONCAT(
+		s.NORMS,
+		'/',
+		s.PARAM,
+		'/',
+		s.MODEL_DESC
+	) allInfo,
+	s.NORMS norms,
+	s.PARAM param,
+	s.MODEL_DESC modelDesc,
+	s.BRAND brand,
+	s.MATERIAL material,
+	s.LEVEL LEVEL,
+	s.UNIT unit,
+	s.FACTORY factory,
+	s.CUR_AMOUNT curAmount,
+	s.ADV_AMOUNT advAmount,
+	s.PUR_AMOUNT purAmount,
+	s.WEIGHT weight,
+	s.METTER_WEI metterWei,
+	s.STORE_ID storeId,
+	s.IOS_DESC iosDesc,
+	s.VERSIONS versions,
+	s.IS_MIDPROD isMidprodId,
+	s.STATUS statusId,
+	IF(s.IS_MIDPROD='0','原料',IF(s.IS_MIDPROD='1','公用组件','半成品')) isMidprod,
+	IF(s.STATUS='0','缺货',IF(s.STATUS='1','正常供货','关闭')) STATUS,
+	s.SECURE_STOCK secureStock,
+	s.BEF_DATE befDate,
+	s.BULIDDATE buliddate,
+	s.LOSEDATE losedate,
+	s.DELETED deleted,
+	s.CREATE_TIME createTime,
+	s.CREATE_BY createBy,
+	s.COMPANY_ID companyId,
+	s.MODIFY_TIME modifyTime,
+	s.MODIFY_BY modifyBy,
+	t.type_name typeName
+	</sql>
     <!-- 分页查询（条件） -->
     <sql id="select_condition">
         <where>

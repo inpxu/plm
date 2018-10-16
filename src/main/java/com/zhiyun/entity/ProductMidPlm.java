@@ -19,59 +19,59 @@ import javax.validation.constraints.Pattern;
  */
 public class ProductMidPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 5943246506340824242L;
+    private static final long serialVersionUID = 2139350275980117956L;
 
     // ~~~~实体属性
     // 产品编码
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品编码字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "产品编码字段过长")
     private String prodNo;
     // 产品名称
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品名称字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "产品名称字段过长")
     private String prodName;
     // 半成品编码
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品编码字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "半成品编码字段过长")
     private String midProdNo;
     // 半成品名
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品名字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "半成品名字段过长")
     private String midProdName;
     // 上级编码
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "上级编码字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "上级编码字段过长")
     private String parentNo;
-    // 层级
-    @Max(value = 9223372036854775807L, message = "层级字段过长")
-    private Long hierarchy;
     // 规格
-    @Pattern(regexp = "[\\s\\S]{0,40}", message = "规格字段过长")
+    @Pattern(regexp = "[\\S]{0,40}", message = "规格字段过长")
     private String norms;
     // 参数
-    @Pattern(regexp = "[\\s\\S]{0,400}", message = "参数字段过长")
+    @Pattern(regexp = "[\\S]{0,400}", message = "参数字段过长")
     private String param;
     // 型号
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "型号字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "型号字段过长")
     private String modelDesc;
     // 计量单位
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "计量单位字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "计量单位字段过长")
     private String unit;
     // 数量
-    private Double amount;
+    private java.math.BigDecimal amount;
     // 仓库id
     @Max(value = 9223372036854775807L, message = "仓库id字段过长")
     private Long storeId;
     // 仓储位置
-    @Pattern(regexp = "[\\s\\S]{0,30}", message = "仓储位置字段过长")
+    @Pattern(regexp = "[\\S]{0,30}", message = "仓储位置字段过长")
     private String rockPosition;
     // 生产场地
     @Max(value = 9223372036854775807L, message = "生产场地字段过长")
     private Long factoryId;
     // 来源
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "来源字段过长")
+    @Pattern(regexp = "[\\S]{0,20}", message = "来源字段过长")
     private String source;
     // 备注
-    @Pattern(regexp = "[\\s\\S]{0,40}", message = "备注字段过长")
+    @Pattern(regexp = "[\\S]{0,40}", message = "备注字段过长")
     private String remark;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
+    // 层级
+    @Max(value = 9223372036854775807L, message = "层级字段过长")
+    private Long hierarchy;
 
     @Override
     public Long getId() {
@@ -154,20 +154,6 @@ public class ProductMidPlm extends BaseEntity<Long> {
     }
 
     /**
-     * 层级
-     */
-    public Long getHierarchy() {
-        return this.hierarchy;
-    }
-
-    /**
-     * 层级
-     */
-    public void setHierarchy(Long hierarchy) {
-        this.hierarchy = hierarchy;
-    }
-
-    /**
      * 规格
      */
     public String getNorms() {
@@ -226,14 +212,14 @@ public class ProductMidPlm extends BaseEntity<Long> {
     /**
      * 数量
      */
-    public Double getAmount() {
+    public java.math.BigDecimal getAmount() {
         return this.amount;
     }
 
     /**
      * 数量
      */
-    public void setAmount(Double amount) {
+    public void setAmount(java.math.BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -310,6 +296,7 @@ public class ProductMidPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -317,7 +304,22 @@ public class ProductMidPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
+    }
+
+    /**
+     * 层级
+     */
+    public Long getHierarchy() {
+        return this.hierarchy;
+    }
+
+    /**
+     * 层级
+     */
+    public void setHierarchy(Long hierarchy) {
+        this.hierarchy = hierarchy;
     }
 }

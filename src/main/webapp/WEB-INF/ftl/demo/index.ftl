@@ -3,7 +3,7 @@
 <head>
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width,initial-scale=1">
-    <title>Plm</title>
+    <title>人资管理</title>
     <link href="/static/css/app.9e1f51662a3ad2796048f954669e96dc.css" rel="stylesheet">
 </head>
 <body>

@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 public class CrafworkParamPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 5090684729699840051L;
+    private static final long serialVersionUID = 7879642074014183343L;
 
     // ~~~~实体属性
     // 工艺id
@@ -28,6 +28,11 @@ public class CrafworkParamPlm extends BaseEntity<Long> {
     // 工艺参数名
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "工艺参数名字段过长")
     private String param;
+    // creat_time
+    private java.util.Date creatTime;
+    // creat_by
+    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
+    private String creatBy;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
@@ -71,8 +76,37 @@ public class CrafworkParamPlm extends BaseEntity<Long> {
     }
 
     /**
+     * creat_time
+     */
+    public java.util.Date getCreatTime() {
+        return this.creatTime;
+    }
+
+    /**
+     * creat_time
+     */
+    public void setCreatTime(java.util.Date creatTime) {
+        this.creatTime = creatTime;
+    }
+
+    /**
+     * creat_by
+     */
+    public String getCreatBy() {
+        return this.creatBy;
+    }
+
+    /**
+     * creat_by
+     */
+    public void setCreatBy(String creatBy) {
+        this.creatBy = creatBy;
+    }
+
+    /**
      * company_id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -80,6 +114,7 @@ public class CrafworkParamPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

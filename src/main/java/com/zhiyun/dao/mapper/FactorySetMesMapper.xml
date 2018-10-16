@@ -118,30 +118,31 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.FactorySetMes">
-        UPDATE mes_jingcai.factory_set_mes
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE mes_jingcai.factory_set_mes
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID           id,
-               FACTORY_ID   factoryId,
-               FACTORY_NAME factoryName,
-               FACTORY_TYPE factoryType,
-               FACTORY_DESC factoryDesc,
-               MANAGER      manager,
-               BUILDDATE    builddate,
-               LOSEDATE     losedate,
-               CREATE_TIME  createTime,
-               CREATE_BY    createBy,
-               MODIFY_TIME  modifyTime,
-               MODIFY_BY    modifyBy,
-               COMPANY_ID   companyId,
-               DELETED      deleted
-    </sql>
+		SELECT 
+		       ID id,
+		       FACTORY_ID factoryId,
+		       FACTORY_NAME factoryName,
+		       FACTORY_TYPE factoryType,
+		       FACTORY_DESC factoryDesc,
+		       MANAGER manager,
+		       BUILDDATE builddate,
+		       LOSEDATE losedate,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy,
+		       COMPANY_ID companyId,
+		       DELETED deleted
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">

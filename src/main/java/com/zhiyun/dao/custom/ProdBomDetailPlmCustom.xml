@@ -29,40 +29,4 @@
         AND d.company_id = #{companyId,jdbcType=BIGINT}
         GROUP BY d.id
     </select>
-
-    <select id="ReturnInfoForFront" resultType="com.zhiyun.dto.ProdBomDetailPlmDto" parameterType="map">
-        SELECT s.ID                                                        id,
-               CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)                   mattersInfo,
-               s.MATTERS_NO                                                mattersNo,
-               CONCAT(s.NORMS, '/', s.PARAM, '/', s.MODEL_DESC)            allInfo,
-               s.UNIT                                                      unit,
-               s.WEIGHT                                                    weight,
-               t.type_name                                                 typeName,
-               prod_bom_detail_plm.amount,
-               prod_bom_detail_plm.plm_desc                                plmDesc,
-               prod_bom_detail_plm.backup_matter                           backUpMatterNo,
-               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME) backMattersInfo
-        FROM prod_bom_detail_plm
-                 INNER JOIN MATTERS_STORE_IOS s ON prod_bom_detail_plm.matters_no = s.matters_no
-                                                       AND s.deleted = 'F'
-                                                       AND s.company_id = #{companyId}
-                 INNER JOIN matters_type_ios t ON s.TYPE_ID = t.id
-                                                      AND t.deleted = 'F'
-                                                      AND t.company_id = #{companyId}
-                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
-                                                                   AND backMatter.deleted = 'F'
-                                                                   AND s.company_id = #{companyId}
-        WHERE prod_bom_detail_plm.id = #{id}
-          AND prod_bom_detail_plm.company_id = #{companyId}
-          AND prod_bom_detail_plm.deleted = 'F'
-    </select>
-
-
-    <update id="updateMatterNumber" parameterType="map">
-        UPDATE prod_bom_detail_plm
-        SET amount = #{number}
-        WHERE deleted = 'F'
-          AND company_id = #{companyId}
-          AND id = #{id}
-    </update>
 </mapper>   

@@ -6,13 +6,9 @@
 package com.zhiyun.dao;
 
 import com.zhiyun.base.dao.BaseDao;
-import com.zhiyun.dto.MattersStoreDto;
-import com.zhiyun.dto.ProdBomPlmDto;
-import com.zhiyun.dto.ProductMidPlmDto;
 import com.zhiyun.dto.ProductStorePlmDto;
 import com.zhiyun.entity.ProdBomPlm;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,35 +22,7 @@ public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
 
     ProductStorePlmDto searchForProduct(Map<String, Object> param);
 
-    ProdBomPlmDto findBomByPno(Map<String, Object> param);
+    ProdBomPlm findBomByPno(Map<String, Object> param);
 
-    ProdBomPlmDto findBomByMpno(Map<String, Object> param);
-
-    void updateBom(Map<String, Object> param);
-
-    void startOrStopBom(Map<String, Object> bomCode);
-
-    ProdBomPlm selectBeforeUpdate(Map<String, Object> param);
-
-    ProdBomPlm searchForCompnent(Map<String, Object> param);
-
-    List<MattersStoreDto> optionBomCodeAndProdName(Map<String, Object> param);
-
-    List<ProductMidPlmDto> findAllMidProductByPno(Map<String, Object> param);
-
-    List<MattersStoreDto> findAllMattersFroProduct(Map<String, Object> param);
-
-    List<MattersStoreDto> SearchBeforeAddMatters(Map<String, Object> codeOrName);
-
-    List<ProductMidPlmDto> findMidProduct(Map<String, Object> param);
-
-    ProdBomPlmDto findCommonBomByMatterName(Map<String, Object> param);
-
-    ProdBomPlmDto findCommonBomByBomCode(Map<String, Object> param);
-
-    ProdBomPlmDto findCommonBomByProdNo(Map<String, Object> param);
-
-    List<MattersStoreDto> SearchBeforeAddMattersForCom(Map<String, Object> param);
-
-    List<MattersStoreDto> optionComponent(Map<String, Object> param);
+    ProdBomPlm findBomByMpno(Map<String, Object> param);
 }

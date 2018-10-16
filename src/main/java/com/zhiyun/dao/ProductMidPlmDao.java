@@ -13,7 +13,6 @@ import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.ProductMidPlm;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * ProductMidPlmDao接口
@@ -31,6 +30,4 @@ public interface ProductMidPlmDao extends BaseDao<ProductMidPlm, Long> {
     List<ProdMidDto> prodDropDown(ProductMidPlm productMidPlm);
 
     List<ProductMidPlm> getMidMess(ProductMidPlm productMidPlm);
-
-    List<ProductMidPlm> findAllMidProductByMidId(Map<String, Object> param);
 }

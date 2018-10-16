@@ -8,7 +8,7 @@ package com.zhiyun.util;
 public enum VoucherEnum {
 
     APPROVAL_STATUS_SUCCESS("AS001", "已通过"),
-    APPROVAL_STATUS_PROCESS("AS002", "审核中"),
+    APPROVAL_STATUS_PROCESS("AS002", "审批中"),
     APPROVAL_STATUS_FAILURE("AS003", "已驳回");
 
     private String id;

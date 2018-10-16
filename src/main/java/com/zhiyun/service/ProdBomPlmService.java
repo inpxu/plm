@@ -6,11 +6,9 @@
 package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
-import com.zhiyun.dto.*;
-import com.zhiyun.entity.ProdBomDetailPlm;
+import com.zhiyun.dto.ProductStorePlmDto;
+import com.zhiyun.entity.MattersStoreIos;
 import com.zhiyun.entity.ProdBomPlm;
-
-import java.util.List;
 
 /**
  * 产品物料构成主表Service接口。
@@ -32,45 +30,9 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
      */
     ProductStorePlmDto searchForProduct(String productName, String bomCode);
 
-    ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno);
+    ProdBomPlm findBomByPnoOrMpno(String pNo, String mpno);
 
     void addBomNo(ProdBomPlm prodBomPlm);
 
-    List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlm[] mattersStoreIos);
-
-    void commit2Approve(String bomCode);
-
-    void deleteMatters(Long[] ids);
-
-    void startOrStopBom(String bomCode);
-
-    ProdBomPlm searchForCompnent(String productName, String bomCode);
-
-    List<MattersStoreDto> optionBomCodeAndProdName();
-
-    List<MattersStoreDto> SearchBeforeAddMatters(String codeOrName);
-
-    void updateMatter(ProdBomDetailPlm prodBomDetailPlm);
-
-    List<ProductMidPlmDto> findMidProduct(String parentNo);
-
-    void changeNumber(boolean isMidProduct, Long id, Long number, Long numberBefore);
-
-    ProdBomPlmDto findCommonBom(String matterName, String bomCode);
-
-    ProdBomPlmDto findCommonBomByProdNo(String prodNo);
-
-    List<MattersStoreDto> SearchBeforeAddMattersForCom(String codeOrName);
-
-    /**
-     * 下拉查询组件
-     *
-     * @param
-     * @return java.util.List<com.zhiyun.dto.MattersStoreDto>
-     * @author 邓艺
-     * @date 2018/10/12 9:50
-     */
-    List<MattersStoreDto> optionComponent();
-
-    void approve(String bomCode);
+    void addMatters(MattersStoreIos mattersStoreIos);
 }

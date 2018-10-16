@@ -16,7 +16,6 @@ import com.zhiyun.entity.ProductMidPlm;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * ProductMidPlmDao接口实现类
@@ -48,10 +47,5 @@ public class ProductMidPlmDaoImpl extends BaseDaoImpl<ProductMidPlm, Long> imple
     public List<ProductMidPlm> getMidMess(ProductMidPlm productMidPlm) {
         productMidPlm.setCompanyId(UserHolder.getCompanyId());
         return this.selectList(getMethodName(), productMidPlm);
-    }
-
-    @Override
-    public List<ProductMidPlm> findAllMidProductByMidId(Map<String, Object> param) {
-        return this.selectList(getMethodName(), param);
     }
 }

@@ -113,30 +113,31 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.QuartersHcm">
-        UPDATE hcm.QUARTERS_HCM
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE hcm.QUARTERS_HCM
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID            id,
-               QUARTERS_NO   quartersNo,
-               QUARTERS_DESC quartersDesc,
-               FUN_DESC      funDesc,
-               HIRES         hires,
-               QU_QUIRE      quQuire,
-               EDUCATIONAL   educational,
-               SKILL         skill,
-               DELETED       deleted,
-               COMPANY_ID    companyId,
-               CREATE_TIME   createTime,
-               CREATE_BY     createBy,
-               MODIFY_TIME   modifyTime,
-               MODIFY_BY     modifyBy
-    </sql>
+		SELECT 
+		       ID id,
+		       QUARTERS_NO quartersNo,
+		       QUARTERS_DESC quartersDesc,
+		       FUN_DESC funDesc,
+		       HIRES hires,
+		       QU_QUIRE quQuire,
+		       EDUCATIONAL educational,
+		       SKILL skill,
+		       DELETED deleted,
+		       COMPANY_ID companyId,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.QuartersHcm">

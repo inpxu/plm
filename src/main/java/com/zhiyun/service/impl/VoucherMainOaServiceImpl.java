@@ -40,7 +40,8 @@ import java.util.List;
 @Service("voucherMainOaService")
 public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Long> implements VoucherMainOaService {
 
-    private final static String UNIQUE_ID_HEAD = "PCWM";
+    private final static String UNIQUE_ID_HEAD = "PCWM-UN";
+    private final static String AUDIT_ID_HEAD = "PCWM-AU";
     private final static Long APPROVER_USER_ID = 232526L;
     private final static Long DEFAULT_WORKFLOW_ID = 1L;
 
@@ -151,7 +152,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
         }
         //生成单据号
-        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 20, UserHolder.getCompanyId());
+        String voucherNo = uniqueIdService.mixedId(AUDIT_ID_HEAD, 20, UserHolder.getCompanyId());
         //创建流程
         //        ProcessDto processDto = processService.startProcess(processKey, String.valueOf(UserHolder.getId()));
         //        if (!ResponseStatusConsts.OK.equals(processDto.getStatus())) {
@@ -234,4 +235,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
 
         voucherMainOaDao.updateByVoucherNo(voucherMainOa);
     }
+
+
+
 }

@@ -5,7 +5,9 @@
 
 package com.zhiyun.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -19,7 +21,7 @@ import javax.validation.constraints.Pattern;
  */
 public class ProdDependPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 6816543476350024323L;
+    private static final long serialVersionUID = 1251789792309965910L;
 
     // ~~~~实体属性
     // 主产品编码
@@ -44,7 +46,7 @@ public class ProdDependPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "型号字段过长")
     private String modelDesc;
     // 应配数量
-    private Double depNumber;
+    private java.math.BigDecimal depNumber;
     // 计量单位
     @Pattern(regexp = "[\\s\\S]{0,10}", message = "计量单位字段过长")
     private String unit;
@@ -76,6 +78,8 @@ public class ProdDependPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "保质期限字段过长")
     private String qualtyTime;
     // 下架日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date loseDate;
     // 产品状态
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "产品状态字段过长")
@@ -91,6 +95,11 @@ public class ProdDependPlm extends BaseEntity<Long> {
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
+    // creat_time
+    private java.util.Date creatTime;
+    // creat_by
+    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
+    private String creatBy;
 
     @Override
     public Long getId() {
@@ -203,14 +212,14 @@ public class ProdDependPlm extends BaseEntity<Long> {
     /**
      * 应配数量
      */
-    public Double getDepNumber() {
+    public java.math.BigDecimal getDepNumber() {
         return this.depNumber;
     }
 
     /**
      * 应配数量
      */
-    public void setDepNumber(Double depNumber) {
+    public void setDepNumber(java.math.BigDecimal depNumber) {
         this.depNumber = depNumber;
     }
 
@@ -427,6 +436,7 @@ public class ProdDependPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -434,7 +444,36 @@ public class ProdDependPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
+    }
+
+    /**
+     * creat_time
+     */
+    public java.util.Date getCreatTime() {
+        return this.creatTime;
+    }
+
+    /**
+     * creat_time
+     */
+    public void setCreatTime(java.util.Date creatTime) {
+        this.creatTime = creatTime;
+    }
+
+    /**
+     * creat_by
+     */
+    public String getCreatBy() {
+        return this.creatBy;
+    }
+
+    /**
+     * creat_by
+     */
+    public void setCreatBy(String creatBy) {
+        this.creatBy = creatBy;
     }
 }

@@ -227,49 +227,50 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.ProductStorePlm">
-        UPDATE PRODUCT_STORE_PLM
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+		UPDATE PRODUCT_STORE_PLM
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-        SELECT ID            id,
-               PROD_NO       prodNo,
-               PROD_NAME     prodName,
-               NORMS         norms,
-               PARAM         param,
-               MODEL_DESC    modelDesc,
-               TYPE_ID       typeId,
-               UNIT          unit,
-               ALLOW_NO      allowNo,
-               PATENT_NO     patentNo,
-               SELL_NO       sellNo,
-               VERSION_NO    versionNo,
-               LEVEL         level,
-               MATERIAL      material,
-               QUALTY_TIME   qualtyTime,
-               PROD_STATUS   prodStatus,
-               ROCK_POSITION rockPosition,
-               STORE_ID      storeId,
-               CUR_AMOUNT    curAmount,
-               FACTORY_ID    factoryId,
-               WARES_NO      waresNo,
-               GRAM          gram,
-               HAIR_LEN      hairLen,
-               FLEX          flex,
-               CLOTH_TYPE    clothType,
-               COMB          comb,
-               REMARK        remark,
-               DELETED       deleted,
-               COMPANY_ID    companyId,
-               MODIFY_TIME   modifyTime,
-               MODIFY_BY     modifyBy,
-               CREATE_TIME   createTime,
-               CREATE_BY     createBy
-    </sql>
+		SELECT 
+		       ID id,
+		       PROD_NO prodNo,
+		       PROD_NAME prodName,
+		       NORMS norms,
+		       PARAM param,
+		       MODEL_DESC modelDesc,
+		       TYPE_ID typeId,
+		       UNIT unit,
+		       ALLOW_NO allowNo,
+		       PATENT_NO patentNo,
+		       SELL_NO sellNo,
+		       VERSION_NO versionNo,
+		       LEVEL level,
+		       MATERIAL material,
+		       QUALTY_TIME qualtyTime,
+		       PROD_STATUS prodStatus,
+		       ROCK_POSITION rockPosition,
+		       STORE_ID storeId,
+		       CUR_AMOUNT curAmount,
+		       FACTORY_ID factoryId,
+		       WARES_NO waresNo,
+		       GRAM gram,
+		       HAIR_LEN hairLen,
+		       FLEX flex,
+		       CLOTH_TYPE clothType,
+		       COMB comb,
+		       REMARK remark,
+		       DELETED deleted,
+		       COMPANY_ID companyId,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy
+	</sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProductStorePlm">

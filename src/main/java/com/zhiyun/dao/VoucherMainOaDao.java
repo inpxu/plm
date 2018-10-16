@@ -9,8 +9,6 @@ import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.entity.ProdCrafworkMainPlm;
 import com.zhiyun.entity.VoucherMainOa;
 
-import java.util.Map;
-
 /**
  * VoucherMainOaDao接口
  *
@@ -21,8 +19,6 @@ import java.util.Map;
 public interface VoucherMainOaDao extends BaseDao<VoucherMainOa, Long> {
 
     VoucherMainOa getIsFinished(ProdCrafworkMainPlm prodCrafworkMainPlm);
-
-    void approve(Map<String, Object> param);
 
     VoucherMainOa getByVoucherNo(String voucherNo, Long companyId);
 

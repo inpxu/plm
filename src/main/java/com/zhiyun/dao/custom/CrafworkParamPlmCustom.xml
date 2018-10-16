@@ -3,16 +3,14 @@
 <mapper namespace="com.zhiyun.dao.impl.CrafworkParamPlmDaoImpl">
 
     <select id="addParamGet" parameterType="com.zhiyun.dto.CrafworkParamPlmDto" resultType="com.zhiyun.entity.CrafworkParamPlm">
-        SELECT cp.id id, cp.crafwork_id crafworkId, cp.param param
-        FROM crafwork_param_plm cp
-        WHERE cp.param NOT IN (SELECT tp.param_name
-                               FROM prod_crafwork_param_plm tp
-                               WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
-                                 AND tp.crafwork_id = #{crafworkId,jdbcType=BIGINT}
-                                 AND tp.company_id = cp.company_id
-                                 AND tp.deleted = 'F')
-          AND cp.deleted = 'F'
-          AND cp.company_id = #{companyId,jdbcType=BIGINT}
-          AND cp.crafwork_id = #{crafworkId,jdbcType=BIGINT}
+        SELECT
+          cp.id id,
+          cp.crafwork_id crafworkId,
+          cp.param param
+          FROM crafwork_param_plm cp
+          WHERE cp.param NOT IN (SELECT tp.param_name FROM prod_crafwork_param_plm tp WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR} AND tp.crafwork_id = #{crafworkId,jdbcType=BIGINT} AND tp.company_id = cp.company_id AND tp.deleted = 'F')
+	        AND cp.deleted = 'F'
+            AND cp.company_id = #{companyId,jdbcType=BIGINT}
+            AND cp.crafwork_id = #{crafworkId,jdbcType=BIGINT}
     </select>
 </mapper>   

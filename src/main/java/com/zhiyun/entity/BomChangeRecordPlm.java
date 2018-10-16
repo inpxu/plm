@@ -5,9 +5,7 @@
 
 package com.zhiyun.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -21,39 +19,37 @@ import javax.validation.constraints.Pattern;
  */
 public class BomChangeRecordPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 4093889260136468557L;
+    private static final long serialVersionUID = 6798557667563870363L;
 
     // ~~~~实体属性
     // 单据号
-    @Pattern(regexp = "[\\S]{0,30}", message = "单据号字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "单据号字段过长")
     private String voucherNo;
     // 半产品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "半产品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半产品编码字段过长")
     private String midProdNo;
     // 工艺id
     @Max(value = 9223372036854775807L, message = "工艺id字段过长")
     private Long crafworkId;
     // 物料编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "物料编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "物料编码字段过长")
     private String mattersNo;
     // 修改类型
-    @Pattern(regexp = "[\\S]{0,30}", message = "修改类型字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "修改类型字段过长")
     private String changeFlag;
     // 修改项目
-    @Pattern(regexp = "[\\S]{0,30}", message = "修改项目字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "修改项目字段过长")
     private String changeItem;
     // 旧值
-    @Pattern(regexp = "[\\S]{0,30}", message = "旧值字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "旧值字段过长")
     private String oldValue;
     // 新值
-    @Pattern(regexp = "[\\S]{0,30}", message = "新值字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "新值字段过长")
     private String newValue;
     // 修改人
-    @Pattern(regexp = "[\\S]{0,30}", message = "修改人字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "修改人字段过长")
     private String changeEmp;
     // 修改日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date updDate;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
@@ -212,7 +208,6 @@ public class BomChangeRecordPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -220,7 +215,6 @@ public class BomChangeRecordPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

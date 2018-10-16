@@ -37,14 +37,14 @@ public class ProdBomDetailPlmServiceImpl extends BaseServiceImpl<ProdBomDetailPl
     @Override
     public List<ProdBomDetailPlmDto> getMatter(ProdBomDetailPlmDto prodBomDetailPlmDto) {
         String prod = prodBomDetailPlmDto.getProdNo();
-        String mid = prodBomDetailPlmDto.getMidNo();
+      //  String mid = prodBomDetailPlmDto.getMidNo();
         String parent = prodBomDetailPlmDto.getMidProdNo();
         //        if (prod != mid && parent == null) {
         //            throw new BusinessException("半成品编码不能为空");
         //        }
-        if (prod == mid) {
-            prodBomDetailPlmDto.setMidProdNo(null);
-        }
+//        if (prod == mid) {
+//            prodBomDetailPlmDto.setMidProdNo(null);
+//        }
         return prodBomDetailPlmDao.getMatter(prodBomDetailPlmDto);
     }
 }

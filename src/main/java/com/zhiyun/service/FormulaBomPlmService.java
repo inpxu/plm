@@ -6,6 +6,7 @@
 package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
+import com.zhiyun.dto.FormulaDto;
 import com.zhiyun.entity.FormulaBomPlm;
 
 /**
@@ -37,4 +38,13 @@ public interface FormulaBomPlmService extends BaseService<FormulaBomPlm, Long> {
      */
     void deleteByIds(Long[] ids);
 
+    /**
+     * 通过产品编码查询配方bom
+     *
+     * @param pNo
+     * @return com.zhiyun.dto.FormulaDto
+     * @author 邓艺
+     * @date 2018/10/14 18:36
+     */
+    FormulaDto findBomByPnoOrMpno(String pNo);
 }

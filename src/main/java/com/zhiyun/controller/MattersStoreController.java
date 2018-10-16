@@ -417,4 +417,35 @@ public class MattersStoreController extends BaseController {
         }
         return JSON.toJSONString(baseResult);
     }
+
+    /**
+     * 物料下拉查询
+     * 查询出所有物料id,编码，物料名供下拉使用
+     *
+     * @param
+     * @return java.lang.String
+     * @author 邓艺
+     * @date 2018/10/14 19:47
+     */
+    @RequestMapping("/mattersOption")
+    @ResponseBody
+    public String mattersOption() {
+        BaseResult<List<MattersStoreIos>> baseResult = new BaseResult<>();
+        try {
+            List<MattersStoreIos> matters = mattersStoreIosService.mattersOption();
+            baseResult.setResult(true);
+            baseResult.setMessage("查询成功");
+            baseResult.setModel(matters);
+        } catch (BusinessException be) {
+            logger.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            logger.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
 }

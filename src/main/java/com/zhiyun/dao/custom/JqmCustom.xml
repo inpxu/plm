@@ -3,23 +3,28 @@
 <mapper namespace="com.zhiyun.dao.impl.JqmDaoImpl">
     <!-- 查询所有 -->
     <select id="findAll" parameterType="map" resultType="com.zhiyun.dto.JqmDto">
-		select 
-			ddtv.id id,
-			ddtv.modelName modelName,
-			ddtv.modelType modelType,
-			ddtv.devName devName,
-			ddtv.devType devType,
-			ddtv.commcode commcode,
-			ddp.alias alias,
-			ddp.field_type fieldType,
-			ddtv.companyId companyId,
-			IF(field_type='c',dmrt.c_value,IF(field_type='n',dmrt.n_value ,IF(field_type='s',dmrt.s_value ,IF(field_type='f',dmrt.f_value ,IF(field_type='d',dmrt.d_value ,""))))) realValue
-			 from machine.devcentre_monitor_real_time dmrt LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
-			LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
-			where param_id != 0 and ddtv.id in  (select dev_id id
-			 from machine.devcentre_monitor_real_time where param_id=1 and c_value = 1) and ddtv.commcode='B0000005'
-and ddp.alias='当前长度'
-	</select>
+        select ddtv.id                                                                                                                                                id,
+               ddtv.modelName                                                                                                                                         modelName,
+               ddtv.modelType                                                                                                                                         modelType,
+               ddtv.devName                                                                                                                                           devName,
+               ddtv.devType                                                                                                                                           devType,
+               ddtv.commcode                                                                                                                                          commcode,
+               ddp.alias                                                                                                                                              alias,
+               ddp.field_type                                                                                                                                         fieldType,
+               ddtv.companyId                                                                                                                                         companyId,
+               IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                        IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, ""))))) realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+          and ddtv.commcode = 'B0000005'
+          and ddp.alias = '当前长度'
+    </select>
 
 
     <!-- 卡尔迈耶断纱记录 -->
@@ -45,49 +50,60 @@ and ddp.alias='当前长度'
 
     <!-- 整经机开机率 -->
     <select id="openRate" parameterType="map" resultType="map">
-	select 
-	
-			CAST(ddtv.id AS char) id,
-			CAST(ddtv.`code` AS char) devCode,
-			CAST(ddtv.modelName AS char) modelName,
-			CAST(ddtv.modelType AS char) modelType,
-			CAST(ddtv.devName AS char) devName,
-			CAST(ddtv.devType AS char) devType,
-			CAST(ddtv.commcode AS char) commcode,
-			CAST(ddp.alias AS char) alias,
-			CAST(ddp.field_type AS char) fieldType,
-			CAST(ddtv.companyId AS char) companyId,
-			CAST(HOUR(dmrt.modify_time) AS char) modifyHour ,
-			CAST(dmrt.modify_time AS char) modifyTime ,
-		CAST(IF(field_type='c',dmrt.c_value,IF(field_type='n',dmrt.n_value ,IF(field_type='s',dmrt.s_value ,IF(field_type='f',dmrt.f_value ,IF(field_type='d',dmrt.d_value ,""))))) AS char) realValue
-		 from machine.devcentre_monitor_real_time dmrt LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
-		LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
-		where param_id != 0 
-and devName like '%整经%'   and ddtv.id in   (select dev_id id
-			 from machine.devcentre_monitor_real_time where param_id=1 and c_value = 1)
-	</select>
+        select CAST(ddtv.id AS char)                id,
+               CAST(ddtv.`code` AS char)            devCode,
+               CAST(ddtv.modelName AS char)         modelName,
+               CAST(ddtv.modelType AS char)         modelType,
+               CAST(ddtv.devName AS char)           devName,
+               CAST(ddtv.devType AS char)           devType,
+               CAST(ddtv.commcode AS char)          commcode,
+               CAST(ddp.alias AS char)              alias,
+               CAST(ddp.field_type AS char)         fieldType,
+               CAST(ddtv.companyId AS char)         companyId,
+               CAST(HOUR(dmrt.modify_time) AS char) modifyHour,
+               CAST(dmrt.modify_time AS char)       modifyTime,
+               CAST(IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                             IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, "")))))
+                    AS char)                        realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and devName like '%整经%'
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+    </select>
 
     <!-- 卡尔迈耶班次开机率 -->
     <select id="bcRate" parameterType="map" resultType="map">
-select 
-			CAST(ddtv.id AS char) id,
-			CAST(ddtv.`code` AS char) devCode,
-			CAST(ddtv.modelName AS char) modelName,
-			CAST(ddtv.modelType AS char) modelType,
-			CAST(ddtv.devName AS char) devName,
-			CAST(ddtv.devType AS char) devType,
-			CAST(ddtv.commcode AS char) commcode,
-			CAST(ddp.alias AS char) alias,
-			CAST(ddp.field_type AS char) fieldType,
-			CAST(ddtv.companyId AS char) companyId,
-			CAST(HOUR(dmrt.modify_time) AS char) modifyHour ,
-			CAST(dmrt.modify_time AS char) modifyTime ,
-			CAST(IF(field_type='c',dmrt.c_value,IF(field_type='n',dmrt.n_value ,IF(field_type='s',dmrt.s_value ,IF(field_type='f',dmrt.f_value ,IF(field_type='d',dmrt.d_value ,""))))) AS char) realValue
-			 from machine.devcentre_monitor_real_time dmrt LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
-			LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
-			where param_id != 0 and ddtv.id in  (select dev_id id
-			 from machine.devcentre_monitor_real_time where param_id=1 and c_value = 1) and devName like '卡尔%'  and ddp.alias in( '设备效率' ,'当前班次','GB3经轴剩余运行时间','GB1经轴剩余运行时间','GB2经轴剩余运行时间','GB4经轴剩余运行时间') 
-	</select>
+        select CAST(ddtv.id AS char)                id,
+               CAST(ddtv.`code` AS char)            devCode,
+               CAST(ddtv.modelName AS char)         modelName,
+               CAST(ddtv.modelType AS char)         modelType,
+               CAST(ddtv.devName AS char)           devName,
+               CAST(ddtv.devType AS char)           devType,
+               CAST(ddtv.commcode AS char)          commcode,
+               CAST(ddp.alias AS char)              alias,
+               CAST(ddp.field_type AS char)         fieldType,
+               CAST(ddtv.companyId AS char)         companyId,
+               CAST(HOUR(dmrt.modify_time) AS char) modifyHour,
+               CAST(dmrt.modify_time AS char)       modifyTime,
+               CAST(IF(field_type = 'c', dmrt.c_value, IF(field_type = 'n', dmrt.n_value, IF(field_type = 's', dmrt.s_value,
+                                                                                             IF(field_type = 'f', dmrt.f_value, IF(field_type = 'd', dmrt.d_value, "")))))
+                    AS char)                        realValue
+        from machine.devcentre_monitor_real_time dmrt
+                 LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
+                 LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
+        where param_id != 0
+          and ddtv.id in (select dev_id id
+                          from machine.devcentre_monitor_real_time
+                          where param_id = 1
+                            and c_value = 1)
+          and devName like '卡尔%'
+          and ddp.alias in ('设备效率', '当前班次', 'GB3经轴剩余运行时间', 'GB1经轴剩余运行时间', 'GB2经轴剩余运行时间', 'GB4经轴剩余运行时间')
+    </select>
 
     <!-- 查询 -->
     <select id="findDev" parameterType="com.zhiyun.entity.DevInfoJqm" resultType="com.zhiyun.entity.DevInfoJqm">

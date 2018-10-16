@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 public class MattersTypeIos extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 3162201564454133139L;
+    private static final long serialVersionUID = 2386248326367162811L;
 
     // ~~~~实体属性
     // 分类编码
@@ -90,7 +90,6 @@ public class MattersTypeIos extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -98,7 +97,6 @@ public class MattersTypeIos extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

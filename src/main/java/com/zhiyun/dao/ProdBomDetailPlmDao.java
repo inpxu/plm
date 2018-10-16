@@ -10,6 +10,7 @@ import com.zhiyun.dto.ProdBomDetailPlmDto;
 import com.zhiyun.entity.ProdBomDetailPlm;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ProdBomDetailPlmDao接口
@@ -22,4 +23,7 @@ public interface ProdBomDetailPlmDao extends BaseDao<ProdBomDetailPlm, Long> {
 
     List<ProdBomDetailPlmDto> getMatter(ProdBomDetailPlmDto prodBomDetailPlmDto);
 
+    ProdBomDetailPlmDto ReturnInfoForFront(Map<String, Object> insert);
+
+    void updateMatterNumber(Map<String, Object> param);
 }

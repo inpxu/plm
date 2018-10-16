@@ -93,44 +93,43 @@
     </sql>
     <!-- 查询字段 -->
     <sql id="selectSQL">
-		SELECT
-		       psp.ID id,
-		       psp.PROD_NO prodNo,
-		       psp.PROD_NAME prodName,
-		       psp.NORMS norms,
-		       psp.PARAM param,
-		       psp.MODEL_DESC modelDesc,
-		       psp.TYPE_ID typeId,
-		       ptc.type_desc typeDesc,
-		       psp.UNIT unit,
-		       psp.ALLOW_NO allowNo,
-		       psp.PATENT_NO patentNo,
-		       psp.SELL_NO sellNo,
-		       psp.VERSION_NO versionNo,
-		       psp.LEVEL level,
-		       psp.MATERIAL material,
-		       psp.QUALTY_TIME qualtyTime,
-		       psp.PROD_STATUS prodStatus,
-		       psp.ROCK_POSITION rockPosition,
-		       psp.STORE_ID storeId,
-		       ssi.store_name storeName,
-		       psp.CUR_AMOUNT curAmount,
-		       psp.FACTORY_ID factoryId,
-		       fsm.factory_name factoryName,
-		       psp.WARES_NO waresNo,
-		       psp.GRAM gram,
-		       psp.HAIR_LEN hairLen,
-		       psp.FLEX flex,
-		       psp.CLOTH_TYPE clothType,
-		       psp.COMB comb,
-		       psp.REMARK remark,
-		       psp.DELETED deleted,
-		       psp.COMPANY_ID companyId,
-		       psp.MODIFY_TIME modifyTime,
-		       psp.MODIFY_BY modifyBy,
-		       psp.CREATE_TIME createTime,
-		       psp.CREATE_BY createBy
-	</sql>
+        SELECT psp.ID            id,
+               psp.PROD_NO       prodNo,
+               psp.PROD_NAME     prodName,
+               psp.NORMS         norms,
+               psp.PARAM         param,
+               psp.MODEL_DESC    modelDesc,
+               psp.TYPE_ID       typeId,
+               ptc.type_desc     typeDesc,
+               psp.UNIT          unit,
+               psp.ALLOW_NO      allowNo,
+               psp.PATENT_NO     patentNo,
+               psp.SELL_NO       sellNo,
+               psp.VERSION_NO    versionNo,
+               psp.LEVEL         level,
+               psp.MATERIAL      material,
+               psp.QUALTY_TIME   qualtyTime,
+               psp.PROD_STATUS   prodStatus,
+               psp.ROCK_POSITION rockPosition,
+               psp.STORE_ID      storeId,
+               ssi.store_name    storeName,
+               psp.CUR_AMOUNT    curAmount,
+               psp.FACTORY_ID    factoryId,
+               fsm.factory_name  factoryName,
+               psp.WARES_NO      waresNo,
+               psp.GRAM          gram,
+               psp.HAIR_LEN      hairLen,
+               psp.FLEX          flex,
+               psp.CLOTH_TYPE    clothType,
+               psp.COMB          comb,
+               psp.REMARK        remark,
+               psp.DELETED       deleted,
+               psp.COMPANY_ID    companyId,
+               psp.MODIFY_TIME   modifyTime,
+               psp.MODIFY_BY     modifyBy,
+               psp.CREATE_TIME   createTime,
+               psp.CREATE_BY     createBy
+    </sql>
     <!-- 分页查询（计数） -->
     <select id="pg_count" parameterType="map" resultType="int">
         SELECT count(*)
@@ -179,6 +178,18 @@
             AND psp.PROD_NAME LIKE CONCAT ('%',#{prodName,jdbcType=VARCHAR}, '%')
         </if>
         AND psp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    </select>
+
+    <select id="optionProduct" parameterType="map" resultType="com.zhiyun.dto.ProductStorePlmDto">
+        SELECT
+               product_store_plm.id,
+               product_store_plm.prod_no prodNo,
+               product_store_plm.prod_name prodName
+        FROM
+             product_store_plm
+        WHERE
+                product_store_plm.deleted = 'F'
+          AND product_store_plm.company_id =#{companyId}
     </select>
 
 </mapper>   

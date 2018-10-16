@@ -23,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 物料库Service接口实现类。
@@ -59,7 +61,7 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
             throw new BusinessException("该物料编码已重复，请重新输入");
         }
         mattersStoreIos.setCompanyId(UserHolder.getCompanyId());
-        mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
+//        mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
         //新增
         this.mattersStoreIosDao.insert(mattersStoreIos);
     }
@@ -104,8 +106,8 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
                         this.productMidPlmDao.update(mid);
                     }
                 }
-                mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
-                mattersStoreIos.setIsMidprod(mattersStoreIos.getIsMidprodId());
+//                mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
+//                mattersStoreIos.setIsMidprod(mattersStoreIos.getIsMidprodId());
                 //修改物料库
                 this.mattersStoreIosDao.update(mattersStoreIos);
             }
@@ -146,5 +148,12 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
     @Override
     public List<MattersStoreDto> getMatter(MattersStoreIos mattersStoreIos) {
         return mattersStoreIosDao.getMatter(mattersStoreIos);
+    }
+
+    @Override
+    public List<MattersStoreIos> mattersOption() {
+        Map<String,Object> param = new HashMap<>(1);
+        param.put("companyId", UserHolder.getCompanyId());
+        return mattersStoreIosDao.mattersOption(param);
     }
 }

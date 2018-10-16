@@ -5,9 +5,7 @@
 
 package com.zhiyun.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -21,15 +19,13 @@ import javax.validation.constraints.Pattern;
  */
 public class BomChangeMain extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 7747450362548641383L;
+    private static final long serialVersionUID = 5747470465201909673L;
 
     // ~~~~实体属性
     // 单据号
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "单据号字段过长")
     private String voucherNo;
     // 申请日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date raiseDate;
     // 申请人
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "申请人字段过长")
@@ -40,11 +36,6 @@ public class BomChangeMain extends BaseEntity<Long> {
     // bom号
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "bom号字段过长")
     private String bomNo;
-    // creat_time
-    private java.util.Date creatTime;
-    // creat_by
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
-    private String creatBy;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
@@ -130,37 +121,8 @@ public class BomChangeMain extends BaseEntity<Long> {
     }
 
     /**
-     * creat_time
-     */
-    public java.util.Date getCreatTime() {
-        return this.creatTime;
-    }
-
-    /**
-     * creat_time
-     */
-    public void setCreatTime(java.util.Date creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    /**
-     * creat_by
-     */
-    public String getCreatBy() {
-        return this.creatBy;
-    }
-
-    /**
-     * creat_by
-     */
-    public void setCreatBy(String creatBy) {
-        this.creatBy = creatBy;
-    }
-
-    /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -168,7 +130,6 @@ public class BomChangeMain extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

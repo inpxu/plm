@@ -5,9 +5,7 @@
 
 package com.zhiyun.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -21,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 public class VoucherMainOa extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 4603097012576107728L;
+    private static final long serialVersionUID = 6054620461242978351L;
 
     // ~~~~实体属性
     // 单据号
@@ -31,12 +29,8 @@ public class VoucherMainOa extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "提交人字段过长")
     private String raiser;
     // 提交日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date raiseDate;
     // 希望日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date hopeDate;
     // 事件描述
     @Pattern(regexp = "[\\s\\S]{0,100}", message = "事件描述字段过长")
@@ -54,7 +48,7 @@ public class VoucherMainOa extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,100}", message = "审批流字段过长")
     private String checks;
     // 单据状态
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "单据状态字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,20}", message = "单据状态字段过长")
     private String isFinished;
     // 备注
     @Pattern(regexp = "[\\s\\S]{0,100}", message = "备注字段过长")
@@ -62,11 +56,6 @@ public class VoucherMainOa extends BaseEntity<Long> {
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
-    // creat_time
-    private java.util.Date creatTime;
-    // creat_by
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
-    private String creatBy;
 
     @Override
     public Long getId() {
@@ -235,7 +224,6 @@ public class VoucherMainOa extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -243,36 +231,7 @@ public class VoucherMainOa extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
-    }
-
-    /**
-     * creat_time
-     */
-    public java.util.Date getCreatTime() {
-        return this.creatTime;
-    }
-
-    /**
-     * creat_time
-     */
-    public void setCreatTime(java.util.Date creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    /**
-     * creat_by
-     */
-    public String getCreatBy() {
-        return this.creatBy;
-    }
-
-    /**
-     * creat_by
-     */
-    public void setCreatBy(String creatBy) {
-        this.creatBy = creatBy;
     }
 }

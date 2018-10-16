@@ -40,4 +40,15 @@ public interface ProductStorePlmService extends BaseService<ProductStorePlm, Lon
 
     // 产品工艺路线侧边产品查询显示
     List<ProductStorePlmDto> prodDrop(ProductStorePlm productStorePlm);
+
+    /**
+     * 下拉查询产品
+     *
+     * @param
+     * @return com.zhiyun.dto.ProductStorePlmDto
+     * @author 邓艺
+     * @date 2018/10/13 14:59
+     */
+    List<ProductStorePlmDto> optionProduct();
+
 }

@@ -6,11 +6,15 @@
 package com.zhiyun.dao.impl;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.dao.ProdBomPlmDao;
-import com.zhiyun.dto.ProductStorePlmDto;
+import com.zhiyun.dto.*;
 import com.zhiyun.entity.ProdBomPlm;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,12 +33,108 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
     }
 
     @Override
-    public ProdBomPlm findBomByPno(Map<String, Object> param) {
+    public ProdBomPlmDto findBomByPno(Map<String, Object> param) {
         return this.selectOne(getMethodName(), param);
     }
 
     @Override
-    public ProdBomPlm findBomByMpno(Map<String, Object> param) {
+    public ProdBomPlmDto findBomByMpno(Map<String, Object> param) {
         return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public void updateBom(Map<String, Object> param) {
+        this.update(getMethodName(), param);
+    }
+
+    @Override
+    public void startOrStopBom(Map<String, Object> bomCode) {
+        this.update(getMethodName(), bomCode);
+
+    }
+
+    @Override
+    public ProdBomPlm selectBeforeUpdate(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public ProdBomPlm searchForCompnent(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> optionBomCodeAndProdName(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<ProductMidPlmDto> findAllMidProductByPno(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> findAllMattersFroProduct(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> SearchBeforeAddMatters(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<ProductMidPlmDto> findMidProduct(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public ProdBomPlmDto findCommonBomByMatterName(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public ProdBomPlmDto findCommonBomByBomCode(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public ProdBomPlmDto findCommonBomByProdNo(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> SearchBeforeAddMattersForCom(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> optionComponent(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public ProdBomPlmDto findCommonBomByMatterNo(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public DataGrid<Object> customPage(Params entity, Pager pager) {
+        return this.selectPage(getMethodName(), entity, pager);
+    }
+
+    @Override
+    public FormulaDto findBomByPnoForFormula(Map<String, Object> param) {
+        return this.selectOne(getMethodName(), param);
+    }
+
+    @Override
+    public List<ProdBomPlm> uniqueBom(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> findAllMattersAndComponet(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
     }
 }

@@ -19,23 +19,23 @@ import javax.validation.constraints.Pattern;
  */
 public class CarfworkOutputMaterPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 3539661704076519228L;
+    private static final long serialVersionUID = 4299823662716098190L;
 
     // ~~~~实体属性
     // 产品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "产品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品编码字段过长")
     private String prodNo;
     // 半成品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "半成品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品编码字段过长")
     private String midProdNo;
     // 工艺id
     @Max(value = 9223372036854775807L, message = "工艺id字段过长")
     private Long crafworkNo;
     // 输出半成品
-    @Pattern(regexp = "[\\S]{0,30}", message = "输出半成品字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "输出半成品字段过长")
     private String outMidPordNo;
     // 输出数量
-    private java.math.BigDecimal outputAmt;
+    private Double outputAmt;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
@@ -109,21 +109,20 @@ public class CarfworkOutputMaterPlm extends BaseEntity<Long> {
     /**
      * 输出数量
      */
-    public java.math.BigDecimal getOutputAmt() {
+    public Double getOutputAmt() {
         return this.outputAmt;
     }
 
     /**
      * 输出数量
      */
-    public void setOutputAmt(java.math.BigDecimal outputAmt) {
+    public void setOutputAmt(Double outputAmt) {
         this.outputAmt = outputAmt;
     }
 
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -131,7 +130,6 @@ public class CarfworkOutputMaterPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

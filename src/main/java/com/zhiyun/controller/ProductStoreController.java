@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 产品库
@@ -191,6 +192,36 @@ public class ProductStoreController extends PublicController {
             vaildParamsDefault(baseResult, bindingResult);
             ProductStorePlmDto productStorePlmDto = productStorePlmService.getById(productStorePlm);
             baseResult.setModel(productStorePlmDto);
+        } catch (BusinessException be) {
+            LOGGER.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
+    /**
+     * 下拉查询产品信息
+     * 下拉产品信息，供配方bom搜索使用
+     *
+     * @param
+     * @return String
+     * @author 邓艺
+     * @date 2018/10/13 14:56
+     */
+    @ResponseBody
+    @RequestMapping(value = "/optionProduct", method = RequestMethod.GET)
+    public String optionProduct() {
+        BaseResult<List<ProductStorePlmDto>> baseResult = new BaseResult<>();
+        try {
+            List<ProductStorePlmDto> productStorePlmDtos = productStorePlmService.optionProduct();
+            baseResult.setResult(true);
+            baseResult.setMessage("查询成功");
+            baseResult.setModel(productStorePlmDtos);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);

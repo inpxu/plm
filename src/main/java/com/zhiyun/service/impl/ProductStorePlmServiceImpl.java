@@ -24,7 +24,9 @@ import com.zhiyun.service.ProductStorePlmService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品库Service接口实现类。
@@ -177,6 +179,13 @@ public class ProductStorePlmServiceImpl extends BaseServiceImpl<ProductStorePlm,
             }
         }
         return list;
+    }
+
+    @Override
+    public List<ProductStorePlmDto> optionProduct() {
+        Map<String, Object> param = new HashMap<>(1);
+        param.put("companyId", UserHolder.getCompanyId());
+        return productStorePlmDao.optionProduct(param);
     }
 
 }

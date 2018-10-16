@@ -31,25 +31,22 @@ public class CommonBomController {
     private ProdBomPlmService prodBomPlmService;
 
     /**
-     * 通过物料名名或者bom编码搜索公用组件bom
+     * 通过物料编码公用组件bom
      *
-     * @param matterName 物料名
-     * @param bomCode bom编码
+     * @param mattersNo bom编码
      * @return java.lang.String
      * @author 邓艺
      * @date 2018/10/7 13:29
      */
     @RequestMapping(value = "findCommonBom", method = RequestMethod.POST)
     @ResponseBody
-    public String findCommonBom(String matterName, String bomCode) {
+    public String findCommonBom(String mattersNo) {
         BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
         try {
-            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findCommonBom(matterName, bomCode);
-            if (prodBomPlmDto != null) {
-                baseResult.setResult(true);
-                baseResult.setMessage("查询成功");
-                baseResult.setModel(prodBomPlmDto);
-            }
+            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findCommonBom(mattersNo);
+            baseResult.setResult(true);
+            baseResult.setMessage("查询成功");
+            baseResult.setModel(prodBomPlmDto);
         } catch (BusinessException be) {
             log.debug("业务异常" + be);
             baseResult.setResult(false);
@@ -75,6 +72,8 @@ public class CommonBomController {
     public String addBomNo(ProdBomPlm prodBomPlm) {
         BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
         try {
+            //bom编码唯一性校验
+            prodBomPlmService.uniqueBomNo(prodBomPlm.getBomNo());
             prodBomPlm.setCompanyId(UserHolder.getCompanyId());
             prodBomPlm.setMakeEmp(UserHolder.getUserName());
             prodBomPlm.setMakeDate(new Date());

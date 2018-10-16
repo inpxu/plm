@@ -10,8 +10,12 @@ import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.dao.MattersTypeIosDao;
+import com.zhiyun.entity.MattersStoreIos;
 import com.zhiyun.entity.MattersTypeIos;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * MattersTypeIosDao接口实现类
@@ -27,4 +31,5 @@ public class MattersTypeIosDaoImpl extends BaseDaoImpl<MattersTypeIos, Long> imp
     public DataGrid<MattersTypeIos> select(Params params, Pager pager) {
         return this.selectPage(getMethodName(), params, pager);
     }
+
 }

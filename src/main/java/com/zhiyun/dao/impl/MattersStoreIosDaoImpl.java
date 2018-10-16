@@ -15,6 +15,7 @@ import com.zhiyun.entity.MattersStoreIos;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * MattersStoreIosDao接口实现类
@@ -34,5 +35,10 @@ public class MattersStoreIosDaoImpl extends BaseDaoImpl<MattersStoreIos, Long> i
     @Override
     public List<MattersStoreDto> getMatter(MattersStoreIos mattersStoreIos) {
         return this.selectList(getMethodName(), mattersStoreIos);
+    }
+
+    @Override
+    public List<MattersStoreIos> mattersOption(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
     }
 }

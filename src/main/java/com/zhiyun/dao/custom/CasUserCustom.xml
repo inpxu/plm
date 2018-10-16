@@ -3,46 +3,34 @@
 <mapper namespace="com.zhiyun.dao.impl.CasUserDaoImpl">
     <!-- 新增space -->
     <insert id="insertSpace" parameterType="com.zhiyun.entity.CasUser">
-		INSERT INTO `zhiyun_oa`.`oa_library_user_space`(
-		   	ID_,
-		   	USER_ID,
-		   	SPACE_INIT_SIZE,
-		   	SPACE_MAX_SIZE,
-		   	SPACE_USED_SIZE
-		) VALUES (
-		   	#{id,jdbcType=INTEGER},
-		   	#{userId,jdbcType=INTEGER},
-		   	1073741824,
-		   	10737418240,
-		   	53175910
-		)
-		
-	</insert>
+        INSERT INTO `zhiyun_oa`.`oa_library_user_space` (ID_, USER_ID, SPACE_INIT_SIZE, SPACE_MAX_SIZE, SPACE_USED_SIZE)
+        VALUES (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 1073741824, 10737418240, 53175910)
+
+    </insert>
 
     <!-- 查询字段 -->
     <sql id="cselectFieldSQL">
-		SELECT
-		       auth_authorization.cas_user.ID id,
-		       auth_authorization.cas_user.HEAD_IMG headImg,
-		       auth_authorization.cas_user.ORG_ID orgId,
-		       auth_authorization.cas_user.ACCOUNT account,
-		       auth_authorization.cas_user.NAME `name`,
-		       auth_authorization.cas_user.EMP_NO empNo,
-		       auth_authorization.cas_user.PHONE phone,
-		       auth_authorization.cas_user.EMAIL email,
-		       auth_authorization.cas_user.PASSWORD `password`,
-		      auth_authorization.cas_user.SLAT slat,
-		      auth_authorization.cas_user.POSITION `position`,
-		       auth_authorization.cas_user.IS_ABLE isAble,
-		      auth_authorization.cas_user.IS_ADMIN isAdmin,
-		       auth_authorization.cas_user.IS_CONTACTS isContacts,
-		       auth_authorization.cas_user.DELETED deleted,
-		      auth_authorization.cas_user.COMPANY_ID companyId,
-		       auth_authorization.cas_user.CREATE_TIME createTime,
-		      auth_authorization.cas_user.CREATE_BY createBy,
-		       auth_authorization.cas_user.MODIFY_TIME modifyTime,
-		       auth_authorization.cas_user.MODIFY_BY modifyBy
-	</sql>
+        SELECT auth_authorization.cas_user.ID          id,
+               auth_authorization.cas_user.HEAD_IMG    headImg,
+               auth_authorization.cas_user.ORG_ID      orgId,
+               auth_authorization.cas_user.ACCOUNT     account,
+               auth_authorization.cas_user.NAME        `name`,
+               auth_authorization.cas_user.EMP_NO      empNo,
+               auth_authorization.cas_user.PHONE       phone,
+               auth_authorization.cas_user.EMAIL       email,
+               auth_authorization.cas_user.PASSWORD    `password`,
+               auth_authorization.cas_user.SLAT        slat,
+               auth_authorization.cas_user.POSITION    `position`,
+               auth_authorization.cas_user.IS_ABLE     isAble,
+               auth_authorization.cas_user.IS_ADMIN    isAdmin,
+               auth_authorization.cas_user.IS_CONTACTS isContacts,
+               auth_authorization.cas_user.DELETED     deleted,
+               auth_authorization.cas_user.COMPANY_ID  companyId,
+               auth_authorization.cas_user.CREATE_TIME createTime,
+               auth_authorization.cas_user.CREATE_BY   createBy,
+               auth_authorization.cas_user.MODIFY_TIME modifyTime,
+               auth_authorization.cas_user.MODIFY_BY   modifyBy
+    </sql>
     <!-- 查询 -->
     <select id="customeFind" parameterType="com.zhiyun.entity.CasUser" resultType="com.zhiyun.entity.CasUser">
         <include refid="cselectFieldSQL"/>

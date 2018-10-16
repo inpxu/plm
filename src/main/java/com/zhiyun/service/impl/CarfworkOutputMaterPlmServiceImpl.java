@@ -22,7 +22,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -109,7 +108,7 @@ public class CarfworkOutputMaterPlmServiceImpl extends BaseServiceImpl<CarfworkO
     @Override
     public CarfworkOutputMaterPlmDto addOutput(CarfworkOutputMaterPlmDto carfworkOutputMaterPlmDto) {
         CarfworkOutputMaterPlm carfworkOutputMaterPlm = new CarfworkOutputMaterPlm();
-        BigDecimal outputAmt = carfworkOutputMaterPlmDto.getOutputAmt();
+        Double outputAmt = carfworkOutputMaterPlmDto.getOutputAmt();
         if (outputAmt == null) {
             throw new BusinessException("输出数量不能为空");
         }

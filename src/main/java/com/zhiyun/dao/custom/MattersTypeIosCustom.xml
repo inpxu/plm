@@ -3,18 +3,17 @@
 <mapper namespace="com.zhiyun.dao.impl.MattersTypeIosDaoImpl">
     <!-- 查询字段 -->
     <sql id="selectField">
-		SELECT
-		       ID id,
-		       TYPE_NO typeNo,
-		       TYPE_NAME typeName,
-		       REMARK remark,
-		       DELETED deleted,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       COMPANY_ID companyId,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID          id,
+               TYPE_NO     typeNo,
+               TYPE_NAME   typeName,
+               REMARK      remark,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               COMPANY_ID  companyId,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
 
 
     <!-- 分页查询（条件） -->

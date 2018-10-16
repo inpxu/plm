@@ -113,31 +113,30 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.ProdCrafworkParamPlm">
-		UPDATE PROD_CRAFWORK_PARAM_PLM
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+        UPDATE PROD_CRAFWORK_PARAM_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       PROD_NO prodNo,
-		       MID_PROD_NO midProdNo,
-		       CRAFWORK_ID crafworkId,
-		       PARAM_NAME paramName,
-		       VALUES1 values1,
-		       VALUES2 values2,
-		       VALUES3 values3,
-		       MODIFY_TIME modifyTime,
-		       COMPANY_ID companyId,
-		       CREATE_BY createBy,
-		       CREATE_TIME createTime,
-		       DELETED deleted,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID          id,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               CRAFWORK_ID crafworkId,
+               PARAM_NAME  paramName,
+               VALUES1     values1,
+               VALUES2     values2,
+               VALUES3     values3,
+               MODIFY_TIME modifyTime,
+               COMPANY_ID  companyId,
+               CREATE_BY   createBy,
+               CREATE_TIME createTime,
+               DELETED     deleted,
+               MODIFY_BY   modifyBy
+    </sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdCrafworkParamPlm">

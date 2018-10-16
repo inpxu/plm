@@ -5,9 +5,7 @@
 
 package com.zhiyun.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -21,11 +19,11 @@ import javax.validation.constraints.Pattern;
  */
 public class MattersStoreIos extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 3243883386801396878L;
+    private static final long serialVersionUID = 1848066116907335735L;
 
     // ~~~~实体属性
     // 物料编码
-    @Max(value = 9223372036854775807L, message = "物料编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,20}", message = "物料编码字段过长")
     private String mattersNo;
     // 物料名称
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "物料名称字段过长")
@@ -58,13 +56,13 @@ public class MattersStoreIos extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "生产厂商字段过长")
     private String factory;
     // 库存数量
-    private java.math.BigDecimal curAmount;
+    private Double curAmount;
     // 生产预领数量
-    private java.math.BigDecimal advAmount;
+    private Double advAmount;
     // 采购预进数量
-    private java.math.BigDecimal purAmount;
+    private Double purAmount;
     // 理论重量
-    private java.math.BigDecimal weight;
+    private Double weight;
     // 克重
     @Max(value = 99999999999L, message = "克重字段过长")
     private Integer metterWei;
@@ -84,46 +82,17 @@ public class MattersStoreIos extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,1}", message = "状态字段过长")
     private String status;
     // 安全库存
-    private java.math.BigDecimal secureStock;
+    private Double secureStock;
     // 采购提前期
     @Max(value = 9223372036854775807L, message = "采购提前期字段过长")
     private Long befDate;
     // buliddate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date buliddate;
     // losedate
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date losedate;
-    // creat_time
-    private java.util.Date creatTime;
-    // creat_by
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
-    private String creatBy;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
-    //物料状态id
-    private String statusId;
-    //物料类型id
-    private String isMidprodId;
-
-    public String getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(String statusId) {
-        this.statusId = statusId;
-    }
-
-    public String getIsMidprodId() {
-        return isMidprodId;
-    }
-
-    public void setIsMidprodId(String isMidprodId) {
-        this.isMidprodId = isMidprodId;
-    }
 
     @Override
     public Long getId() {
@@ -292,56 +261,56 @@ public class MattersStoreIos extends BaseEntity<Long> {
     /**
      * 库存数量
      */
-    public java.math.BigDecimal getCurAmount() {
+    public Double getCurAmount() {
         return this.curAmount;
     }
 
     /**
      * 库存数量
      */
-    public void setCurAmount(java.math.BigDecimal curAmount) {
+    public void setCurAmount(Double curAmount) {
         this.curAmount = curAmount;
     }
 
     /**
      * 生产预领数量
      */
-    public java.math.BigDecimal getAdvAmount() {
+    public Double getAdvAmount() {
         return this.advAmount;
     }
 
     /**
      * 生产预领数量
      */
-    public void setAdvAmount(java.math.BigDecimal advAmount) {
+    public void setAdvAmount(Double advAmount) {
         this.advAmount = advAmount;
     }
 
     /**
      * 采购预进数量
      */
-    public java.math.BigDecimal getPurAmount() {
+    public Double getPurAmount() {
         return this.purAmount;
     }
 
     /**
      * 采购预进数量
      */
-    public void setPurAmount(java.math.BigDecimal purAmount) {
+    public void setPurAmount(Double purAmount) {
         this.purAmount = purAmount;
     }
 
     /**
      * 理论重量
      */
-    public java.math.BigDecimal getWeight() {
+    public Double getWeight() {
         return this.weight;
     }
 
     /**
      * 理论重量
      */
-    public void setWeight(java.math.BigDecimal weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
@@ -432,14 +401,14 @@ public class MattersStoreIos extends BaseEntity<Long> {
     /**
      * 安全库存
      */
-    public java.math.BigDecimal getSecureStock() {
+    public Double getSecureStock() {
         return this.secureStock;
     }
 
     /**
      * 安全库存
      */
-    public void setSecureStock(java.math.BigDecimal secureStock) {
+    public void setSecureStock(Double secureStock) {
         this.secureStock = secureStock;
     }
 
@@ -486,37 +455,8 @@ public class MattersStoreIos extends BaseEntity<Long> {
     }
 
     /**
-     * creat_time
-     */
-    public java.util.Date getCreatTime() {
-        return this.creatTime;
-    }
-
-    /**
-     * creat_time
-     */
-    public void setCreatTime(java.util.Date creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    /**
-     * creat_by
-     */
-    public String getCreatBy() {
-        return this.creatBy;
-    }
-
-    /**
-     * creat_by
-     */
-    public void setCreatBy(String creatBy) {
-        this.creatBy = creatBy;
-    }
-
-    /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -524,7 +464,6 @@ public class MattersStoreIos extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

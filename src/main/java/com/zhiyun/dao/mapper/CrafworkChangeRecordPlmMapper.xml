@@ -131,34 +131,33 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.CrafworkChangeRecordPlm">
-		UPDATE CRAFWORK_CHANGE_RECORD_PLM
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+        UPDATE CRAFWORK_CHANGE_RECORD_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       VOUCHER_NO voucherNo,
-		       PROD_NO prodNo,
-		       MID_PROD_NO midProdNo,
-		       CRAFWORK_ID crafworkId,
-		       CHANGE_FLAG changeFlag,
-		       CHANGE_ITEM changeItem,
-		       OLD_VALUE oldValue,
-		       NEW_VALUE newValue,
-		       CHANGE_EMP changeEmp,
-		       UPD_DATE updDate,
-		       DELETED deleted,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       COMPANY_ID companyId,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID          id,
+               VOUCHER_NO  voucherNo,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               CRAFWORK_ID crafworkId,
+               CHANGE_FLAG changeFlag,
+               CHANGE_ITEM changeItem,
+               OLD_VALUE   oldValue,
+               NEW_VALUE   newValue,
+               CHANGE_EMP  changeEmp,
+               UPD_DATE    updDate,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               COMPANY_ID  companyId,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">

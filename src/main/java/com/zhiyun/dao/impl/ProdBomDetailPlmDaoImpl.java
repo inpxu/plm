@@ -12,6 +12,7 @@ import com.zhiyun.entity.ProdBomDetailPlm;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ProdBomDetailPlmDao接口实现类
@@ -26,5 +27,15 @@ public class ProdBomDetailPlmDaoImpl extends BaseDaoImpl<ProdBomDetailPlm, Long>
     @Override
     public List<ProdBomDetailPlmDto> getMatter(ProdBomDetailPlmDto prodBomDetailPlmDto) {
         return this.selectList(getMethodName(), prodBomDetailPlmDto);
+    }
+
+    @Override
+    public ProdBomDetailPlmDto ReturnInfoForFront(Map<String, Object> insert) {
+        return this.selectOne(getMethodName(), insert);
+    }
+
+    @Override
+    public void updateMatterNumber(Map<String, Object> param) {
+        this.update(getMethodName(), param);
     }
 }

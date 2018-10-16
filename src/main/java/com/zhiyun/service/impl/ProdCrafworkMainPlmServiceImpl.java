@@ -11,14 +11,19 @@ import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.base.util.BeanCopyUtil;
 import com.zhiyun.client.UserHolder;
-import com.zhiyun.dao.*;
+import com.zhiyun.dao.ProdCrafworkMainPlmDao;
+import com.zhiyun.dao.ProdCrafworkPathPlmAudDao;
+import com.zhiyun.dao.ProdCrafworkPathPlmDao;
+import com.zhiyun.dao.ProductMidPlmDao;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
 import com.zhiyun.dto.ProdCrafworkPathPlmAudDto;
 import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.dto.ProdMidDto;
-import com.zhiyun.entity.*;
+import com.zhiyun.entity.ProdCrafworkMainPlm;
+import com.zhiyun.entity.ProdCrafworkPathPlm;
+import com.zhiyun.entity.ProdCrafworkPathPlmAud;
+import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
-import com.zhiyun.util.VoucherEnum;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -46,10 +51,6 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     private ProdCrafworkPathPlmAudDao prodCrafworkPathPlmAudDao;
     @Resource
     private ProductMidPlmDao productMidPlmDao;
-    @Resource
-    private VoucherMainOaDao voucherMainOaDao;
-    @Resource
-    private CrafworkChangeRecordPlmDao crafworkChangeRecordPlmDao;
 
     @Override
     protected BaseDao<ProdCrafworkMainPlm, Long> getBaseDao() {
@@ -186,32 +187,7 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     @Override
     public List<ProdCrafworkMainPlmDto> getPathMsg(ProdCrafworkMainPlmDto prodCrafworkMainPlm) {
         prodCrafworkMainPlm.setCompanyId(UserHolder.getCompanyId());
-        String pathNo = prodCrafworkMainPlm.getPathNo();
-        ProdCrafworkMainPlm pro = new ProdCrafworkMainPlm();
-        pro.setPathNo(pathNo);
-        pro.setCompanyId(UserHolder.getCompanyId());
-        List<ProdCrafworkMainPlm> list = prodCrafworkMainPlmDao.find(pro);
-        if (CollectionUtils.isNotEmpty(list)) {
-            String voucherNo = list.get(0).getVoucherNo();
-            VoucherMainOa voucherMainOa = new VoucherMainOa();
-            voucherMainOa.setVoucherNo(voucherNo);
-            voucherMainOa.setCompanyId(UserHolder.getCompanyId());
-            List<VoucherMainOa> oaList = voucherMainOaDao.find(voucherMainOa);
-            if (CollectionUtils.isNotEmpty(oaList)) {
-                prodCrafworkMainPlm.setIsFinished(oaList.get(0).getIsFinished());
-            }
-        }
-
-        List<ProdCrafworkMainPlmDto> lists = prodCrafworkMainPlmDao.getPathMsg(prodCrafworkMainPlm);
-//        for (ProdCrafworkMainPlmDto mainPlmDto : lists) {
-//            String isFinished =  mainPlmDto.getIsFinished();
-//            if ("AS001".equals(isFinished)) {
-//                mainPlmDto.setIsFinished(VoucherEnum.APPROVAL_STATUS_SUCCESS.getLabel());
-//            } else if ("AS002".equals(isFinished)) {
-//                mainPlmDto.setIsFinished(VoucherEnum.APPROVAL_STATUS_PROCESS.getLabel());
-//            }
-//        }
-        return lists;
+        return prodCrafworkMainPlmDao.getPathMsg(prodCrafworkMainPlm);
     }
 
     @Override
@@ -272,30 +248,13 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     public void switchSequence(ProdCrafworkPathPlmDto[] prodCrafworkPathPlmDtos) {
         if (ArrayUtils.isNotEmpty(prodCrafworkPathPlmDtos)) {
             Long afterId = prodCrafworkPathPlmDtos[0].getId();
-            Long uqe1 = prodCrafworkPathPlmDtos[0].getCarfSeq();
             ProdCrafworkPathPlm after = prodCrafworkPathPlmDao.get(afterId);
             Long beforeId = prodCrafworkPathPlmDtos[1].getId();
-            Long uqe2 = prodCrafworkPathPlmDtos[1].getCarfSeq();
             ProdCrafworkPathPlm before = prodCrafworkPathPlmDao.get(beforeId);
             after.setId(beforeId);
             before.setId(afterId);
             prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(after, ProdCrafworkPathPlmDto.class));
             prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(before, ProdCrafworkPathPlmDto.class));
-            CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
-//            sub.setProdNo(after.);
-            sub.setMidProdNo(after.getMidProdNo());
-            sub.setCompanyId(UserHolder.getCompanyId());
-            sub.setChangeEmp(UserHolder.getUserName());
-            sub.setUpdDate(new Date());
-            if (!uqe1.equals(uqe2)) {
-                sub.setCrafworkId(after.getCrafworkId());
-                sub.setId(null);
-                sub.setOldValue(uqe1 + "");
-                sub.setNewValue(uqe2 + "");
-                sub.setChangeFlag("调整工艺顺序");
-                sub.setChangeItem("工艺顺序");
-                crafworkChangeRecordPlmDao.insert(sub);
-            }
         }
     }
 }

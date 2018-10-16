@@ -21,47 +21,43 @@ import javax.validation.constraints.Pattern;
  */
 public class ProdBomPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 1139328991814773770L;
+    private static final long serialVersionUID = 2973933986312283504L;
 
     // ~~~~实体属性
     // 单据号
-    @Max(value=9223372036854775807L,message="单据号字段过长")
-    private Long voucherNo;
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "单据号字段过长")
+    private String voucherNo;
     // bom编号
-    @Pattern(regexp="[\\s\\S]{0,30}", message="bom编号字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "bom编号字段过长")
     private String bomNo;
     // 产品编码
-    @Pattern(regexp="[\\s\\S]{0,30}", message="产品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品编码字段过长")
     private String prodNo;
     // 半成品编码
-    @Pattern(regexp="[\\s\\S]{0,30}", message="半成品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品编码字段过长")
     private String midProdNo;
     // 制订日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date makeDate;
     // 版本号
-    @Pattern(regexp="[\\s\\S]{0,30}", message="版本号字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "版本号字段过长")
     private String versions;
     // 制订人
-    @Pattern(regexp="[\\s\\S]{0,30}", message="制订人字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "制订人字段过长")
     private String makeEmp;
     // 单据状态
-    @Pattern(regexp="[\\s\\S]{0,1}", message="单据状态字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,1}", message = "单据状态字段过长")
     private String status;
     // bom状态
-    @Pattern(regexp="[\\s\\S]{0,10}", message="bom状态字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,10}", message = "bom状态字段过长")
     private String bomStatus;
     // 生效日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date startDate;
     // 失效日期
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date loseDate;
     // company_id
-    @Max(value=9223372036854775807L,message="company_id字段过长")
+    @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
 
     @Override
@@ -77,14 +73,14 @@ public class ProdBomPlm extends BaseEntity<Long> {
     /**
      * 单据号
      */
-    public Long getVoucherNo() {
+    public String getVoucherNo() {
         return this.voucherNo;
     }
 
     /**
      * 单据号
      */
-    public void setVoucherNo(Long voucherNo) {
+    public void setVoucherNo(String voucherNo) {
         this.voucherNo = voucherNo;
     }
 

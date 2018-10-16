@@ -12,6 +12,8 @@ import com.zhiyun.entity.ProdCrafworkMainPlm;
 import com.zhiyun.entity.VoucherMainOa;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * VoucherMainOaDao接口实现类
  *
@@ -25,6 +27,11 @@ public class VoucherMainOaDaoImpl extends BaseDaoImpl<VoucherMainOa, Long> imple
     @Override
     public VoucherMainOa getIsFinished(ProdCrafworkMainPlm prodCrafworkMainPlm) {
         return this.selectOne(getMethodName(), prodCrafworkMainPlm);
+    }
+
+    @Override
+    public void approve(Map<String, Object> param) {
+        this.update(getMethodName(), param);
     }
 
     @Override

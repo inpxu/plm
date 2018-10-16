@@ -137,35 +137,34 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.VoucherMainOa">
-		UPDATE VOUCHER_MAIN_OA
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+        UPDATE VOUCHER_MAIN_OA
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       VOUCHER_NO voucherNo,
-		       RAISER raiser,
-		       RAISE_DATE raiseDate,
-		       HOPE_DATE hopeDate,
-		       EVENT_DESC eventDesc,
-		       VOUCHER_TYPE voucherType,
-		       WKFLOW_ID wkflowId,
-		       CHECK_ADVICE checkAdvice,
-		       CHECKS checks,
-		       IS_FINISHED isFinished,
-		       REMARK remark,
-		       DELETED deleted,
-		       COMPANY_ID companyId,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID           id,
+               VOUCHER_NO   voucherNo,
+               RAISER       raiser,
+               RAISE_DATE   raiseDate,
+               HOPE_DATE    hopeDate,
+               EVENT_DESC   eventDesc,
+               VOUCHER_TYPE voucherType,
+               WKFLOW_ID    wkflowId,
+               CHECK_ADVICE checkAdvice,
+               CHECKS       checks,
+               IS_FINISHED  isFinished,
+               REMARK       remark,
+               DELETED      deleted,
+               COMPANY_ID   companyId,
+               CREATE_TIME  createTime,
+               CREATE_BY    createBy,
+               MODIFY_TIME  modifyTime,
+               MODIFY_BY    modifyBy
+    </sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.VoucherMainOa">

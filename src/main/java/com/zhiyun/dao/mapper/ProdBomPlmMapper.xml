@@ -1,462 +1,461 @@
-<?xml version="1.0" encoding="UTF-8" ?>   
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyun.dao.impl.ProdBomPlmDaoImpl">
 
-	<!-- 插入实体 -->
-	<insert id="insert" parameterType="com.zhiyun.entity.ProdBomPlm">
-		INSERT INTO PROD_BOM_PLM (
-		   	ID,
-		   	VOUCHER_NO,
-		   	BOM_NO,
-		   	PROD_NO,
-		   	MID_PROD_NO,
-		   	MAKE_DATE,
-		   	VERSIONS,
-		   	MAKE_EMP,
-		   	STATUS,
-		   	BOM_STATUS,
-		   	START_DATE,
-		   	LOSE_DATE,
-		   	DELETED,
-		   	CREATE_TIME,
-		   	CREATE_BY,
-		   	COMPANY_ID,
-		   	MODIFY_TIME,
-		   	MODIFY_BY
-		) VALUES (
-		   	#{id,jdbcType=BIGINT},
-		   	#{voucherNo,jdbcType=BIGINT},
-		   	#{bomNo,jdbcType=VARCHAR},
-		   	#{prodNo,jdbcType=VARCHAR},
-		   	#{midProdNo,jdbcType=VARCHAR},
-		   	#{makeDate,jdbcType=TIMESTAMP},
-		   	#{versions,jdbcType=VARCHAR},
-		   	#{makeEmp,jdbcType=VARCHAR},
-		   	#{status,jdbcType=VARCHAR},
-		   	#{bomStatus,jdbcType=VARCHAR},
-		   	#{startDate,jdbcType=TIMESTAMP},
-		   	#{loseDate,jdbcType=TIMESTAMP},
-		   	#{deleted,jdbcType=VARCHAR},
-		   	#{createTime,jdbcType=TIMESTAMP},
-		   	#{createBy,jdbcType=VARCHAR},
-		   	#{companyId,jdbcType=BIGINT},
-		   	#{modifyTime,jdbcType=TIMESTAMP},
-		   	#{modifyBy,jdbcType=VARCHAR}
-		)
-		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-			SELECT LAST_INSERT_ID() AS ID
-		</selectKey>
-		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_PROD_BOM_PLM.nextval as id FROM dual
-		</selectKey>
-	</insert>
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.ProdBomPlm">
+        INSERT INTO PROD_BOM_PLM (
+        ID,
+        VOUCHER_NO,
+        BOM_NO,
+        PROD_NO,
+        MID_PROD_NO,
+        MAKE_DATE,
+        VERSIONS,
+        MAKE_EMP,
+        STATUS,
+        BOM_STATUS,
+        START_DATE,
+        LOSE_DATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{voucherNo,jdbcType=BIGINT},
+        #{bomNo,jdbcType=VARCHAR},
+        #{prodNo,jdbcType=VARCHAR},
+        #{midProdNo,jdbcType=VARCHAR},
+        #{makeDate,jdbcType=TIMESTAMP},
+        #{versions,jdbcType=VARCHAR},
+        #{makeEmp,jdbcType=VARCHAR},
+        #{status,jdbcType=VARCHAR},
+        #{bomStatus,jdbcType=VARCHAR},
+        #{startDate,jdbcType=TIMESTAMP},
+        #{loseDate,jdbcType=TIMESTAMP},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_BOM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
 
-	<!-- 更新实体 -->
-	<update id="update" parameterType="com.zhiyun.entity.ProdBomPlm">
-		UPDATE PROD_BOM_PLM
-		<set>
-			<if test="voucherNo != null">
-				VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
-			</if>
-			<if test="bomNo != null">
-				BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			</if>
-			<if test="prodNo != null">
-				PROD_NO = #{prodNo,jdbcType=VARCHAR},
-			</if>
-			<if test="midProdNo != null">
-				MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
-			</if>
-			<if test="makeDate != null">
-				MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="versions != null">
-				VERSIONS = #{versions,jdbcType=VARCHAR},
-			</if>
-			<if test="makeEmp != null">
-				MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				STATUS = #{status,jdbcType=VARCHAR},
-			</if>
-			<if test="bomStatus != null">
-				BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
-			</if>
-			<if test="startDate != null">
-				START_DATE = #{startDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="loseDate != null">
-				LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="deleted != null">
-				DELETED = #{deleted,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="companyId != null">
-				COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			</if>
-			<if test="modifyTime != null">
-				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifyBy != null">
-				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-			</if>
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
-	
-	<!-- 更新实体 -->
-	<update id="updateFields" parameterType="com.zhiyun.entity.ProdBomPlm">
-		UPDATE PROD_BOM_PLM
-		<set>
-			VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
-			BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			PROD_NO = #{prodNo,jdbcType=VARCHAR},
-			MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
-			MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
-			VERSIONS = #{versions,jdbcType=VARCHAR},
-			MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
-			STATUS = #{status,jdbcType=VARCHAR},
-			BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
-			START_DATE = #{startDate,jdbcType=TIMESTAMP},
-			LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
-			DELETED = #{deleted,jdbcType=VARCHAR},
-			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.ProdBomPlm">
+        UPDATE PROD_BOM_PLM
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
+            </if>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="makeDate != null">
+                MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="versions != null">
+                VERSIONS = #{versions,jdbcType=VARCHAR},
+            </if>
+            <if test="makeEmp != null">
+                MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="bomStatus != null">
+                BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                START_DATE = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loseDate != null">
+                LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 删除实体 -->
-	<update id="delete" parameterType="com.zhiyun.entity.ProdBomPlm">
-		UPDATE PROD_BOM_PLM
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.ProdBomPlm">
+        UPDATE PROD_BOM_PLM
+        <set>
+            VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
+            BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
+            VERSIONS = #{versions,jdbcType=VARCHAR},
+            MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
+            STATUS = #{status,jdbcType=VARCHAR},
+            BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
+            START_DATE = #{startDate,jdbcType=TIMESTAMP},
+            LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 查询字段 -->
-	<sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       VOUCHER_NO voucherNo,
-		       BOM_NO bomNo,
-		       PROD_NO prodNo,
-		       MID_PROD_NO midProdNo,
-		       MAKE_DATE makeDate,
-		       VERSIONS versions,
-		       MAKE_EMP makeEmp,
-		       STATUS status,
-		       BOM_STATUS bomStatus,
-		       START_DATE startDate,
-		       LOSE_DATE loseDate,
-		       DELETED deleted,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       COMPANY_ID companyId,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.ProdBomPlm">
+        UPDATE PROD_BOM_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 查询 -->
-	<select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		 WHERE ID = #{id,jdbcType=INTEGER}
-		   AND DELETED = #{deleted,jdbcType=VARCHAR}
-	</select>
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID          id,
+               VOUCHER_NO  voucherNo,
+               BOM_NO      bomNo,
+               PROD_NO     prodNo,
+               MID_PROD_NO midProdNo,
+               MAKE_DATE   makeDate,
+               VERSIONS    versions,
+               MAKE_EMP    makeEmp,
+               STATUS      status,
+               BOM_STATUS  bomStatus,
+               START_DATE  startDate,
+               LOSE_DATE   loseDate,
+               DELETED     deleted,
+               CREATE_TIME createTime,
+               CREATE_BY   createBy,
+               COMPANY_ID  companyId,
+               MODIFY_TIME modifyTime,
+               MODIFY_BY   modifyBy
+    </sql>
 
-	<!-- 查询 -->
-	<select id="find" parameterType="com.zhiyun.entity.ProdBomPlm" resultType="com.zhiyun.entity.ProdBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		<where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="voucherNo != null">
-				AND VOUCHER_NO = #{voucherNo,jdbcType=BIGINT}
-			</if>
-			<if test="bomNo != null and bomNo != ''">
-				AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
-			</if>
-			<if test="prodNo != null and prodNo != ''">
-				AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
-			</if>
-			<if test="midProdNo != null and midProdNo != ''">
-				AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
-			</if>
-			<if test="makeDate != null">
-				AND MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="versions != null and versions != ''">
-				AND VERSIONS = #{versions,jdbcType=VARCHAR}
-			</if>
-			<if test="makeEmp != null and makeEmp != ''">
-				AND MAKE_EMP = #{makeEmp,jdbcType=VARCHAR}
-			</if>
-			<if test="status != null and status != ''">
-				AND STATUS = #{status,jdbcType=VARCHAR}
-			</if>
-			<if test="bomStatus != null and bomStatus != ''">
-				AND BOM_STATUS = #{bomStatus,jdbcType=VARCHAR}
-			</if>
-			<if test="startDate != null">
-				AND START_DATE = #{startDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="loseDate != null">
-				AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="deleted != null and deleted != ''">
-				AND DELETED = #{deleted,jdbcType=VARCHAR}
-			</if>
-			<if test="companyId != null">
-				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-			</if>
-		</where>
-	</select>
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
 
-	<!-- 查询所有 -->
-	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
-	</select>
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.ProdBomPlm" resultType="com.zhiyun.entity.ProdBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=BIGINT}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="makeDate != null">
+                AND MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="versions != null and versions != ''">
+                AND VERSIONS = #{versions,jdbcType=VARCHAR}
+            </if>
+            <if test="makeEmp != null and makeEmp != ''">
+                AND MAKE_EMP = #{makeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="bomStatus != null and bomStatus != ''">
+                AND BOM_STATUS = #{bomStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                AND START_DATE = #{startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="loseDate != null">
+                AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
 
-	<!-- 分页查询（条件） -->
-	<sql id="page_condition">
-		<where>
-				<if test="entity.voucherNo != null">
-					AND VOUCHER_NO = #{entity.voucherNo,jdbcType=BIGINT}
-				</if>
-				<if test="entity.bomNo != null and entity.bomNo != ''">
-					AND BOM_NO = #{entity.bomNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.prodNo != null and entity.prodNo != ''">
-					AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.midProdNo != null and entity.midProdNo != ''">
-					AND MID_PROD_NO = #{entity.midProdNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.makeDate != null">
-					AND MAKE_DATE = #{entity.makeDate,jdbcType=TIMESTAMP}
-				</if>
-				<if test="entity.versions != null and entity.versions != ''">
-					AND VERSIONS = #{entity.versions,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.makeEmp != null and entity.makeEmp != ''">
-					AND MAKE_EMP = #{entity.makeEmp,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.status != null and entity.status != ''">
-					AND STATUS = #{entity.status,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.bomStatus != null and entity.bomStatus != ''">
-					AND BOM_STATUS = #{entity.bomStatus,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.startDate != null">
-					AND START_DATE = #{entity.startDate,jdbcType=TIMESTAMP}
-				</if>
-				<if test="entity.loseDate != null">
-					AND LOSE_DATE = #{entity.loseDate,jdbcType=TIMESTAMP}
-				</if>
-				<if test="entity.deleted != null and entity.deleted != ''">
-					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.companyId != null">
-					AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
-				</if>
-		</where>
-	</sql>
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
 
-	<!-- 分页查询（计数） -->
-	<select id="page_count" parameterType="map" resultType="int">
-		SELECT count(*)
-		  FROM PROD_BOM_PLM
-		<include refid="page_condition" />
-	</select>
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.voucherNo != null">
+                AND VOUCHER_NO = #{entity.voucherNo,jdbcType=BIGINT}
+            </if>
+            <if test="entity.bomNo != null and entity.bomNo != ''">
+                AND BOM_NO = #{entity.bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.prodNo != null and entity.prodNo != ''">
+                AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.midProdNo != null and entity.midProdNo != ''">
+                AND MID_PROD_NO = #{entity.midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.makeDate != null">
+                AND MAKE_DATE = #{entity.makeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.versions != null and entity.versions != ''">
+                AND VERSIONS = #{entity.versions,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.makeEmp != null and entity.makeEmp != ''">
+                AND MAKE_EMP = #{entity.makeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.status != null and entity.status != ''">
+                AND STATUS = #{entity.status,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.bomStatus != null and entity.bomStatus != ''">
+                AND BOM_STATUS = #{entity.bomStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.startDate != null">
+                AND START_DATE = #{entity.startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.loseDate != null">
+                AND LOSE_DATE = #{entity.loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
 
-	<!-- 分页查询（数据） -->
-	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
-		<include refid="mybatis.pageStartSQL" />
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		<include refid="page_condition" />
-		<include refid="mybatis.pageEndSQL" />
-	</select>
-	
-	<!-- Map查询所有 -->
-	<select id="findMapListAll" parameterType="map" resultType="map">
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		 WHERE DELETED = "F"
-	</select>
-	
-	<!-- Map条件查询 -->
-	<select id="findMapList" parameterType="map" resultType="map">
-		<include refid="selectFieldSQL" />
-		  FROM PROD_BOM_PLM
-		 <where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="voucherNo != null">
-				AND VOUCHER_NO = #{voucherNo,jdbcType=BIGINT}
-			</if>
-			<if test="bomNo != null and bomNo != ''">
-				AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
-			</if>
-			<if test="prodNo != null and prodNo != ''">
-				AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
-			</if>
-			<if test="midProdNo != null and midProdNo != ''">
-				AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
-			</if>
-			<if test="makeDate != null">
-				AND MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="versions != null and versions != ''">
-				AND VERSIONS = #{versions,jdbcType=VARCHAR}
-			</if>
-			<if test="makeEmp != null and makeEmp != ''">
-				AND MAKE_EMP = #{makeEmp,jdbcType=VARCHAR}
-			</if>
-			<if test="status != null and status != ''">
-				AND STATUS = #{status,jdbcType=VARCHAR}
-			</if>
-			<if test="bomStatus != null and bomStatus != ''">
-				AND BOM_STATUS = #{bomStatus,jdbcType=VARCHAR}
-			</if>
-			<if test="startDate != null">
-				AND START_DATE = #{startDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="loseDate != null">
-				AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
-			</if>
-			<if test="deleted != null and deleted != ''">
-				AND DELETED = #{deleted,jdbcType=VARCHAR}
-			</if>
-			<if test="companyId != null">
-				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-			</if>
-		 WHERE DELETED = "F"
-		</where>
-	</select>
-	
-	<!-- 插入实体map -->
-	<insert id="mapInsert" parameterType="map">
-		INSERT INTO PROD_BOM_PLM (
-		   	ID,
-		   	VOUCHER_NO,
-		   	BOM_NO,
-		   	PROD_NO,
-		   	MID_PROD_NO,
-		   	MAKE_DATE,
-		   	VERSIONS,
-		   	MAKE_EMP,
-		   	STATUS,
-		   	BOM_STATUS,
-		   	START_DATE,
-		   	LOSE_DATE,
-		   	DELETED,
-		   	CREATE_TIME,
-		   	CREATE_BY,
-		   	COMPANY_ID,
-		   	MODIFY_TIME,
-		   	MODIFY_BY
-		) VALUES (
-		   	#{ id,jdbcType=BIGINT},
-		   	#{ voucherNo,jdbcType=BIGINT},
-		   	#{ bomNo,jdbcType=VARCHAR},
-		   	#{ prodNo,jdbcType=VARCHAR},
-		   	#{ midProdNo,jdbcType=VARCHAR},
-		   	#{ makeDate,jdbcType=TIMESTAMP},
-		   	#{ versions,jdbcType=VARCHAR},
-		   	#{ makeEmp,jdbcType=VARCHAR},
-		   	#{ status,jdbcType=VARCHAR},
-		   	#{ bomStatus,jdbcType=VARCHAR},
-		   	#{ startDate,jdbcType=TIMESTAMP},
-		   	#{ loseDate,jdbcType=TIMESTAMP},
-		   	#{ deleted,jdbcType=VARCHAR},
-		   	#{ createTime,jdbcType=TIMESTAMP},
-		   	#{ createBy,jdbcType=VARCHAR},
-		   	#{ companyId,jdbcType=BIGINT},
-		   	#{ modifyTime,jdbcType=TIMESTAMP},
-		   	#{ modifyBy,jdbcType=VARCHAR}
-		)
-		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-			SELECT LAST_INSERT_ID() AS ID
-		</selectKey>
-		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_PROD_BOM_PLM.nextval as id FROM dual
-		</selectKey>
-	</insert>
-	
-	<!-- 更新实体Map -->
-	<update id="mapUpdate" parameterType="map">
-		UPDATE PROD_BOM_PLM
-		<set>
-			<if test="voucherNo != null">
-				VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
-			</if>
-			<if test="bomNo != null">
-				BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			</if>
-			<if test="prodNo != null">
-				PROD_NO = #{prodNo,jdbcType=VARCHAR},
-			</if>
-			<if test="midProdNo != null">
-				MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
-			</if>
-			<if test="makeDate != null">
-				MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="versions != null">
-				VERSIONS = #{versions,jdbcType=VARCHAR},
-			</if>
-			<if test="makeEmp != null">
-				MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
-			</if>
-			<if test="status != null">
-				STATUS = #{status,jdbcType=VARCHAR},
-			</if>
-			<if test="bomStatus != null">
-				BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
-			</if>
-			<if test="startDate != null">
-				START_DATE = #{startDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="loseDate != null">
-				LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
-			</if>
-			<if test="deleted != null">
-				DELETED = #{deleted,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="companyId != null">
-				COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			</if>
-			<if test="modifyTime != null">
-				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifyBy != null">
-				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-			</if>
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_BOM_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM PROD_BOM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="voucherNo != null">
+                AND VOUCHER_NO = #{voucherNo,jdbcType=BIGINT}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="prodNo != null and prodNo != ''">
+                AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+            </if>
+            <if test="midProdNo != null and midProdNo != ''">
+                AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+            </if>
+            <if test="makeDate != null">
+                AND MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="versions != null and versions != ''">
+                AND VERSIONS = #{versions,jdbcType=VARCHAR}
+            </if>
+            <if test="makeEmp != null and makeEmp != ''">
+                AND MAKE_EMP = #{makeEmp,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null and status != ''">
+                AND STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="bomStatus != null and bomStatus != ''">
+                AND BOM_STATUS = #{bomStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                AND START_DATE = #{startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="loseDate != null">
+                AND LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO PROD_BOM_PLM (
+        ID,
+        VOUCHER_NO,
+        BOM_NO,
+        PROD_NO,
+        MID_PROD_NO,
+        MAKE_DATE,
+        VERSIONS,
+        MAKE_EMP,
+        STATUS,
+        BOM_STATUS,
+        START_DATE,
+        LOSE_DATE,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ voucherNo,jdbcType=BIGINT},
+        #{ bomNo,jdbcType=VARCHAR},
+        #{ prodNo,jdbcType=VARCHAR},
+        #{ midProdNo,jdbcType=VARCHAR},
+        #{ makeDate,jdbcType=TIMESTAMP},
+        #{ versions,jdbcType=VARCHAR},
+        #{ makeEmp,jdbcType=VARCHAR},
+        #{ status,jdbcType=VARCHAR},
+        #{ bomStatus,jdbcType=VARCHAR},
+        #{ startDate,jdbcType=TIMESTAMP},
+        #{ loseDate,jdbcType=TIMESTAMP},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_PROD_BOM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE PROD_BOM_PLM
+        <set>
+            <if test="voucherNo != null">
+                VOUCHER_NO = #{voucherNo,jdbcType=BIGINT},
+            </if>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="prodNo != null">
+                PROD_NO = #{prodNo,jdbcType=VARCHAR},
+            </if>
+            <if test="midProdNo != null">
+                MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR},
+            </if>
+            <if test="makeDate != null">
+                MAKE_DATE = #{makeDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="versions != null">
+                VERSIONS = #{versions,jdbcType=VARCHAR},
+            </if>
+            <if test="makeEmp != null">
+                MAKE_EMP = #{makeEmp,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="bomStatus != null">
+                BOM_STATUS = #{bomStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                START_DATE = #{startDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="loseDate != null">
+                LOSE_DATE = #{loseDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>   

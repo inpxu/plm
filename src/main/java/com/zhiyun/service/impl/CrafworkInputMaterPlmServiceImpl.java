@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -77,7 +76,7 @@ public class CrafworkInputMaterPlmServiceImpl extends BaseServiceImpl<CrafworkIn
                 if (materNo == null || materNo == "") {
                     materPlm.setMaterNo(null);
                 }
-                BigDecimal inputAmt = materPlm.getInputAmt();
+                Double inputAmt = materPlm.getInputAmt();
                 if (inputNo == null && materNo == null) {
                     throw new BusinessException("请选择需要输入的半成品或者物料");
                 }

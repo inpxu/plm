@@ -20,4 +20,5 @@ import com.zhiyun.entity.MattersTypeIos;
  */
 public interface MattersTypeIosDao extends BaseDao<MattersTypeIos, Long> {
     DataGrid<MattersTypeIos> select(Params params, Pager pager);
+
 }

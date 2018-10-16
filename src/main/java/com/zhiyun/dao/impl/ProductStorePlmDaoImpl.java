@@ -15,6 +15,7 @@ import com.zhiyun.entity.ProductStorePlm;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ProductStorePlmDao接口实现类
@@ -39,5 +40,10 @@ public class ProductStorePlmDaoImpl extends BaseDaoImpl<ProductStorePlm, Long> i
     @Override
     public List<ProductStorePlmDto> prodDrop(ProductStorePlm productStorePlm) {
         return this.selectList(getMethodName(), productStorePlm);
+    }
+
+    @Override
+    public List<ProductStorePlmDto> optionProduct(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
     }
 }

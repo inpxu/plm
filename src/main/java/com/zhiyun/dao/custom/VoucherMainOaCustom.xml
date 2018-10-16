@@ -3,10 +3,9 @@
 <mapper namespace="com.zhiyun.dao.impl.VoucherMainOaDaoImpl">
 
     <select id="getIsFinished" resultType="com.zhiyun.entity.VoucherMainOa" parameterType="com.zhiyun.entity.ProdCrafworkMainPlm">
-        SELECT
-            v.is_finished isFinished
+        SELECT v.is_finished isFinished
         FROM voucher_main_oa v
-        LEFT JOIN prod_crafwork_main_plm m ON m.voucher_no = v.voucher_no AND m.company_id = v.company_id AND v.deleted = 'F'
+                 LEFT JOIN prod_crafwork_main_plm m ON m.voucher_no = v.voucher_no AND m.company_id = v.company_id AND v.deleted = 'F'
         WHERE m.path_no = #{pathNo,jdbcType=VARCHAR}
           AND m.company_id = #{companyId,jdbcType=BIGINT}
           AND m.deleted = 'F'
@@ -42,7 +41,7 @@
         </if>
     </select>
 
-    <update id="updateByVoucherNo"  parameterType="com.zhiyun.entity.VoucherMainOa">
+    <update id="updateByVoucherNo" parameterType="com.zhiyun.entity.VoucherMainOa">
         UPDATE VOUCHER_MAIN_OA
         <set>
             <if test="voucherNo != null">
@@ -104,5 +103,13 @@
         <if test="companyId != null">
             AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
         </if>
+    </update>
+
+    <update id="approve" parameterType="map">
+        update voucher_main_oa
+        set is_finished = '已通过'
+        where company_id = #{companyId}
+          and deleted = 'F'
+          and voucher_no = #{voucherNo}
     </update>
 </mapper>   

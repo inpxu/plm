@@ -302,7 +302,7 @@ public class ProdCrafworkPathPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
         sub.setCompanyId(UserHolder.getCompanyId());
         sub.setChangeEmp(UserHolder.getUserName());
         sub.setUpdDate(new Date());
-        if (mac == null && emp == null && day == null) {
+        if (mac != null && emp != null && day != null) {
             if (!oldSeq.equals(seq)) {
                 sub.setId(null);
                 sub.setOldValue(oldSeq + "");

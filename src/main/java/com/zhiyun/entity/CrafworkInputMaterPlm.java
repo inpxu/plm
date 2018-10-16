@@ -19,26 +19,26 @@ import javax.validation.constraints.Pattern;
  */
 public class CrafworkInputMaterPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 4588744056971911304L;
+    private static final long serialVersionUID = 6644125360443646104L;
 
     // ~~~~实体属性
     // 产品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "产品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "产品编码字段过长")
     private String prodNo;
     // 半成品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "半成品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品编码字段过长")
     private String midPordNo;
     // 工艺id
     @Max(value = 9223372036854775807L, message = "工艺id字段过长")
     private Long crafworkId;
     // 输入物料
-    @Pattern(regexp = "[\\S]{0,30}", message = "输入物料字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "输入物料字段过长")
     private String materNo;
     // 输入半成品编码
-    @Pattern(regexp = "[\\S]{0,30}", message = "输入半成品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "输入半成品编码字段过长")
     private String inProdNo;
     // 输入数量
-    private java.math.BigDecimal inputAmt;
+    private Double inputAmt;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
@@ -126,21 +126,20 @@ public class CrafworkInputMaterPlm extends BaseEntity<Long> {
     /**
      * 输入数量
      */
-    public java.math.BigDecimal getInputAmt() {
+    public Double getInputAmt() {
         return this.inputAmt;
     }
 
     /**
      * 输入数量
      */
-    public void setInputAmt(java.math.BigDecimal inputAmt) {
+    public void setInputAmt(Double inputAmt) {
         this.inputAmt = inputAmt;
     }
 
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -148,7 +147,6 @@ public class CrafworkInputMaterPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

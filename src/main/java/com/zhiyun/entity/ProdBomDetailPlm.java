@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 public class ProdBomDetailPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 4253204763733302414L;
+    private static final long serialVersionUID = 5749163029253336270L;
 
     // ~~~~实体属性
     // bom编号
@@ -47,7 +47,7 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "物料版本号字段过长")
     private String matVersions;
     // 数量
-    private java.math.BigDecimal amount;
+    private Double amount;
     // 单位
     @Pattern(regexp = "[\\s\\S]{0,10}", message = "单位字段过长")
     private String unit;
@@ -66,11 +66,6 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     // 描述
     @Pattern(regexp = "[\\s\\S]{0,65535}", message = "描述字段过长")
     private String plmDesc;
-    // creat_time
-    private java.util.Date creatTime;
-    // creat_by
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
-    private String creatBy;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
@@ -200,14 +195,14 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     /**
      * 数量
      */
-    public java.math.BigDecimal getAmount() {
+    public Double getAmount() {
         return this.amount;
     }
 
     /**
      * 数量
      */
-    public void setAmount(java.math.BigDecimal amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -296,37 +291,8 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     }
 
     /**
-     * creat_time
-     */
-    public java.util.Date getCreatTime() {
-        return this.creatTime;
-    }
-
-    /**
-     * creat_time
-     */
-    public void setCreatTime(java.util.Date creatTime) {
-        this.creatTime = creatTime;
-    }
-
-    /**
-     * creat_by
-     */
-    public String getCreatBy() {
-        return this.creatBy;
-    }
-
-    /**
-     * creat_by
-     */
-    public void setCreatBy(String creatBy) {
-        this.creatBy = creatBy;
-    }
-
-    /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -334,7 +300,6 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

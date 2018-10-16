@@ -179,42 +179,41 @@
 
     <!-- 删除实体 -->
     <update id="delete" parameterType="com.zhiyun.entity.MachineSetMes">
-		UPDATE mes_jingcai.MACHINE_SET_MES
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+        UPDATE mes_jingcai.MACHINE_SET_MES
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
     <!-- 查询字段 -->
     <sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       MAC_NO macNo,
-		       MAC_NAME macName,
-		       FACTORY_ID factoryId,
-		       ORG_ID orgId,
-		       MAC_TYPE macType,
-		       CRAFWORK_ID crafworkId,
-		       LIABLE liable,
-		       MIN_AMOUNT minAmount,
-		       MIN_EMP minEmp,
-		       IS_INSPECTION isInspection,
-		       BRAND brand,
-		       SPEC spec,
-		       FIX_HOUR fixHour,
-		       MAC_STATUS macStatus,
-		       BARCODE barcode,
-		       QRCODE qrcode,
-		       BUILDDATE builddate,
-		       LOSEDATE losedate,
-		       DELETED deleted,
-		       COMPANY_ID companyId,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+        SELECT ID            id,
+               MAC_NO        macNo,
+               MAC_NAME      macName,
+               FACTORY_ID    factoryId,
+               ORG_ID        orgId,
+               MAC_TYPE      macType,
+               CRAFWORK_ID   crafworkId,
+               LIABLE        liable,
+               MIN_AMOUNT    minAmount,
+               MIN_EMP       minEmp,
+               IS_INSPECTION isInspection,
+               BRAND         brand,
+               SPEC          spec,
+               FIX_HOUR      fixHour,
+               MAC_STATUS    macStatus,
+               BARCODE       barcode,
+               QRCODE        qrcode,
+               BUILDDATE     builddate,
+               LOSEDATE      losedate,
+               DELETED       deleted,
+               COMPANY_ID    companyId,
+               CREATE_TIME   createTime,
+               CREATE_BY     createBy,
+               MODIFY_TIME   modifyTime,
+               MODIFY_BY     modifyBy
+    </sql>
 
     <!-- 查询 -->
     <select id="get" parameterType="map" resultType="com.zhiyun.entity.MachineSetMes">

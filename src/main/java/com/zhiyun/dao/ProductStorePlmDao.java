@@ -13,6 +13,7 @@ import com.zhiyun.dto.ProductStorePlmDto;
 import com.zhiyun.entity.ProductStorePlm;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * ProductStorePlmDao接口
@@ -32,4 +33,5 @@ public interface ProductStorePlmDao extends BaseDao<ProductStorePlm, Long> {
     // 产品工艺路线侧边产品查询显示
     List<ProductStorePlmDto> prodDrop(ProductStorePlm productStorePlm);
 
+    List<ProductStorePlmDto> optionProduct(Map<String, Object> param);
 }

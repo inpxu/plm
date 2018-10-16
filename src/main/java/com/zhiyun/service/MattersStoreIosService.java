@@ -36,4 +36,13 @@ public interface MattersStoreIosService extends BaseService<MattersStoreIos, Lon
 
     // 模糊查询物料信息
     List<MattersStoreDto> getMatter(MattersStoreIos mattersStoreIos);
+    /**
+     * 物料下拉查询
+     *
+     * @param
+     * @return java.util.List<com.zhiyun.entity.MattersStoreIos>
+     * @author 邓艺
+     * @date 2018/10/14 19:50
+     */
+    List<MattersStoreIos> mattersOption();
 }

@@ -26,6 +26,4 @@ public interface VoucherMainOaService extends BaseService<VoucherMainOa, Long> {
 
     void examine(String voucherNo, boolean isPass);
 
-
-
 }

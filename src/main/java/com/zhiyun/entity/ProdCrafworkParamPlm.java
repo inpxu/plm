@@ -19,7 +19,7 @@ import javax.validation.constraints.Pattern;
  */
 public class ProdCrafworkParamPlm extends BaseEntity<Long> {
 
-    private static final long serialVersionUID = 7065869553880305042L;
+    private static final long serialVersionUID = 4410066231611338300L;
 
     // ~~~~实体属性
     // 产品编码
@@ -46,11 +46,6 @@ public class ProdCrafworkParamPlm extends BaseEntity<Long> {
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")
     private Long companyId;
-    // creat_by
-    @Pattern(regexp = "[\\s\\S]{0,20}", message = "creat_by字段过长")
-    private String creatBy;
-    // creat_time
-    private java.util.Date creatTime;
 
     @Override
     public Long getId() {
@@ -163,7 +158,6 @@ public class ProdCrafworkParamPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -171,36 +165,7 @@ public class ProdCrafworkParamPlm extends BaseEntity<Long> {
     /**
      * company_id
      */
-    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
-    }
-
-    /**
-     * creat_by
-     */
-    public String getCreatBy() {
-        return this.creatBy;
-    }
-
-    /**
-     * creat_by
-     */
-    public void setCreatBy(String creatBy) {
-        this.creatBy = creatBy;
-    }
-
-    /**
-     * creat_time
-     */
-    public java.util.Date getCreatTime() {
-        return this.creatTime;
-    }
-
-    /**
-     * creat_time
-     */
-    public void setCreatTime(java.util.Date creatTime) {
-        this.creatTime = creatTime;
     }
 }

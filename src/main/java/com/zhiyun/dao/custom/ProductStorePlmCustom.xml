@@ -181,15 +181,10 @@
     </select>
 
     <select id="optionProduct" parameterType="map" resultType="com.zhiyun.dto.ProductStorePlmDto">
-        SELECT
-               product_store_plm.id,
-               product_store_plm.prod_no prodNo,
-               product_store_plm.prod_name prodName
-        FROM
-             product_store_plm
-        WHERE
-                product_store_plm.deleted = 'F'
-          AND product_store_plm.company_id =#{companyId}
+        SELECT product_store_plm.id, product_store_plm.prod_no prodNo, product_store_plm.prod_name prodName
+        FROM product_store_plm
+        WHERE product_store_plm.deleted = 'F'
+          AND product_store_plm.company_id = #{companyId}
     </select>
 
 </mapper>   

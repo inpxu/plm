@@ -182,10 +182,10 @@ public class ProductMidController extends PublicController {
             MattersStoreIos mattersStoreIos = new MattersStoreIos();
             mattersStoreIos.setCompanyId(UserHolder.getCompanyId());
             mattersStoreIos.setMattersNo(productMidPlm.getMidProdNo());
-            List<MattersStoreIos> MattersStoreIos = mattersStoreIosService.find(mattersStoreIos);
-            if (!CommonUtils.isEmpty(MattersStoreIos)) {
+            List<MattersStoreIos> mattersStoreIosList = mattersStoreIosService.find(mattersStoreIos);
+            if (!CommonUtils.isEmpty(mattersStoreIosList)) {
                 // 更新物料
-                for (MattersStoreIos mattersStoreIos1 : MattersStoreIos) {
+                for (MattersStoreIos mattersStoreIos1 : mattersStoreIosList) {
                     if ("2".equals(mattersStoreIos1.getIsMidprod())) {
                         mattersStoreIos1.setMattersName(productMidPlm.getMidProdName());
                         mattersStoreIos1.setIsMidprod("2");
@@ -281,7 +281,7 @@ public class ProductMidController extends PublicController {
      */
     @ResponseBody
     @RequestMapping(value = "SourceList", method = {RequestMethod.POST, RequestMethod.GET})
-    public String SourceList() {
+    public String sourceList() {
         BaseResult<List<LabelValue>> baseResult = new BaseResult<List<LabelValue>>();
         baseResult.setResult(true);
         baseResult.setMessage("获取成功");

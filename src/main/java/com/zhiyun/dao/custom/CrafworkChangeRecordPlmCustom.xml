@@ -53,31 +53,30 @@
     </select>
 
     <select id="getRecordDetail" parameterType="com.zhiyun.dto.CrafworkChangeRecordPlmDto" resultType="com.zhiyun.dto.CrafworkChangeRecordPlmDto">
-        SELECT
-            r.id id,
-            r.prod_no prodNo,
-            r.mid_prod_no midProdNo,
-            s.prod_name prodName,
-            m.mid_prod_name midProdName,
-            concat_ws("/",r.mid_prod_no,m.mid_prod_name) midProdMsg,
-            concat_ws("/",r.prod_no,s.prod_name) prodMsg,
-            r.voucher_no voucherNo,
-            r.change_flag changeFlag,
-            r.crafwork_id crafworkId,
-            p.crafwork_name crafworkName,
-            r.change_item changeItem,
-            r.change_emp changeEmp,
-            r.old_value oldValue,
-            r.new_value newValue,
-            r.upd_date updDate
+        SELECT r.id                                           id,
+               r.prod_no                                      prodNo,
+               r.mid_prod_no                                  midProdNo,
+               s.prod_name                                    prodName,
+               m.mid_prod_name                                midProdName,
+               concat_ws("/", r.mid_prod_no, m.mid_prod_name) midProdMsg,
+               concat_ws("/", r.prod_no, s.prod_name)         prodMsg,
+               r.voucher_no                                   voucherNo,
+               r.change_flag                                  changeFlag,
+               r.crafwork_id                                  crafworkId,
+               p.crafwork_name                                crafworkName,
+               r.change_item                                  changeItem,
+               r.change_emp                                   changeEmp,
+               r.old_value                                    oldValue,
+               r.new_value                                    newValue,
+               r.upd_date                                     updDate
         FROM crafwork_change_record_plm r
-        LEFT JOIN product_mid_plm m ON  r.mid_prod_no = m.mid_prod_no AND r.company_id = m.company_id AND m.deleted = 'F'
-        left join prod_crafwork_main_plm f on f.prod_no = r.prod_no and f.company_id = r.company_id and f.deleted = 'F'
-        LEFT JOIN crafwork_struct_plm p ON p.id = r.crafwork_id AND p.company_id = r.company_id AND p.deleted = 'F'
-        LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.company_id = r.company_id AND s.deleted = 'F'
+                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND r.company_id = m.company_id AND m.deleted = 'F'
+                 left join prod_crafwork_main_plm f on f.prod_no = r.prod_no and f.company_id = r.company_id and f.deleted = 'F'
+                 LEFT JOIN crafwork_struct_plm p ON p.id = r.crafwork_id AND p.company_id = r.company_id AND p.deleted = 'F'
+                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.company_id = r.company_id AND s.deleted = 'F'
         WHERE r.company_id = #{companyId,jdbcType=BIGINT}
-        AND r.VOUCHER_NO is null
-        and f.path_no = #{pathNo,jdbcType=BIGINT}
-        AND r.deleted = 'F'
+          AND r.VOUCHER_NO is null
+          and f.path_no = #{pathNo,jdbcType=BIGINT}
+          AND r.deleted = 'F'
     </select>
 </mapper>

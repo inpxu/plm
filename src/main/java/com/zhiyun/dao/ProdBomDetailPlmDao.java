@@ -23,7 +23,7 @@ public interface ProdBomDetailPlmDao extends BaseDao<ProdBomDetailPlm, Long> {
 
     List<ProdBomDetailPlmDto> getMatter(ProdBomDetailPlmDto prodBomDetailPlmDto);
 
-    ProdBomDetailPlmDto ReturnInfoForFront(Map<String, Object> insert);
+    ProdBomDetailPlmDto returnInfoForFront(Map<String, Object> insert);
 
     void updateMatterNumber(Map<String, Object> param);
 }

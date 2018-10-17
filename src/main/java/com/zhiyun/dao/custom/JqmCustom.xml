@@ -18,10 +18,8 @@
                  LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
                  LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
         where param_id != 0
-          and ddtv.id in (select dev_id id
-                          from machine.devcentre_monitor_real_time
-                          where param_id = 1
-                            and c_value = 1)
+          and ddtv.id in (select dev_id id from machine.devcentre_monitor_real_time where param_id = 1
+                                                                                      and c_value = 1)
           and ddtv.commcode = 'B0000005'
           and ddp.alias = '当前长度'
     </select>
@@ -70,10 +68,8 @@
                  LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
         where param_id != 0
           and devName like '%整经%'
-          and ddtv.id in (select dev_id id
-                          from machine.devcentre_monitor_real_time
-                          where param_id = 1
-                            and c_value = 1)
+          and ddtv.id in (select dev_id id from machine.devcentre_monitor_real_time where param_id = 1
+                                                                                      and c_value = 1)
     </select>
 
     <!-- 卡尔迈耶班次开机率 -->
@@ -97,10 +93,8 @@
                  LEFT JOIN machine.devcentre_dev_param ddp ON dmrt.param_id = ddp.id
                  LEFT JOIN machine.devcentre_dev_temp_view ddtv ON dmrt.dev_id = ddtv.id
         where param_id != 0
-          and ddtv.id in (select dev_id id
-                          from machine.devcentre_monitor_real_time
-                          where param_id = 1
-                            and c_value = 1)
+          and ddtv.id in (select dev_id id from machine.devcentre_monitor_real_time where param_id = 1
+                                                                                      and c_value = 1)
           and devName like '卡尔%'
           and ddp.alias in ('设备效率', '当前班次', 'GB3经轴剩余运行时间', 'GB1经轴剩余运行时间', 'GB2经轴剩余运行时间', 'GB4经轴剩余运行时间')
     </select>

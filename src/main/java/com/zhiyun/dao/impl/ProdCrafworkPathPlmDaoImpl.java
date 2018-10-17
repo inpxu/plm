@@ -52,6 +52,6 @@ public class ProdCrafworkPathPlmDaoImpl extends BaseDaoImpl<ProdCrafworkPathPlm,
 
     @Override
     public List<ProdCrafworkPathPlmDto> pathCraf(ProdCrafworkPathPlm prodCrafworkPathPlm) {
-        return this.selectList(getMethodName(),prodCrafworkPathPlm);
+        return this.selectList(getMethodName(), prodCrafworkPathPlm);
     }
 }

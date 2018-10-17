@@ -25,7 +25,7 @@ public class CrafworkChangeRecordPlmDaoImpl extends BaseDaoImpl<CrafworkChangeRe
 
     @Override
     public List<CrafworkChangeRecordPlmDto> getChange(CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto) {
-        return this.selectList(getMethodName(),crafworkChangeRecordPlmDto);
+        return this.selectList(getMethodName(), crafworkChangeRecordPlmDto);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class CrafworkChangeRecordPlmDaoImpl extends BaseDaoImpl<CrafworkChangeRe
 
     @Override
     public List<CrafworkChangeRecordPlmDto> getRecordDetail(CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto) {
-        return this.selectList(getMethodName(),crafworkChangeRecordPlmDto);
+        return this.selectList(getMethodName(), crafworkChangeRecordPlmDto);
     }
 }

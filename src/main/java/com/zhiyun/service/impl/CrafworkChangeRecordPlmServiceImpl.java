@@ -18,7 +18,6 @@ import com.zhiyun.entity.CrafworkChangeRecordPlm;
 import com.zhiyun.form.ChangeRecordForm;
 import com.zhiyun.service.CrafworkChangeRecordPlmService;
 import com.zhiyun.util.VoucherEnum;
-import freemarker.cache.StrongCacheStorage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,12 +46,12 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
     @Override
     public ChangeRecordForm getRecord(CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto) {
         String pathNo = crafworkChangeRecordPlmDto.getPathNo();
-        if (pathNo == null){
+        if (pathNo == null) {
             throw new BusinessException("该产品尚未添加工艺路线");
         }
         String prodNo = crafworkChangeRecordPlmDto.getProdNo();
         String midProdNo = crafworkChangeRecordPlmDto.getMidProdNo();
-        if (prodNo == null || midProdNo == null){
+        if (prodNo == null || midProdNo == null) {
             throw new BusinessException("操作错误！");
         }
         ProdCrafworkMainPlmDto mainPlmDto = prodCrafworkMainPlmDao.getMain(prodNo);
@@ -63,12 +62,12 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
             throw new BusinessException("该产品的工艺路线未发起评审");
         }
         ChangeRecordForm change = new ChangeRecordForm();
-        if (prodNo.equals(midProdNo)){
-            change.setProdMsg(prodNo +"/"+ prodName);
+        if (prodNo.equals(midProdNo)) {
+            change.setProdMsg(prodNo + "/" + prodName);
             change.setNowChoice(prodName);
         } else {
-            change.setMidProdMsg(midProdNo +"/"+ midProdName);
-            change.setNowChoice(prodName +"/"+ midProdName);
+            change.setMidProdMsg(midProdNo + "/" + midProdName);
+            change.setNowChoice(prodName + "/" + midProdName);
         }
         change.setPathNo(pathNo);
         crafworkChangeRecordPlmDto.setIsFinished(VoucherEnum.APPROVAL_STATUS_SUCCESS.getId());
@@ -76,7 +75,7 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
         List<CrafworkChangeRecordPlmDto> list = crafworkChangeRecordPlmDao.getChange(crafworkChangeRecordPlmDto);
         for (CrafworkChangeRecordPlmDto dto : list) {
             String midName = dto.getMidProdName();
-            if (midName == null){
+            if (midName == null) {
                 dto.setMidProdMsg(dto.getProdMsg());
             }
         }
@@ -98,7 +97,7 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
             for (CrafworkChangeRecordPlmDto dto : list) {
                 String prod = dto.getProdNo();
                 String mid = dto.getMidProdNo();
-                if (prod.equals(mid)){
+                if (prod.equals(mid)) {
                     dto.setMidProdMsg("");
                 }
             }

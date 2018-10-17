@@ -44,7 +44,7 @@ public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
 
     List<MattersStoreDto> findAllMattersFroProduct(Map<String, Object> param);
 
-    List<MattersStoreDto> SearchBeforeAddMatters(Map<String, Object> codeOrName);
+    List<MattersStoreDto> searchBeforeAddMatters(Map<String, Object> codeOrName);
 
     List<ProductMidPlmDto> findMidProduct(Map<String, Object> param);
 
@@ -54,7 +54,7 @@ public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
 
     ProdBomPlmDto findCommonBomByProdNo(Map<String, Object> param);
 
-    List<MattersStoreDto> SearchBeforeAddMattersForCom(Map<String, Object> param);
+    List<MattersStoreDto> searchBeforeAddMattersForCom(Map<String, Object> param);
 
     List<MattersStoreDto> optionComponent(Map<String, Object> param);
 

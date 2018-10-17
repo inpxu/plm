@@ -30,7 +30,7 @@ public class ProdBomDetailPlmDaoImpl extends BaseDaoImpl<ProdBomDetailPlm, Long>
     }
 
     @Override
-    public ProdBomDetailPlmDto ReturnInfoForFront(Map<String, Object> insert) {
+    public ProdBomDetailPlmDto returnInfoForFront(Map<String, Object> insert) {
         return this.selectOne(getMethodName(), insert);
     }
 

@@ -9,14 +9,15 @@ import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
-import com.zhiyun.dao.CrafworkStructPlmDao;
-import com.zhiyun.dto.*;
-import com.zhiyun.entity.*;
-import com.zhiyun.form.ProdCrafworkPathPlmForm;
+import com.zhiyun.dto.CrafworkStructDto;
+import com.zhiyun.dto.ProdCrafworkMainPlmDto;
+import com.zhiyun.dto.ProdCrafworkPathPlmDto;
+import com.zhiyun.dto.ProdMidDto;
+import com.zhiyun.entity.ProdCrafworkPathPlm;
+import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.service.CrafworkStructPlmService;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
 import com.zhiyun.service.ProdCrafworkPathPlmService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -308,11 +309,11 @@ public class ProdCrafworkMainController extends BaseController {
         try {
             vaildParamsDefault(baseResult, bindingResult);
             prodCrafworkMainPlmService.switchSequence(prodCrafworkPathPlmDtos);
-//            List<ProdCrafworkPathPlmAudDto> list = prodCrafworkPathPlmForm.getProdCrafworkPathPlmAuds();
-//            for (ProdCrafworkPathPlmAudDto aud : list) {
-//                prodCrafworkPathPlmService.upd(aud);
-//            }
-//            baseResult.setModel(list);
+            //            List<ProdCrafworkPathPlmAudDto> list = prodCrafworkPathPlmForm.getProdCrafworkPathPlmAuds();
+            //            for (ProdCrafworkPathPlmAudDto aud : list) {
+            //                prodCrafworkPathPlmService.upd(aud);
+            //            }
+            //            baseResult.setModel(list);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);
@@ -356,26 +357,25 @@ public class ProdCrafworkMainController extends BaseController {
         return JSON.toJSONString(baseResult);
     }
 
-
-//    @RequestMapping(value = "approve", method = RequestMethod.POST)
-//    @ResponseBody
-//    public BaseResult<String> approve(String pathNo) {
-//        BaseResult<String> baseResult = new BaseResult<>();
-//        baseResult.setResult(true);
-//        try {
-//            String approve = prodCrafworkPathPlmService.approve(pathNo);
-//            if (StringUtils.isEmpty(approve)) {
-//                throw new BusinessException("审批失败");
-//            }
-//        } catch (BusinessException be) {
-//            LOGGER.debug("业务异常" + be);
-//            baseResult.setResult(false);
-//            baseResult.setMessage(be.getMessage());
-//        } catch (Exception e) {
-//            LOGGER.debug("系统异常" + e);
-//            baseResult.setResult(false);
-//            baseResult.setMessage("系统异常");
-//        }
-//        return baseResult;
-//    }
+    //    @RequestMapping(value = "approve", method = RequestMethod.POST)
+    //    @ResponseBody
+    //    public BaseResult<String> approve(String pathNo) {
+    //        BaseResult<String> baseResult = new BaseResult<>();
+    //        baseResult.setResult(true);
+    //        try {
+    //            String approve = prodCrafworkPathPlmService.approve(pathNo);
+    //            if (StringUtils.isEmpty(approve)) {
+    //                throw new BusinessException("审批失败");
+    //            }
+    //        } catch (BusinessException be) {
+    //            LOGGER.debug("业务异常" + be);
+    //            baseResult.setResult(false);
+    //            baseResult.setMessage(be.getMessage());
+    //        } catch (Exception e) {
+    //            LOGGER.debug("系统异常" + e);
+    //            baseResult.setResult(false);
+    //            baseResult.setMessage("系统异常");
+    //        }
+    //        return baseResult;
+    //    }
 }

@@ -4,20 +4,20 @@
 
     <select id="getMatter" resultType="com.zhiyun.dto.ProdBomDetailPlmDto" parameterType="com.zhiyun.dto.ProdBomDetailPlmDto">
         SELECT
-          d.matters_no mattersNo,
-          d.mat_versions matVersions,
-          i.`status` status,
-          d.unit unit,
-          concat_ws("/",d.param,d.norms,d.MODEL_DESC) syntheticField,
-          concat_ws("/",i.matters_no,i.matters_name) matterMsg,
-          t.type_name typeName,
-          i.matters_name mattersName,
-          p.mid_prod_no midProdNo
+        d.matters_no mattersNo,
+        d.mat_versions matVersions,
+        i.`status` status,
+        d.unit unit,
+        concat_ws("/",d.param,d.norms,d.MODEL_DESC) syntheticField,
+        concat_ws("/",i.matters_no,i.matters_name) matterMsg,
+        t.type_name typeName,
+        i.matters_name mattersName,
+        p.mid_prod_no midProdNo
         FROM prod_bom_detail_plm d
         LEFT JOIN prod_bom_plm p ON p.bom_no = d.bom_no AND p.mid_prod_no = d.parent_no AND p.company_id = d.company_id AND p.deleted = 'F'
         LEFT JOIN matters_store_ios i ON i.matters_no = d.matters_no AND i.company_id = d.company_id AND i.deleted = 'F'
         LEFT JOIN matters_type_ios t ON t.id = i.type_id AND t.company_id = i.company_id AND t.deleted = 'F'
-        WHERE p.prod_no =  #{prodNo,jdbcType=VARCHAR}
+        WHERE p.prod_no = #{prodNo,jdbcType=VARCHAR}
         <if test="midProdNo == null or midProdNo == ''">
             AND (p.mid_prod_no = '' OR p.mid_prod_no is null)
         </if>

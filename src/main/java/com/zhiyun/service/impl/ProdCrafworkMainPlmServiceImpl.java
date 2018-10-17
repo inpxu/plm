@@ -11,18 +11,15 @@ import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.base.util.BeanCopyUtil;
 import com.zhiyun.client.UserHolder;
-import com.zhiyun.dao.ProdCrafworkMainPlmDao;
-import com.zhiyun.dao.ProdCrafworkPathPlmAudDao;
-import com.zhiyun.dao.ProdCrafworkPathPlmDao;
-import com.zhiyun.dao.ProductMidPlmDao;
+import com.zhiyun.dao.*;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
+import com.zhiyun.dto.ProdCrafworkPathPlmAudDto;
 import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.dto.ProdMidDto;
-import com.zhiyun.entity.ProdCrafworkMainPlm;
-import com.zhiyun.entity.ProdCrafworkPathPlm;
-import com.zhiyun.entity.ProductMidPlm;
+import com.zhiyun.entity.*;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +45,8 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     private ProdCrafworkPathPlmAudDao prodCrafworkPathPlmAudDao;
     @Resource
     private ProductMidPlmDao productMidPlmDao;
+    @Resource
+    private CrafworkChangeRecordPlmDao crafworkChangeRecordPlmDao;
 
     @Override
     protected BaseDao<ProdCrafworkMainPlm, Long> getBaseDao() {
@@ -152,28 +151,28 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
         String pathNo = prodCrafworkMainPlmDto.getPathNo();
         ProdCrafworkMainPlm path = new ProdCrafworkMainPlm();
         String t = prodCrafworkMainPlmDto.getEnDis();
-        //        ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
-        //        plm.setCompanyId(UserHolder.getCompanyId());
-        //        plm.setPathNo(pathNo);
-        //        List<ProdCrafworkMainPlm> list = prodCrafworkMainPlmDao.find(plm);
-        //        if (CollectionUtils.isNotEmpty(list)) {
-        //            String status = list.get(0).getStatus();
-        //            if (status == null || status.equals("")) {
-        //                ProdCrafworkPathPlm pp = new ProdCrafworkPathPlm();
-        //                pp.setCompanyId(UserHolder.getCompanyId());
-        //                pp.setPathNo(pathNo);
-        //                List<ProdCrafworkPathPlm> lp = prodCrafworkPathPlmDao.find(pp);
-        //                if (CollectionUtils.isNotEmpty(lp)) {
-        //                    for (ProdCrafworkPathPlm l : lp) {
-        //                        l.setId(null);
-        //                        l.setVoucherNo(null);
-        //                        ProdCrafworkPathPlmAud aud = new ProdCrafworkPathPlmAud();
-        //                        BeanUtils.copyProperties(l, aud);
-        //                        prodCrafworkPathPlmAudDao.insert(aud);
-        //                    }
-        //                }
-        //            }
-        //        }
+//        ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
+//        plm.setCompanyId(UserHolder.getCompanyId());
+//        plm.setPathNo(pathNo);
+//        List<ProdCrafworkMainPlm> list = prodCrafworkMainPlmDao.find(plm);
+//        if (CollectionUtils.isNotEmpty(list)) {
+//            String status = list.get(0).getStatus();
+//            if (status == null || status.equals("")) {
+//                ProdCrafworkPathPlm pp = new ProdCrafworkPathPlm();
+//                pp.setCompanyId(UserHolder.getCompanyId());
+//                pp.setPathNo(pathNo);
+//                List<ProdCrafworkPathPlm> lp = prodCrafworkPathPlmDao.find(pp);
+//                if (CollectionUtils.isNotEmpty(lp)) {
+//                    for (ProdCrafworkPathPlm l : lp) {
+//                        l.setId(null);
+//                        l.setVoucherNo(null);
+//                        ProdCrafworkPathPlmAud aud = new ProdCrafworkPathPlmAud();
+//                        BeanUtils.copyProperties(l, aud);
+//                        prodCrafworkPathPlmAudDao.insert(aud);
+//                    }
+//                }
+//            }
+//        }
         path.setStatus(t);
         path.setPathNo(pathNo);
         path.setCompanyId(UserHolder.getCompanyId());
@@ -245,13 +244,37 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     public void switchSequence(ProdCrafworkPathPlmDto[] prodCrafworkPathPlmDtos) {
         if (ArrayUtils.isNotEmpty(prodCrafworkPathPlmDtos)) {
             Long afterId = prodCrafworkPathPlmDtos[0].getId();
+            Long uqe1 = prodCrafworkPathPlmDtos[0].getCarfSeq();
             ProdCrafworkPathPlm after = prodCrafworkPathPlmDao.get(afterId);
             Long beforeId = prodCrafworkPathPlmDtos[1].getId();
+            Long uqe2 = prodCrafworkPathPlmDtos[1].getCarfSeq();
             ProdCrafworkPathPlm before = prodCrafworkPathPlmDao.get(beforeId);
             after.setId(beforeId);
             before.setId(afterId);
             prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(after, ProdCrafworkPathPlmDto.class));
             prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(before, ProdCrafworkPathPlmDto.class));
+            CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
+            ProductMidPlm mid = new ProductMidPlm();
+            mid.setMidProdNo(after.getMidProdNo());
+            mid.setCompanyId(UserHolder.getCompanyId());
+            List<ProductMidPlm> midList = productMidPlmDao.find(mid);
+            if (CollectionUtils.isNotEmpty(midList)) {
+                String prodNo = midList.get(0).getProdNo();
+                sub.setProdNo(prodNo);
+            }
+            sub.setMidProdNo(after.getMidProdNo());
+            sub.setCompanyId(UserHolder.getCompanyId());
+            sub.setChangeEmp(UserHolder.getUserName());
+            sub.setUpdDate(new Date());
+            if (!uqe1.equals(uqe2)) {
+                sub.setCrafworkId(after.getCrafworkId());
+                sub.setId(null);
+                sub.setOldValue(uqe1 + "");
+                sub.setNewValue(uqe2 + "");
+                sub.setChangeFlag("调整工艺顺序");
+                sub.setChangeItem("工艺顺序");
+                crafworkChangeRecordPlmDao.insert(sub);
+            }
         }
     }
 }

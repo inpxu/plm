@@ -10,7 +10,7 @@
                m.mac_status                         macStatus,
                m.spec                               spec,
                c.org_name                           orgName
-        FROM mes_jingcai.machine_set_mes m
+        FROM aps.machine_set_mes m
                  LEFT JOIN hcm.cas_org c ON c.id = m.org_id AND c.company_id = m.company_id AND c.deleted = 'F'
         WHERE m.crafwork_id = #{crafworkId,jdbcType=BIGINT}
           AND m.company_id = #{companyId,jdbcType=BIGINT}

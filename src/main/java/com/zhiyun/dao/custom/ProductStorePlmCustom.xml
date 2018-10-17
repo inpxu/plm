@@ -135,7 +135,7 @@
         SELECT count(*)
         FROM PRODUCT_STORE_PLM psp
         LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id
-        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN aps.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
         LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
         <include refid="pg_condition"/>
     </select>
@@ -146,7 +146,7 @@
         <include refid="selectSQL"/>
         FROM PRODUCT_STORE_PLM psp
         LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id AND ptc.deleted = 'F'
-        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN aps.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
         LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
         <include refid="pg_condition"/>
         <include refid="mybatis.pageEndSQL"/>
@@ -156,7 +156,7 @@
         <include refid="selectSQL"/>
         FROM PRODUCT_STORE_PLM psp
         LEFT JOIN prod_type_crm ptc ON ptc.id = psp.type_id AND ptc.company_id = psp.company_id AND ptc.deleted = 'F'
-        LEFT JOIN mes_jingcai.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
+        LEFT JOIN aps.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
         LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
         where psp.id = #{id,jdbcType=BIGINT}
         AND psp.COMPANY_ID = #{companyId,jdbcType=BIGINT}

@@ -57,7 +57,7 @@ public class ProdMacPlmServiceImpl extends BaseServiceImpl<ProdMacPlm, Long> imp
                 if (macNo == null) {
                     throw new BusinessException("设备信息不能为空");
                 }
-                Integer total = materPlm.getRunTotal();
+                String total = materPlm.getTotalName();
                 if (total == null) {
                     throw new BusinessException("设备班制不能为空");
                 }
@@ -96,12 +96,13 @@ public class ProdMacPlmServiceImpl extends BaseServiceImpl<ProdMacPlm, Long> imp
             prodMacPlmDao.delete(p.getId());
         }
         if (CollectionUtils.isNotEmpty(prodMacPlmDtos)) {
-            for (ProdMacPlm m : prodMacPlmDtos) {
+            for (ProdMacPlmDto m : prodMacPlmDtos) {
                 m.setId(null);
                 m.setCompanyId(UserHolder.getCompanyId());
                 m.setProdNo(prodNo);
                 m.setMidProdNo(mid);
                 m.setCrafworkId(crafId);
+                m.setRunTotal(Integer.valueOf(m.getTotalName()));
                 prodMacPlmDao.insert(m);
             }
         }

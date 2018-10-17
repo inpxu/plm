@@ -44,9 +44,9 @@ public class ConstansUtil {
      */
     public enum RunTotal {
 
-        ONE(1, "单班"),
-        TWO(2, "两班倒"),
-        THR(3, "三班倒");
+        ONE(0, "单班"),
+        TWO(1, "两班倒"),
+        THR(2, "三班倒");
 
         private int id;
 

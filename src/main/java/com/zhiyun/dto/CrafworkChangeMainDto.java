@@ -2,6 +2,8 @@ package com.zhiyun.dto;
 
 import com.zhiyun.entity.CrafworkChangeMain;
 
+import java.util.List;
+
 public class CrafworkChangeMainDto extends CrafworkChangeMain {
     private static final long serialVersionUID = -3145145339795857174L;
 
@@ -9,6 +11,26 @@ public class CrafworkChangeMainDto extends CrafworkChangeMain {
     private String orgName;
     // 审批状态
     private String label;
+
+    private List<ProdCrafworkPathPlmDto> prodCrafworkPathPlmDtos;
+
+    private ProdCrafworkPathPlmDto[] crafworkPathDtos;
+
+    public List<ProdCrafworkPathPlmDto> getProdCrafworkPathPlmDtos() {
+        return prodCrafworkPathPlmDtos;
+    }
+
+    public void setProdCrafworkPathPlmDtos(List<ProdCrafworkPathPlmDto> prodCrafworkPathPlmDtos) {
+        this.prodCrafworkPathPlmDtos = prodCrafworkPathPlmDtos;
+    }
+
+    public ProdCrafworkPathPlmDto[] getCrafworkPathDtos() {
+        return crafworkPathDtos;
+    }
+
+    public void setCrafworkPathDtos(ProdCrafworkPathPlmDto[] crafworkPathDtos) {
+        this.crafworkPathDtos = crafworkPathDtos;
+    }
 
     public String getOrgName() {
         return orgName;

@@ -37,14 +37,14 @@ public class VoucherMainOaDaoImpl extends BaseDaoImpl<VoucherMainOa, Long> imple
     @Override
     public VoucherMainOa getByVoucherNo(String voucherNo, Long companyId) {
         Params params = Params.create();
-        params.add("voucherNo",voucherNo);
-        params.add("companyId",companyId);
+        params.add("voucherNo", voucherNo);
+        params.add("companyId", companyId);
 
-        return this.selectOne(this.getMethodName(),params);
+        return this.selectOne(this.getMethodName(), params);
     }
 
     @Override
     public void updateByVoucherNo(VoucherMainOa voucherMainOa) {
-        this.update(this.getMethodName(),voucherMainOa);
+        this.update(this.getMethodName(), voucherMainOa);
     }
 }

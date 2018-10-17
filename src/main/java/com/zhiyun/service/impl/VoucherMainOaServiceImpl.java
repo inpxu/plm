@@ -129,15 +129,14 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         }
         // 工艺路线添加单据号
         if (CollectionUtils.isNotEmpty(li)) {
-            for (ProdCrafworkPathPlm Plm : li) {
+            for (ProdCrafworkPathPlm plm : li) {
                 ProdCrafworkPathPlm p = new ProdCrafworkPathPlm();
-                p.setId(Plm.getId());
+                p.setId(plm.getId());
                 p.setVoucherNo(voucherNo);
                 prodCrafworkPathPlmService.update(p);
             }
         }
     }
-
 
     @Override
     @Transactional
@@ -186,7 +185,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         main.setRaiseDate(new Date());
         crafworkChangeMainDao.insert(main);
         // 工艺路线变更申请详情表添加单据号
-        if (CollectionUtils.isNotEmpty(list)){
+        if (CollectionUtils.isNotEmpty(list)) {
             for (CrafworkChangeRecordPlmDto dto : list) {
                 CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
                 plm.setId(dto.getId());
@@ -226,7 +225,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                 voucherMainOa.setWkflowId(Long.valueOf(processDto.getData().getTasks().get(0).getTaskId()));
             }
             //FIX ME
-            if(processDto == null){
+            if (processDto == null) {
                 voucherMainOa.setIsFinished(VoucherEnum.APPROVAL_STATUS_FAILURE.getId());
                 voucherMainOa.setWkflowId(DEFAULT_WORKFLOW_ID);
             }

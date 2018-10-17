@@ -167,15 +167,10 @@
         AND s.DELETED = 'F'
     </select>
     <select id="mattersOption" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">
-        SELECT
-               matters_store_ios.id,
-               matters_store_ios.matters_no mattersNo,
-               matters_store_ios.matters_name mattersName
-        FROM
-             matters_store_ios
-        WHERE
-                deleted = 'F'
-          AND company_id =#{companyId}
-          AND is_midprod !=2
+        SELECT matters_store_ios.id, matters_store_ios.matters_no mattersNo, matters_store_ios.matters_name mattersName
+        FROM matters_store_ios
+        WHERE deleted = 'F'
+          AND company_id = #{companyId}
+          AND is_midprod != 2
     </select>
 </mapper>   

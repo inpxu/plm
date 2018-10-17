@@ -10,10 +10,7 @@ import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.dto.CrafworkChangeRecordPlmDto;
-import com.zhiyun.dto.ProdCrafworkMainPlmDto;
-import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.entity.CrafworkChangeRecordPlm;
-import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.form.ChangeRecordForm;
 import com.zhiyun.service.CrafworkChangeRecordPlmService;
 import org.slf4j.Logger;
@@ -32,7 +29,7 @@ import java.util.List;
  * 工艺变更申请
  */
 @Controller
-@RequestMapping(value = "/changeRe",produces = "application/json;charset=UTF-8")
+@RequestMapping(value = "/changeRe", produces = "application/json;charset=UTF-8")
 public class CrafworkChangeRecordPlmController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CrafworkChangeRecordPlmController.class);
@@ -42,6 +39,7 @@ public class CrafworkChangeRecordPlmController extends BaseController {
 
     /**
      * 工艺路线变更记录
+     *
      * @param crafworkChangeRecordPlmDto
      * @param bindingResult
      * @return
@@ -49,8 +47,8 @@ public class CrafworkChangeRecordPlmController extends BaseController {
      * @date 2018-9-18 17:18:56
      */
     @ResponseBody
-    @RequestMapping(value = "/getRecord", method ={RequestMethod.GET,RequestMethod.POST} )
-    public Object getRecord(@RequestBody CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto, BindingResult bindingResult){
+    @RequestMapping(value = "/getRecord", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getRecord(@RequestBody CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto, BindingResult bindingResult) {
         BaseResult<ChangeRecordForm> baseResult = new BaseResult<ChangeRecordForm>();
         baseResult.setResult(true);
         baseResult.setMessage("查询成功！");
@@ -72,6 +70,7 @@ public class CrafworkChangeRecordPlmController extends BaseController {
 
     /**
      * 工艺变更申请查看详情
+     *
      * @param crafworkChangeRecordPlm
      * @param bindingResult
      * @return
@@ -79,8 +78,8 @@ public class CrafworkChangeRecordPlmController extends BaseController {
      * @date 2018-9-26 13:21:10
      */
     @ResponseBody
-    @RequestMapping(value = "/getDetail", method ={RequestMethod.GET,RequestMethod.POST} )
-    public Object getDetail(CrafworkChangeRecordPlm crafworkChangeRecordPlm, BindingResult bindingResult){
+    @RequestMapping(value = "/getDetail", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getDetail(CrafworkChangeRecordPlm crafworkChangeRecordPlm, BindingResult bindingResult) {
         BaseResult<List<CrafworkChangeRecordPlmDto>> baseResult = new BaseResult<List<CrafworkChangeRecordPlmDto>>();
         baseResult.setResult(true);
         baseResult.setMessage("查询成功！");
@@ -108,7 +107,6 @@ public class CrafworkChangeRecordPlmController extends BaseController {
         }
         return JSON.toJSONString(baseResult);
     }
-
 
     /**
      * 查看工艺变更申请

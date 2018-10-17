@@ -148,8 +148,8 @@
                CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
                matters_store_ios.versions,
                matters_store_ios.unit,
-               matters_store_ios.matters_no  mattersNo,
-               matters_store_ios.is_midprod  isMidprod
+               matters_store_ios.matters_no                                                                     mattersNo,
+               matters_store_ios.is_midprod                                                                     isMidprod
         FROM prod_bom_detail_plm
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
@@ -170,8 +170,8 @@
                CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
                matters_store_ios.versions,
                matters_store_ios.unit,
-               matters_store_ios.is_midprod isMidprod,
-               matters_store_ios.matters_no  mattersNo
+               matters_store_ios.is_midprod                                                                     isMidprod,
+               matters_store_ios.matters_no                                                                     mattersNo
         FROM prod_bom_detail_plm
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}

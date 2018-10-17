@@ -209,7 +209,7 @@ public class ProdBomPlmController extends BaseController {
      */
     @RequestMapping(value = "SearchBeforeAddMatters", method = RequestMethod.POST)
     @ResponseBody
-    public String SearchBeforeAddMatters(String codeOrName, String parentNo) {
+    public String searchBeforeAddMatters(String codeOrName, String parentNo) {
         BaseResult<List<MattersStoreDto>> baseResult = new BaseResult<>();
         try {
             List<MattersStoreDto> list = prodBomPlmService.SearchBeforeAddMatters(codeOrName, parentNo);

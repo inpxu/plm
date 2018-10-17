@@ -3,29 +3,28 @@
 <mapper namespace="com.zhiyun.dao.impl.CrafworkInputMaterPlmDaoImpl">
 
     <select id="findInput" parameterType="com.zhiyun.entity.CrafworkInputMaterPlm" resultType="com.zhiyun.dto.CrafworkInputMaterPlmDto">
-        SELECT
-        	m.id id,
-        	m.prod_no prodNo,
-        	m.mid_pord_no midPordNo,
-	        m.in_prod_no inProdNo,
-			concat_ws("/",m.in_prod_no,p.mid_prod_name) midProdMsg,
-	        m.mater_no materNo,
-	        s.matters_name mattersName,
-	        concat_ws("/",s.matters_no,s.matters_name) matterMsg,
-	        s.`status` status,
-	        t.type_name	typeName,
-	        m.input_amt	inputAmt,
-	        concat_ws("/",s.param,s.norms,s.MODEL_DESC) syntheticField,
-	        s.unit unit,
-	        s.versions version
+        SELECT m.id                                           id,
+               m.prod_no                                      prodNo,
+               m.mid_pord_no                                  midPordNo,
+               m.in_prod_no                                   inProdNo,
+               concat_ws("/", m.in_prod_no, p.mid_prod_name)  midProdMsg,
+               m.mater_no                                     materNo,
+               s.matters_name                                 mattersName,
+               concat_ws("/", s.matters_no, s.matters_name)   matterMsg,
+               s.`status`                                     status,
+               t.type_name                                    typeName,
+               m.input_amt                                    inputAmt,
+               concat_ws("/", s.param, s.norms, s.MODEL_DESC) syntheticField,
+               s.unit                                         unit,
+               s.versions                                     version
         FROM crafwork_input_mater_plm m
-        LEFT JOIN matters_store_ios s ON s.matters_no = m.mater_no AND s.company_id = m.company_id AND s.deleted = 'F'
-        LEFT JOIN matters_type_ios t ON t.id = s.type_id AND t.company_id = m.company_id AND t.deleted = 'F'
-		LEFT JOIN product_mid_plm p ON p.mid_prod_no = m.in_prod_no AND p.company_id = m.company_id AND p.deleted = 'F'
+                 LEFT JOIN matters_store_ios s ON s.matters_no = m.mater_no AND s.company_id = m.company_id AND s.deleted = 'F'
+                 LEFT JOIN matters_type_ios t ON t.id = s.type_id AND t.company_id = m.company_id AND t.deleted = 'F'
+                 LEFT JOIN product_mid_plm p ON p.mid_prod_no = m.in_prod_no AND p.company_id = m.company_id AND p.deleted = 'F'
         WHERE m.prod_no = #{prodNo,jdbcType=VARCHAR}
-        AND m.mid_pord_no = #{midPordNo,jdbcType=VARCHAR}
-        AND m.crafwork_id = #{crafworkId,jdbcType=BIGINT}
-        AND m.company_id = #{companyId,jdbcType=BIGINT}
-        AND m.deleted = 'F'
+          AND m.mid_pord_no = #{midPordNo,jdbcType=VARCHAR}
+          AND m.crafwork_id = #{crafworkId,jdbcType=BIGINT}
+          AND m.company_id = #{companyId,jdbcType=BIGINT}
+          AND m.deleted = 'F'
     </select>
 </mapper>   

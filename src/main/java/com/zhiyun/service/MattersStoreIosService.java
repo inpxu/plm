@@ -36,6 +36,7 @@ public interface MattersStoreIosService extends BaseService<MattersStoreIos, Lon
 
     // 模糊查询物料信息
     List<MattersStoreDto> getMatter(MattersStoreIos mattersStoreIos);
+
     /**
      * 物料下拉查询
      *

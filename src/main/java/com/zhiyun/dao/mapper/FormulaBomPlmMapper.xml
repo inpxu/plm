@@ -1,378 +1,377 @@
-<?xml version="1.0" encoding="UTF-8" ?>   
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyun.dao.impl.FormulaBomPlmDaoImpl">
 
-	<!-- 插入实体 -->
-	<insert id="insert" parameterType="com.zhiyun.entity.FormulaBomPlm">
-		INSERT INTO FORMULA_BOM_PLM (
-		   	ID,
-		   	BOM_NO,
-		   	FORMULA_NO,
-		   	FORMULA_NAME,
-		   	MATTER_NO,
-		   	AMOUNT,
-		   	UNIT,
-		   	NORMS,
-		   	DELETED,
-		   	CREATE_TIME,
-		   	CREATE_BY,
-		   	COMPANY_ID,
-		   	MODIFY_TIME,
-		   	MODIFY_BY
-		) VALUES (
-		   	#{id,jdbcType=BIGINT},
-		   	#{bomNo,jdbcType=VARCHAR},
-		   	#{formulaNo,jdbcType=VARCHAR},
-		   	#{formulaName,jdbcType=VARCHAR},
-		   	#{matterNo,jdbcType=VARCHAR},
-		   	#{amount,jdbcType=DOUBLE},
-		   	#{unit,jdbcType=VARCHAR},
-		   	#{norms,jdbcType=VARCHAR},
-		   	#{deleted,jdbcType=VARCHAR},
-		   	#{createTime,jdbcType=TIMESTAMP},
-		   	#{createBy,jdbcType=VARCHAR},
-		   	#{companyId,jdbcType=BIGINT},
-		   	#{modifyTime,jdbcType=TIMESTAMP},
-		   	#{modifyBy,jdbcType=VARCHAR}
-		)
-		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-			SELECT LAST_INSERT_ID() AS ID
-		</selectKey>
-		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_FORMULA_BOM_PLM.nextval as id FROM dual
-		</selectKey>
-	</insert>
+    <!-- 插入实体 -->
+    <insert id="insert" parameterType="com.zhiyun.entity.FormulaBomPlm">
+        INSERT INTO FORMULA_BOM_PLM (
+        ID,
+        BOM_NO,
+        FORMULA_NO,
+        FORMULA_NAME,
+        MATTER_NO,
+        AMOUNT,
+        UNIT,
+        NORMS,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{id,jdbcType=BIGINT},
+        #{bomNo,jdbcType=VARCHAR},
+        #{formulaNo,jdbcType=VARCHAR},
+        #{formulaName,jdbcType=VARCHAR},
+        #{matterNo,jdbcType=VARCHAR},
+        #{amount,jdbcType=DOUBLE},
+        #{unit,jdbcType=VARCHAR},
+        #{norms,jdbcType=VARCHAR},
+        #{deleted,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=VARCHAR},
+        #{companyId,jdbcType=BIGINT},
+        #{modifyTime,jdbcType=TIMESTAMP},
+        #{modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_FORMULA_BOM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
 
-	<!-- 更新实体 -->
-	<update id="update" parameterType="com.zhiyun.entity.FormulaBomPlm">
-		UPDATE FORMULA_BOM_PLM
-		<set>
-			<if test="bomNo != null">
-				BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			</if>
-			<if test="formulaNo != null">
-				FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
-			</if>
-			<if test="formulaName != null">
-				FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
-			</if>
-			<if test="matterNo != null">
-				MATTER_NO = #{matterNo,jdbcType=VARCHAR},
-			</if>
-			<if test="amount != null">
-				AMOUNT = #{amount,jdbcType=DOUBLE},
-			</if>
-			<if test="unit != null">
-				UNIT = #{unit,jdbcType=VARCHAR},
-			</if>
-			<if test="norms != null">
-				NORMS = #{norms,jdbcType=VARCHAR},
-			</if>
-			<if test="deleted != null">
-				DELETED = #{deleted,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="companyId != null">
-				COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			</if>
-			<if test="modifyTime != null">
-				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifyBy != null">
-				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-			</if>
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
-	
-	<!-- 更新实体 -->
-	<update id="updateFields" parameterType="com.zhiyun.entity.FormulaBomPlm">
-		UPDATE FORMULA_BOM_PLM
-		<set>
-			BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
-			FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
-			MATTER_NO = #{matterNo,jdbcType=VARCHAR},
-			AMOUNT = #{amount,jdbcType=DOUBLE},
-			UNIT = #{unit,jdbcType=VARCHAR},
-			NORMS = #{norms,jdbcType=VARCHAR},
-			DELETED = #{deleted,jdbcType=VARCHAR},
-			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 更新实体 -->
+    <update id="update" parameterType="com.zhiyun.entity.FormulaBomPlm">
+        UPDATE FORMULA_BOM_PLM
+        <set>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="formulaNo != null">
+                FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
+            </if>
+            <if test="formulaName != null">
+                FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
+            </if>
+            <if test="matterNo != null">
+                MATTER_NO = #{matterNo,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount,jdbcType=DOUBLE},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 删除实体 -->
-	<update id="delete" parameterType="com.zhiyun.entity.FormulaBomPlm">
-		UPDATE FORMULA_BOM_PLM
-		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
-		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-		 WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 更新实体 -->
+    <update id="updateFields" parameterType="com.zhiyun.entity.FormulaBomPlm">
+        UPDATE FORMULA_BOM_PLM
+        <set>
+            BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
+            FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
+            MATTER_NO = #{matterNo,jdbcType=VARCHAR},
+            AMOUNT = #{amount,jdbcType=DOUBLE},
+            UNIT = #{unit,jdbcType=VARCHAR},
+            NORMS = #{norms,jdbcType=VARCHAR},
+            DELETED = #{deleted,jdbcType=VARCHAR},
+            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 查询字段 -->
-	<sql id="selectFieldSQL">
-		SELECT 
-		       ID id,
-		       BOM_NO bomNo,
-		       FORMULA_NO formulaNo,
-		       FORMULA_NAME formulaName,
-		       MATTER_NO matterNo,
-		       AMOUNT amount,
-		       UNIT unit,
-		       NORMS norms,
-		       DELETED deleted,
-		       CREATE_TIME createTime,
-		       CREATE_BY createBy,
-		       COMPANY_ID companyId,
-		       MODIFY_TIME modifyTime,
-		       MODIFY_BY modifyBy
-	</sql>
+    <!-- 删除实体 -->
+    <update id="delete" parameterType="com.zhiyun.entity.FormulaBomPlm">
+        UPDATE FORMULA_BOM_PLM
+        SET DELETED     = #{deleted,jdbcType=VARCHAR},
+            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
-	<!-- 查询 -->
-	<select id="get" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		 WHERE ID = #{id,jdbcType=INTEGER}
-		   AND DELETED = #{deleted,jdbcType=VARCHAR}
-	</select>
+    <!-- 查询字段 -->
+    <sql id="selectFieldSQL">
+        SELECT ID           id,
+               BOM_NO       bomNo,
+               FORMULA_NO   formulaNo,
+               FORMULA_NAME formulaName,
+               MATTER_NO    matterNo,
+               AMOUNT       amount,
+               UNIT         unit,
+               NORMS        norms,
+               DELETED      deleted,
+               CREATE_TIME  createTime,
+               CREATE_BY    createBy,
+               COMPANY_ID   companyId,
+               MODIFY_TIME  modifyTime,
+               MODIFY_BY    modifyBy
+    </sql>
 
-	<!-- 查询 -->
-	<select id="find" parameterType="com.zhiyun.entity.FormulaBomPlm" resultType="com.zhiyun.entity.FormulaBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		<where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="bomNo != null and bomNo != ''">
-				AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
-			</if>
-			<if test="formulaNo != null and formulaNo != ''">
-				AND FORMULA_NO = #{formulaNo,jdbcType=VARCHAR}
-			</if>
-			<if test="formulaName != null and formulaName != ''">
-				AND FORMULA_NAME = #{formulaName,jdbcType=VARCHAR}
-			</if>
-			<if test="matterNo != null and matterNo != ''">
-				AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
-			</if>
-			<if test="amount != null">
-				AND AMOUNT = #{amount,jdbcType=DOUBLE}
-			</if>
-			<if test="unit != null and unit != ''">
-				AND UNIT = #{unit,jdbcType=VARCHAR}
-			</if>
-			<if test="norms != null and norms != ''">
-				AND NORMS = #{norms,jdbcType=VARCHAR}
-			</if>
-			<if test="deleted != null and deleted != ''">
-				AND DELETED = #{deleted,jdbcType=VARCHAR}
-			</if>
-			<if test="companyId != null">
-				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-			</if>
-		</where>
-	</select>
+    <!-- 查询 -->
+    <select id="get" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        WHERE ID = #{id,jdbcType=INTEGER}
+        AND DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
 
-	<!-- 查询所有 -->
-	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
-	</select>
+    <!-- 查询 -->
+    <select id="find" parameterType="com.zhiyun.entity.FormulaBomPlm" resultType="com.zhiyun.entity.FormulaBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="formulaNo != null and formulaNo != ''">
+                AND FORMULA_NO = #{formulaNo,jdbcType=VARCHAR}
+            </if>
+            <if test="formulaName != null and formulaName != ''">
+                AND FORMULA_NAME = #{formulaName,jdbcType=VARCHAR}
+            </if>
+            <if test="matterNo != null and matterNo != ''">
+                AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                AND AMOUNT = #{amount,jdbcType=DOUBLE}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </select>
 
-	<!-- 分页查询（条件） -->
-	<sql id="page_condition">
-		<where>
-				<if test="entity.bomNo != null and entity.bomNo != ''">
-					AND BOM_NO = #{entity.bomNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.formulaNo != null and entity.formulaNo != ''">
-					AND FORMULA_NO = #{entity.formulaNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.formulaName != null and entity.formulaName != ''">
-					AND FORMULA_NAME = #{entity.formulaName,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.matterNo != null and entity.matterNo != ''">
-					AND MATTER_NO = #{entity.matterNo,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.amount != null">
-					AND AMOUNT = #{entity.amount,jdbcType=DOUBLE}
-				</if>
-				<if test="entity.unit != null and entity.unit != ''">
-					AND UNIT = #{entity.unit,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.norms != null and entity.norms != ''">
-					AND NORMS = #{entity.norms,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.deleted != null and entity.deleted != ''">
-					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
-				</if>
-				<if test="entity.companyId != null">
-					AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
-				</if>
-		</where>
-	</sql>
+    <!-- 查询所有 -->
+    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+    </select>
 
-	<!-- 分页查询（计数） -->
-	<select id="page_count" parameterType="map" resultType="int">
-		SELECT count(*)
-		  FROM FORMULA_BOM_PLM
-		<include refid="page_condition" />
-	</select>
+    <!-- 分页查询（条件） -->
+    <sql id="page_condition">
+        <where>
+            <if test="entity.bomNo != null and entity.bomNo != ''">
+                AND BOM_NO = #{entity.bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.formulaNo != null and entity.formulaNo != ''">
+                AND FORMULA_NO = #{entity.formulaNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.formulaName != null and entity.formulaName != ''">
+                AND FORMULA_NAME = #{entity.formulaName,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.matterNo != null and entity.matterNo != ''">
+                AND MATTER_NO = #{entity.matterNo,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.amount != null">
+                AND AMOUNT = #{entity.amount,jdbcType=DOUBLE}
+            </if>
+            <if test="entity.unit != null and entity.unit != ''">
+                AND UNIT = #{entity.unit,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.norms != null and entity.norms != ''">
+                AND NORMS = #{entity.norms,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
 
-	<!-- 分页查询（数据） -->
-	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
-		<include refid="mybatis.pageStartSQL" />
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		<include refid="page_condition" />
-		<include refid="mybatis.pageEndSQL" />
-	</select>
-	
-	<!-- Map查询所有 -->
-	<select id="findMapListAll" parameterType="map" resultType="map">
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		 WHERE DELETED = "F"
-	</select>
-	
-	<!-- Map条件查询 -->
-	<select id="findMapList" parameterType="map" resultType="map">
-		<include refid="selectFieldSQL" />
-		  FROM FORMULA_BOM_PLM
-		 <where>
-			<if test="id != null">
-				AND ID = #{id,jdbcType=INTEGER}
-			</if>
-			<if test="bomNo != null and bomNo != ''">
-				AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
-			</if>
-			<if test="formulaNo != null and formulaNo != ''">
-				AND FORMULA_NO = #{formulaNo,jdbcType=VARCHAR}
-			</if>
-			<if test="formulaName != null and formulaName != ''">
-				AND FORMULA_NAME = #{formulaName,jdbcType=VARCHAR}
-			</if>
-			<if test="matterNo != null and matterNo != ''">
-				AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
-			</if>
-			<if test="amount != null">
-				AND AMOUNT = #{amount,jdbcType=DOUBLE}
-			</if>
-			<if test="unit != null and unit != ''">
-				AND UNIT = #{unit,jdbcType=VARCHAR}
-			</if>
-			<if test="norms != null and norms != ''">
-				AND NORMS = #{norms,jdbcType=VARCHAR}
-			</if>
-			<if test="deleted != null and deleted != ''">
-				AND DELETED = #{deleted,jdbcType=VARCHAR}
-			</if>
-			<if test="companyId != null">
-				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-			</if>
-		 WHERE DELETED = "F"
-		</where>
-	</select>
-	
-	<!-- 插入实体map -->
-	<insert id="mapInsert" parameterType="map">
-		INSERT INTO FORMULA_BOM_PLM (
-		   	ID,
-		   	BOM_NO,
-		   	FORMULA_NO,
-		   	FORMULA_NAME,
-		   	MATTER_NO,
-		   	AMOUNT,
-		   	UNIT,
-		   	NORMS,
-		   	DELETED,
-		   	CREATE_TIME,
-		   	CREATE_BY,
-		   	COMPANY_ID,
-		   	MODIFY_TIME,
-		   	MODIFY_BY
-		) VALUES (
-		   	#{ id,jdbcType=BIGINT},
-		   	#{ bomNo,jdbcType=VARCHAR},
-		   	#{ formulaNo,jdbcType=VARCHAR},
-		   	#{ formulaName,jdbcType=VARCHAR},
-		   	#{ matterNo,jdbcType=VARCHAR},
-		   	#{ amount,jdbcType=DOUBLE},
-		   	#{ unit,jdbcType=VARCHAR},
-		   	#{ norms,jdbcType=VARCHAR},
-		   	#{ deleted,jdbcType=VARCHAR},
-		   	#{ createTime,jdbcType=TIMESTAMP},
-		   	#{ createBy,jdbcType=VARCHAR},
-		   	#{ companyId,jdbcType=BIGINT},
-		   	#{ modifyTime,jdbcType=TIMESTAMP},
-		   	#{ modifyBy,jdbcType=VARCHAR}
-		)
-		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-			SELECT LAST_INSERT_ID() AS ID
-		</selectKey>
-		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-			SELECT SEQ_FORMULA_BOM_PLM.nextval as id FROM dual
-		</selectKey>
-	</insert>
-	
-	<!-- 更新实体Map -->
-	<update id="mapUpdate" parameterType="map">
-		UPDATE FORMULA_BOM_PLM
-		<set>
-			<if test="bomNo != null">
-				BOM_NO = #{bomNo,jdbcType=VARCHAR},
-			</if>
-			<if test="formulaNo != null">
-				FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
-			</if>
-			<if test="formulaName != null">
-				FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
-			</if>
-			<if test="matterNo != null">
-				MATTER_NO = #{matterNo,jdbcType=VARCHAR},
-			</if>
-			<if test="amount != null">
-				AMOUNT = #{amount,jdbcType=DOUBLE},
-			</if>
-			<if test="unit != null">
-				UNIT = #{unit,jdbcType=VARCHAR},
-			</if>
-			<if test="norms != null">
-				NORMS = #{norms,jdbcType=VARCHAR},
-			</if>
-			<if test="deleted != null">
-				DELETED = #{deleted,jdbcType=VARCHAR},
-			</if>
-			<if test="createTime != null">
-				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="createBy != null">
-				CREATE_BY = #{createBy,jdbcType=VARCHAR},
-			</if>
-			<if test="companyId != null">
-				COMPANY_ID = #{companyId,jdbcType=BIGINT},
-			</if>
-			<if test="modifyTime != null">
-				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifyBy != null">
-				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-			</if>
-		</set>
-		WHERE ID = #{id,jdbcType=INTEGER}
-	</update>
+    <!-- 分页查询（计数） -->
+    <select id="page_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM FORMULA_BOM_PLM
+        <include refid="page_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.FormulaBomPlm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        <include refid="page_condition"/>
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
+
+    <!-- Map查询所有 -->
+    <select id="findMapListAll" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        WHERE DELETED = "F"
+    </select>
+
+    <!-- Map条件查询 -->
+    <select id="findMapList" parameterType="map" resultType="map">
+        <include refid="selectFieldSQL"/>
+        FROM FORMULA_BOM_PLM
+        <where>
+            <if test="id != null">
+                AND ID = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="bomNo != null and bomNo != ''">
+                AND BOM_NO = #{bomNo,jdbcType=VARCHAR}
+            </if>
+            <if test="formulaNo != null and formulaNo != ''">
+                AND FORMULA_NO = #{formulaNo,jdbcType=VARCHAR}
+            </if>
+            <if test="formulaName != null and formulaName != ''">
+                AND FORMULA_NAME = #{formulaName,jdbcType=VARCHAR}
+            </if>
+            <if test="matterNo != null and matterNo != ''">
+                AND MATTER_NO = #{matterNo,jdbcType=VARCHAR}
+            </if>
+            <if test="amount != null">
+                AND AMOUNT = #{amount,jdbcType=DOUBLE}
+            </if>
+            <if test="unit != null and unit != ''">
+                AND UNIT = #{unit,jdbcType=VARCHAR}
+            </if>
+            <if test="norms != null and norms != ''">
+                AND NORMS = #{norms,jdbcType=VARCHAR}
+            </if>
+            <if test="deleted != null and deleted != ''">
+                AND DELETED = #{deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="companyId != null">
+                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+            </if>
+            WHERE DELETED = "F"
+        </where>
+    </select>
+
+    <!-- 插入实体map -->
+    <insert id="mapInsert" parameterType="map">
+        INSERT INTO FORMULA_BOM_PLM (
+        ID,
+        BOM_NO,
+        FORMULA_NO,
+        FORMULA_NAME,
+        MATTER_NO,
+        AMOUNT,
+        UNIT,
+        NORMS,
+        DELETED,
+        CREATE_TIME,
+        CREATE_BY,
+        COMPANY_ID,
+        MODIFY_TIME,
+        MODIFY_BY
+        ) VALUES (
+        #{ id,jdbcType=BIGINT},
+        #{ bomNo,jdbcType=VARCHAR},
+        #{ formulaNo,jdbcType=VARCHAR},
+        #{ formulaName,jdbcType=VARCHAR},
+        #{ matterNo,jdbcType=VARCHAR},
+        #{ amount,jdbcType=DOUBLE},
+        #{ unit,jdbcType=VARCHAR},
+        #{ norms,jdbcType=VARCHAR},
+        #{ deleted,jdbcType=VARCHAR},
+        #{ createTime,jdbcType=TIMESTAMP},
+        #{ createBy,jdbcType=VARCHAR},
+        #{ companyId,jdbcType=BIGINT},
+        #{ modifyTime,jdbcType=TIMESTAMP},
+        #{ modifyBy,jdbcType=VARCHAR}
+        )
+        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID() AS ID
+        </selectKey>
+        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+            SELECT SEQ_FORMULA_BOM_PLM.nextval as id FROM dual
+        </selectKey>
+    </insert>
+
+    <!-- 更新实体Map -->
+    <update id="mapUpdate" parameterType="map">
+        UPDATE FORMULA_BOM_PLM
+        <set>
+            <if test="bomNo != null">
+                BOM_NO = #{bomNo,jdbcType=VARCHAR},
+            </if>
+            <if test="formulaNo != null">
+                FORMULA_NO = #{formulaNo,jdbcType=VARCHAR},
+            </if>
+            <if test="formulaName != null">
+                FORMULA_NAME = #{formulaName,jdbcType=VARCHAR},
+            </if>
+            <if test="matterNo != null">
+                MATTER_NO = #{matterNo,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                AMOUNT = #{amount,jdbcType=DOUBLE},
+            </if>
+            <if test="unit != null">
+                UNIT = #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="norms != null">
+                NORMS = #{norms,jdbcType=VARCHAR},
+            </if>
+            <if test="deleted != null">
+                DELETED = #{deleted,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null">
+                COMPANY_ID = #{companyId,jdbcType=BIGINT},
+            </if>
+            <if test="modifyTime != null">
+                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyBy != null">
+                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=INTEGER}
+    </update>
 
 </mapper>   

@@ -4,22 +4,21 @@
 
     <!-- 查询字段 -->
     <sql id="selectFieldsSQL">
-		SELECT
-		       csp.ID id,
-		       csp.CRAFWORK_NAME crafworkName,
-		       csp.MAC_TYPE macType,
-		       csp.IS_CHECK isCheck,
-		       csp.QUARTERS_EMP quartersEmp,
-		       csp.GRADE_EMP gradeEmp,
-		       csp.UNIT unit,
-		       csp.DELETED deleted,
-		       csp.COMPANY_ID companyId,
-		       csp.CREATE_TIME createTime,
-		       csp.CREATE_BY createBy,
-		       csp.MODIFY_TIME modifyTime,
-		       csp.MODIFY_BY modifyBy,
-		       qh.quarters_desc quarterName
-	</sql>
+        SELECT csp.ID            id,
+               csp.CRAFWORK_NAME crafworkName,
+               csp.MAC_TYPE      macType,
+               csp.IS_CHECK      isCheck,
+               csp.QUARTERS_EMP  quartersEmp,
+               csp.GRADE_EMP     gradeEmp,
+               csp.UNIT          unit,
+               csp.DELETED       deleted,
+               csp.COMPANY_ID    companyId,
+               csp.CREATE_TIME   createTime,
+               csp.CREATE_BY     createBy,
+               csp.MODIFY_TIME   modifyTime,
+               csp.MODIFY_BY     modifyBy,
+               qh.quarters_desc  quarterName
+    </sql>
     <!-- 分页查询（条件） -->
     <sql id="pageCrafwork_condition">
         <where>
@@ -71,32 +70,31 @@
     </select>
 
     <select id="addGet" parameterType="com.zhiyun.dto.CrafworkStructDto" resultType="com.zhiyun.dto.CrafworkStructDto">
-        SELECT
-          cp.id id,
-          cp.crafwork_name crafworkName,
-          cp.unit unit,
-          cp.quarters_emp quartersEmp,
-          qh.quarters_desc quarterName
+        SELECT cp.id id, cp.crafwork_name crafworkName, cp.unit unit, cp.quarters_emp quartersEmp, qh.quarters_desc quarterName
         FROM crafwork_struct_plm cp
-        left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
-        WHERE cp.id NOT IN (SELECT tp.crafwork_id FROM prod_crafwork_path_plm tp WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR} AND cp.company_id = tp.company_id AND tp.deleted = 'F')
-        AND cp.deleted = 'F'
-        AND cp.company_id = #{companyId,jdbcType=BIGINT}
+                 left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
+        WHERE cp.id NOT IN (SELECT tp.crafwork_id
+                            FROM prod_crafwork_path_plm tp
+                            WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+                              AND cp.company_id = tp.company_id
+                              AND tp.deleted = 'F')
+          AND cp.deleted = 'F'
+          AND cp.company_id = #{companyId,jdbcType=BIGINT}
         ORDER BY cp.create_time DESC
     </select>
 
     <select id="findCraf" parameterType="com.zhiyun.dto.CrafworkStructDto" resultType="com.zhiyun.dto.CrafworkStructDto">
-        SELECT
-          cp.id id,
-          cp.crafwork_name crafworkName,
-          cp.unit unit,
-          cp.quarters_emp quartersEmp,
-          qh.quarters_desc quarterName
+        SELECT cp.id id, cp.crafwork_name crafworkName, cp.unit unit, cp.quarters_emp quartersEmp, qh.quarters_desc quarterName
         FROM crafwork_struct_plm cp
-        left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
-        WHERE cp.id NOT IN (SELECT tp.crafwork_id FROM prod_crafwork_path_plm tp WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR} AND tp.path_no = #{pathNo,jdbcType=VARCHAR} AND cp.company_id = tp.company_id AND tp.deleted = 'F')
-        AND cp.deleted = 'F'
-        AND cp.company_id = #{companyId,jdbcType=BIGINT}
+                 left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
+        WHERE cp.id NOT IN (SELECT tp.crafwork_id
+                            FROM prod_crafwork_path_plm tp
+                            WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
+                              AND tp.path_no = #{pathNo,jdbcType=VARCHAR}
+                              AND cp.company_id = tp.company_id
+                              AND tp.deleted = 'F')
+          AND cp.deleted = 'F'
+          AND cp.company_id = #{companyId,jdbcType=BIGINT}
     </select>
 
 </mapper>   

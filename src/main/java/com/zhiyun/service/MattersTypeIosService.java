@@ -37,6 +37,4 @@ public interface MattersTypeIosService extends BaseService<MattersTypeIos, Long>
     //物料分类下拉
     public List<LabelValue> mattersOptions();
 
-
-
 }

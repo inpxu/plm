@@ -5,11 +5,10 @@
 
 package com.zhiyun.dao.impl;
 
-import org.springframework.stereotype.Repository;
-
 import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.dao.FormulaBomPlmDao;
 import com.zhiyun.entity.FormulaBomPlm;
+import org.springframework.stereotype.Repository;
 
 /**
  * FormulaBomPlmDao接口实现类

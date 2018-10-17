@@ -72,32 +72,29 @@
 
     <select id="pathCraf" resultType="com.zhiyun.dto.ProdCrafworkPathPlmDto"
             parameterType="com.zhiyun.entity.ProdCrafworkPathPlm">
-        SELECT
-          tp.id id,
-          tp.mid_prod_no midProdNo,
-          tp.crafwork_id crafworkId,
-          tp.carf_seq carfSeq,
-          tp.mac_minutes macMinutes,
-          tp.emp_minutes empMinutes,
-          tp.day_amount dayAmount,
-          cp.crafwork_name crafworkName,
-          cp.is_check isCheck,
-          tp.unit unit,
-          mp.`status` status,
-          	CASE cp.is_check
-            WHEN 1 THEN
-                '是'
-            ELSE
-                '否'
-            END AS isCheckDisplay
+        SELECT tp.id            id,
+               tp.mid_prod_no   midProdNo,
+               tp.crafwork_id   crafworkId,
+               tp.carf_seq      carfSeq,
+               tp.mac_minutes   macMinutes,
+               tp.emp_minutes   empMinutes,
+               tp.day_amount    dayAmount,
+               cp.crafwork_name crafworkName,
+               cp.is_check      isCheck,
+               tp.unit          unit,
+               mp.`status`      status,
+               CASE cp.is_check
+                   WHEN 1 THEN '是'
+                   ELSE '否'
+                       END AS   isCheckDisplay
         FROM prod_crafwork_path_plm tp
-        LEFT JOIN crafwork_struct_plm cp ON cp.id = tp.crafwork_id AND cp.company_id = tp.company_id AND cp.deleted = 'F'
-        LEFT JOIN product_mid_plm pmp ON pmp.mid_prod_no = tp.mid_prod_no AND pmp.company_id = tp.company_id AND pmp.deleted = 'F'
-        LEFT JOIN prod_crafwork_main_plm mp ON mp.prod_no = pmp.prod_no AND mp.company_id = pmp.company_id AND mp.deleted = 'F'
+                 LEFT JOIN crafwork_struct_plm cp ON cp.id = tp.crafwork_id AND cp.company_id = tp.company_id AND cp.deleted = 'F'
+                 LEFT JOIN product_mid_plm pmp ON pmp.mid_prod_no = tp.mid_prod_no AND pmp.company_id = tp.company_id AND pmp.deleted = 'F'
+                 LEFT JOIN prod_crafwork_main_plm mp ON mp.prod_no = pmp.prod_no AND mp.company_id = pmp.company_id AND mp.deleted = 'F'
         where tp.MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
           AND tp.path_no = #{pathNo,jdbcType=VARCHAR}
           AND tp.DELETED = 'F'
           AND tp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
-         order by tp.id desc
+        order by tp.id desc
     </select>
 </mapper>   

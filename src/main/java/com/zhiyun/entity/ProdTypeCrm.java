@@ -88,6 +88,7 @@ public class ProdTypeCrm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public Long getCompanyId() {
         return this.companyId;
     }
@@ -95,6 +96,7 @@ public class ProdTypeCrm extends BaseEntity<Long> {
     /**
      * company_id
      */
+    @Override
     public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }

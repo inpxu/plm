@@ -14,12 +14,10 @@ import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.ProdBomDetailPlmDao;
 import com.zhiyun.dao.ProdBomPlmDao;
-import com.zhiyun.dao.ProductMidPlmDao;
 import com.zhiyun.dao.VoucherMainOaDao;
 import com.zhiyun.dto.*;
 import com.zhiyun.entity.ProdBomDetailPlm;
 import com.zhiyun.entity.ProdBomPlm;
-import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.entity.VoucherMainOa;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.service.ProdBomPlmService;
@@ -49,8 +47,6 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     private UniqueIdService uniqueIdService;
     @Autowired
     private VoucherMainOaDao voucherMainOaDao;
-    @Autowired
-    private ProductMidPlmDao productMidPlmDao;
     @Resource
     private ProdBomPlmDao prodBomPlmDao;
     @Autowired
@@ -115,7 +111,6 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
             //判断物料是纯物料还是公共组件
             if (CollectionUtils.isNotEmpty(mattersStoreIosList)) {
                 for (MattersStoreDto mattersStoreDto : mattersStoreIosList) {
-                    //TODO 判断是否是公用组件,首先要将数据查出来----------------
                     if ("1".equals(mattersStoreDto.getIsMidprod())) {
                         param.put("productNo", mattersStoreDto.getMattersNo());
                     } else {
@@ -168,7 +163,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                     Map<String, Object> param = new HashMap<>(2);
                     param.put("id", prodBomDetailPlm.getId());
                     param.put("companyId", UserHolder.getCompanyId());
-                    ProdBomDetailPlmDto prodBomDetailPlmDto = prodBomDetailPlmDao.ReturnInfoForFront(param);
+                    ProdBomDetailPlmDto prodBomDetailPlmDto = prodBomDetailPlmDao.returnInfoForFront(param);
                     list.add(prodBomDetailPlmDto);
                 }
             }
@@ -237,7 +232,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
-    public List<MattersStoreDto> SearchBeforeAddMatters(String codeOrName, String parentNo) {
+    public List<MattersStoreDto> searchBeforeAddMatters(String codeOrName, String parentNo) {
         Map<String, Object> param = new HashMap<>(3);
         param.put("codeOrName", codeOrName);
         param.put("companyId", UserHolder.getCompanyId());
@@ -272,37 +267,12 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     @Override
     @Transactional
     public void changeNumber(boolean isMidProduct, Long id, Long number, Long numberBefore) {
-        if (isMidProduct) {
-            //为半成品，更新半成品数量的同时，要更新半成品下所有的半成品及,其下的半成品数量向上取整
-            //1.查询半成品
-            Map<String, Object> param = new HashMap<>();
-            param.put("companyId", UserHolder.getCompanyId());
-            param.put("midProductId", id);
-            List<ProductMidPlm> list = productMidPlmDao.findAllMidProductByMidId(param);
-            if (CollectionUtils.isNotEmpty(list)) {
-                for (ProductMidPlm productMidPlm : list) {
-                    //减小
-                    if (numberBefore > number) {
-                        double ceil = Math.ceil((number / numberBefore) * productMidPlm.getAmount().doubleValue());
-                        productMidPlm.setAmount(ceil);
-                        //增大
-                    } else if (numberBefore < number) {
-                        double ceil = Math.ceil((numberBefore / number) * productMidPlm.getAmount().doubleValue());
-                        productMidPlm.setAmount(ceil);
-                    }
-
-                }
-            }
-            //2.更新半成品下的物料
-            List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersFroProduct(param);
-        } else {
-            //更新的为物料
-            Map<String, Object> param = new HashMap<>(2);
-            param.put("id", id);
-            param.put("number", number);
-            param.put("companyId", UserHolder.getCompanyId());
-            prodBomDetailPlmDao.updateMatterNumber(param);
-        }
+        //更新的为物料
+        Map<String, Object> param = new HashMap<>(2);
+        param.put("id", id);
+        param.put("number", number);
+        param.put("companyId", UserHolder.getCompanyId());
+        prodBomDetailPlmDao.updateMatterNumber(param);
     }
 
     /**
@@ -371,11 +341,11 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
      * @date 2018/10/13 17:15
      */
     @Override
-    public List<MattersStoreDto> SearchBeforeAddMattersForCom(String codeOrName) {
+    public List<MattersStoreDto> searchBeforeAddMattersForCom(String codeOrName) {
         Map<String, Object> param = new HashMap<>(3);
         param.put("codeOrName", codeOrName);
         param.put("companyId", UserHolder.getCompanyId());
-        return prodBomPlmDao.SearchBeforeAddMattersForCom(param);
+        return prodBomPlmDao.searchBeforeAddMattersForCom(param);
     }
 
     /**

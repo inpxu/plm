@@ -7,7 +7,6 @@ package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
-import com.zhiyun.dto.ProdCrafworkPathPlmAudDto;
 import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.ProdCrafworkMainPlm;
@@ -24,9 +23,9 @@ import java.util.List;
  */
 public interface ProdCrafworkMainPlmService extends BaseService<ProdCrafworkMainPlm, Long> {
 
-    void  addPathNo(ProdCrafworkMainPlm prodCrafworkMainPlm);
+    void addPathNo(ProdCrafworkMainPlm prodCrafworkMainPlm);
 
-    ProdCrafworkMainPlm  getSV(ProdCrafworkMainPlm prodCrafworkMainPlm);
+    ProdCrafworkMainPlm getSV(ProdCrafworkMainPlm prodCrafworkMainPlm);
 
     ProdCrafworkMainPlmDto getMsg(ProdMidDto prodMidDto);
 

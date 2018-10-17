@@ -13,7 +13,6 @@ import com.zhiyun.dto.ProdCrafworkMainPlmDto;
 import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.CrafworkChangeMain;
 import com.zhiyun.entity.ProdCrafworkMainPlm;
-import com.zhiyun.entity.VoucherMainOa;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
 import com.zhiyun.service.VoucherMainOaService;
 import org.slf4j.Logger;
@@ -171,6 +170,7 @@ public class VoucherMainOaController extends BaseController {
 
     /**
      * 工艺路线变更审核
+     *
      * @param voucherNo
      * @param isPass
      * @return
@@ -179,20 +179,20 @@ public class VoucherMainOaController extends BaseController {
      */
     @ResponseBody
     @RequestMapping("examine")
-    public Object examine(@RequestParam(value = "voucherNo",required = true)String voucherNo,
-                        @RequestParam(value = "isPass",required = true)boolean isPass){
+    public Object examine(@RequestParam(value = "voucherNo", required = true) String voucherNo,
+            @RequestParam(value = "isPass", required = true) boolean isPass) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
 
         baseResult.setResult(true);
         baseResult.setMessage("操作成功");
         try {
-            voucherMainOaService.examine(voucherNo,isPass);
+            voucherMainOaService.examine(voucherNo, isPass);
         } catch (BusinessException be) {
-            LOGGER.debug("业务异常"+be);
+            LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);
             baseResult.setMessage(be.getMessage());
         } catch (Exception e) {
-            LOGGER.debug("系统异常"+e);
+            LOGGER.debug("系统异常" + e);
             baseResult.setResult(false);
             baseResult.setMessage("系统异常");
         }

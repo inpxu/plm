@@ -9,6 +9,7 @@ import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.client.UserHolder;
+import com.zhiyun.dto.CrafworkChangeMainDto;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
 import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.CrafworkChangeMain;
@@ -140,7 +141,7 @@ public class VoucherMainOaController extends BaseController {
     /**
      * 工艺路线变更提交审核
      *
-     * @param crafworkChangeMain
+     * @param crafworkChangeMainDto
      * @param bindingResult
      * @return
      * @author xufei
@@ -148,14 +149,13 @@ public class VoucherMainOaController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/audit ", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object audit(CrafworkChangeMain crafworkChangeMain, BindingResult bindingResult) {
+    public Object audit(CrafworkChangeMainDto crafworkChangeMainDto, BindingResult bindingResult) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
         baseResult.setResult(true);
         baseResult.setMessage("审核已提交！");
         try {
             vaildParamsDefault(baseResult, bindingResult);
-            crafworkChangeMain.setCompanyId(UserHolder.getCompanyId());
-            voucherMainOaService.audit(crafworkChangeMain);
+            voucherMainOaService.audit(crafworkChangeMainDto);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);

@@ -14,6 +14,17 @@ public class ProdCrafworkPathPlmDto extends ProdCrafworkPathPlm {
     private Long[] ids;
     private String prodNo;
 
+    // 调用的方法
+    private String auditMethod;
+
+    public String getAuditMethod() {
+        return auditMethod;
+    }
+
+    public void setAuditMethod(String auditMethod) {
+        this.auditMethod = auditMethod;
+    }
+
     public String getQuartersDesc() {
         return quartersDesc;
     }

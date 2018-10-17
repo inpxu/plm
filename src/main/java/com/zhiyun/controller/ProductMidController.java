@@ -101,6 +101,7 @@ public class ProductMidController extends PublicController {
             vaildParamsDefault(baseResult, bindingResult);
             // 新增半成品
             // 通过产品编码查寻产品信息
+            String paraentNo = productMidPlm.getParentNo();
             productMidPlm.setCompanyId(UserHolder.getCompanyId());
             ProductStorePlm storePlm = new ProductStorePlm();
             storePlm.setCompanyId(UserHolder.getCompanyId());
@@ -131,6 +132,10 @@ public class ProductMidController extends PublicController {
                     throw new BusinessException("超过层级上限");
                 }
                 productMidPlm.setHierarchy(midPlms.get(0).getHierarchy() + 1);
+            }
+
+            if (paraentNo == null || paraentNo == ""){
+                productMidPlm.setParentNo(productMidPlm.getProdNo());
             }
             productMidPlm = productMidPlmService.insert(productMidPlm);
             // 新增物料库

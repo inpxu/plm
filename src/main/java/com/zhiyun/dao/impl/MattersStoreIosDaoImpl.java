@@ -41,4 +41,9 @@ public class MattersStoreIosDaoImpl extends BaseDaoImpl<MattersStoreIos, Long> i
     public List<MattersStoreIos> mattersOption(Map<String, Object> param) {
         return this.selectList(getMethodName(), param);
     }
+
+    @Override
+    public List<com.zhiyun.internal.plm.MattersStoreDto> queryAllMatters(Long companyId) {
+        return this.selectList(getMethodName(), companyId);
+    }
 }

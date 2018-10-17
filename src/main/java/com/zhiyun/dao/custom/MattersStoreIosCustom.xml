@@ -173,4 +173,17 @@
           AND company_id = #{companyId}
           AND is_midprod != 2
     </select>
+
+    <select id="queryAllMatters" resultType="com.zhiyun.internal.plm.MattersStoreDto">
+        SELECT
+               matters_store_ios.id,
+               matters_store_ios.matters_no matterNo,
+               matters_store_ios.matters_name matterName
+        FROM
+             matters_store_ios
+        WHERE
+                matters_store_ios.deleted = 'F'
+          AND matters_store_ios.is_midprod != 1
+          AND matters_store_ios.company_id = #{companyId}
+    </select>
 </mapper>   

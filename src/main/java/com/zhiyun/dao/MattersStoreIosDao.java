@@ -37,4 +37,7 @@ public interface MattersStoreIosDao extends BaseDao<MattersStoreIos, Long> {
      * @date 2018/10/14 19:52
      */
     List<MattersStoreIos> mattersOption(Map<String, Object> param);
+
+    List<com.zhiyun.internal.plm.MattersStoreDto> queryAllMatters(Long companyId);
+
 }

@@ -5,11 +5,8 @@
     http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <description>提供者配置</description>
-    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
-    <dubbo:application name="${dubbo.appName}" owner="${dubbo.owner}" organization="${dubbo.organization}"/>
-    <!--生产者提供服务-->
-    <!--<dubbo:service interface=""/>-->
     <!--生产者全局配置-->
-    <dubbo:provider group="${dubbo.group}" version="${dubbo.version}"/>
+    <dubbo:provider host="${dubbo.registerHost}" group="${dubbo.group}" version="${dubbo.version}"/>
+    <dubbo:service interface="com.zhiyun.internal.plm.PlmService" ref="plmservice"/>
 
 </beans>

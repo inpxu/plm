@@ -428,4 +428,19 @@
           AND company_id = #{companyId}
           AND bom_no = #{bomNo}
     </select>
+    <select id="findByVoucherNO" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
+        SELECT
+               prod_bom_plm.id,
+               prod_bom_plm.voucher_no voucherNo,
+               prod_bom_plm.bom_no bomNo,
+               prod_bom_plm.prod_no prodNo,
+               prod_bom_plm.versions
+        FROM
+             prod_bom_plm
+        WHERE
+                prod_bom_plm.deleted = 'F'
+          AND prod_bom_plm.company_id = #{companyId}
+          AND prod_bom_plm.voucher_no=#{voucherNo}
+    </select>
+
 </mapper>

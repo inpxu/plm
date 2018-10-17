@@ -51,7 +51,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     List<MattersStoreDto> optionBomCodeAndProdName();
 
-    List<MattersStoreDto> searchBeforeAddMatters(String codeOrName, String parentNo);
+    List<MattersStoreDto> SearchBeforeAddMatters(String codeOrName, String parentNo);
 
     void updateMatter(ProdBomDetailPlm prodBomDetailPlm);
 
@@ -63,7 +63,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     ProdBomPlmDto findCommonBomByProdNo(String prodNo);
 
-    List<MattersStoreDto> searchBeforeAddMattersForCom(String codeOrName);
+    List<MattersStoreDto> SearchBeforeAddMattersForCom(String codeOrName);
 
     /**
      * 下拉查询组件

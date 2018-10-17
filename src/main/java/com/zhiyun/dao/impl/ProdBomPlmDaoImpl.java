@@ -79,7 +79,7 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
     }
 
     @Override
-    public List<MattersStoreDto> searchBeforeAddMatters(Map<String, Object> param) {
+    public List<MattersStoreDto> SearchBeforeAddMatters(Map<String, Object> param) {
         return this.selectList(getMethodName(), param);
     }
 
@@ -104,7 +104,7 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
     }
 
     @Override
-    public List<MattersStoreDto> searchBeforeAddMattersForCom(Map<String, Object> param) {
+    public List<MattersStoreDto> SearchBeforeAddMattersForCom(Map<String, Object> param) {
         return this.selectList(getMethodName(), param);
     }
 

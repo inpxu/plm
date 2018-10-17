@@ -274,13 +274,6 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
                 sub.setChangeFlag("调整工艺顺序");
                 sub.setChangeItem("工艺顺序");
                 crafworkChangeRecordPlmDao.insert(sub);
-                sub.setCrafworkId(before.getCrafworkId());
-                sub.setId(null);
-                sub.setOldValue(uqe2 + "");
-                sub.setNewValue(uqe1 + "");
-                sub.setChangeFlag("调整工艺顺序");
-                sub.setChangeItem("工艺顺序");
-                crafworkChangeRecordPlmDao.insert(sub);
             }
         }
     }

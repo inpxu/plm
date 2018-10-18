@@ -42,6 +42,7 @@ public class ProdBomPlm extends BaseEntity<Long> {
     private java.util.Date makeDate;
     // 版本号
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "版本号字段过长")
+    @JSONField(serialize = true)
     private String versions;
     // 制订人
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "制订人字段过长")

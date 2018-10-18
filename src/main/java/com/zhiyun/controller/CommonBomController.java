@@ -124,4 +124,32 @@ public class CommonBomController {
         return JSON.toJSONString(baseResult);
     }
 
+    /**
+     * 升级公共组件bom版本及参数
+     * 保存历史记录
+     *
+     * @param prodBomPlmDto
+     * @return java.lang.String
+     * @author 邓艺
+     * @date 2018/10/17 16:46
+     */
+    @RequestMapping(value = "upGradeCommonBom", method = RequestMethod.GET)
+    @ResponseBody
+    public String upGradeCommonBom(ProdBomPlmDto prodBomPlmDto) {
+        BaseResult<String> baseResult = new BaseResult<>();
+        try {
+            prodBomPlmService.upGradeCommonBom(prodBomPlmDto);
+            baseResult.setResult(true);
+        } catch (BusinessException be) {
+            log.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            log.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
 }

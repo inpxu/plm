@@ -97,4 +97,6 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
      * @date 2018/10/14 20:13
      */
     void uniqueBomNo(String bomNo);
+
+    void upGradeCommonBom(ProdBomPlmDto prodBomPlmDto);
 }

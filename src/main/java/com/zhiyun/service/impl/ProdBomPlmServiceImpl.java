@@ -122,13 +122,13 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                         if (CollectionUtils.isEmpty(mattersStores)) {
                             mattersStoreDto.setLeaf(true);
                         }
-                    } else if ("2".equals(mattersStoreDto.getIsMidprod())){
+                    } else if ("2".equals(mattersStoreDto.getIsMidprod())) {
                         param.put("productNo", mattersStoreDto.getMattersNo());
                         List<MattersStoreDto> mattersStores = prodBomPlmDao.findAllMattersFroProduct(param);
                         if (CollectionUtils.isEmpty(mattersStores)) {
                             mattersStoreDto.setLeaf(true);
                         }
-                    }else{
+                    } else {
                         mattersStoreDto.setLeaf(true);
                     }
                 }
@@ -327,7 +327,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         Map<String, Object> param = new HashMap<>(2);
         param.put("companyId", UserHolder.getCompanyId());
         param.put("matterNo", matterNo);
-        //查询bom是否存在
+        //查询bom是否存在，在查询的时候要查询版本号最大的，迫于无奈使用子查询
         ProdBomPlmDto bomByMatterName = prodBomPlmDao.findCommonBomByMatterNo(param);
         if (bomByMatterName == null) {
             throw new BusinessException("BOM不存在");
@@ -433,6 +433,36 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         List<ProdBomPlm> list = prodBomPlmDao.uniqueBom(param);
         if (CollectionUtils.isNotEmpty(list)) {
             throw new BusinessException("BOM编码已存在");
+        }
+    }
+
+    @Override
+    public void upGradeCommonBom(ProdBomPlmDto prodBomPlmDto) {
+        //如果存在的版本为空的话，直接允许修改
+        if (prodBomPlmDto.getVersions() == null) {
+            throw new BusinessException("BOM历史版本还未审批");
+        }
+        //升级版本
+        prodBomPlmDto.setVersions(String.valueOf(Integer.parseInt(prodBomPlmDto.getVersions())));
+        //升级数据的封装
+
+        //将下属版本全进行更新，然后插入数据库
+        List<MattersStoreDto> mattersStoreDtos = prodBomPlmDto.getMattersStoreDtos();
+        if (CollectionUtils.isNotEmpty(mattersStoreDtos)) {
+            //判断是否是公用组件
+            for (MattersStoreDto mattersStoreDto : mattersStoreDtos) {
+                //如果是公用组件，则递归
+                if ("1".equals(mattersStoreDto.getIsMidprod())) {
+                    Map<String, Object> param = new HashMap<>(2);
+                    param.put("companyId", UserHolder.getCompanyId());
+                    param.put("mattersNo", mattersStoreDto.getMattersNo());
+                    //查询所有物料和通用组件
+
+
+                } else {
+
+                }
+            }
         }
     }
 

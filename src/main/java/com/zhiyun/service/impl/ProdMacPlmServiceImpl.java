@@ -102,7 +102,10 @@ public class ProdMacPlmServiceImpl extends BaseServiceImpl<ProdMacPlm, Long> imp
                 m.setProdNo(prodNo);
                 m.setMidProdNo(mid);
                 m.setCrafworkId(crafId);
-                m.setRunTotal(Integer.valueOf(m.getTotalName()));
+                Integer runTotal = m.getRunTotal();
+                if(runTotal == null) {
+                    m.setRunTotal(Integer.valueOf(m.getTotalName()));
+                }
                 prodMacPlmDao.insert(m);
             }
         }

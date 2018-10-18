@@ -10,7 +10,8 @@
                concat_ws("/", m.mid_prod_no, m.mid_prod_name) midProdMsg,
                o.mid_prod_no                                  midProdNo,
                concat_ws("/", m.param, m.norms, m.MODEL_DESC) syntheticField,
-               m.unit                                         unit
+               m.unit                                         unit,
+               o.output_amt                                   outputAmt
         FROM carfwork_output_mater_plm o
                  LEFT JOIN product_mid_plm m ON m.prod_no = o.prod_no AND m.mid_prod_no = o.mid_prod_no AND m.company_id = o.company_id AND m.deleted = 'F'
         WHERE o.prod_no = #{prodNo,jdbcType=VARCHAR}
@@ -28,7 +29,8 @@
                concat_ws("/", m.prod_no, m.prod_name)         midProdMsg,
                o.prod_no                                      midProdNo,
                concat_ws("/", m.param, m.norms, m.MODEL_DESC) syntheticField,
-               m.unit                                         unit
+               m.unit                                         unit,
+               o.output_amt                                   outputAmt
         FROM carfwork_output_mater_plm o
                  LEFT JOIN product_store_plm m ON m.prod_no = o.prod_no AND m.company_id = o.company_id AND m.deleted = 'F'
         WHERE o.prod_no = #{prodNo,jdbcType=VARCHAR}

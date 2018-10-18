@@ -369,4 +369,34 @@ public class ProductMidController extends PublicController {
         return JSON.toJSONString(baseResult);
     }
 
+    /**
+     * 上级编码下拉
+     *
+     * @param prodMidDto
+     * @return
+     * @author xufei
+     * @date 2018-10-15 17:03:33
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getParentNo", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object getParentNo(ProductMidPlm prodMidDto) {
+        BaseResult<List<ProductMidPlm>> baseResult = new BaseResult<List<ProductMidPlm>>();
+        baseResult.setResult(true);
+        baseResult.setMessage("查询成功！");
+        try {
+            List<ProductMidPlm> list = productMidPlmService.getParentNo(prodMidDto);
+            baseResult.setModel(list);
+        } catch (BusinessException be) {
+            LOGGER.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
+
 }

@@ -15,7 +15,7 @@
                p.behind_time                        behindTime,
                p.run_total                          runTotal
         FROM prod_mac_plm p
-                 LEFT JOIN mes_jingcai.machine_set_mes m ON p.mac_no = m.mac_no AND p.company_id = m.company_id AND m.deleted = 'F'
+                 LEFT JOIN aps.machine_set_mes m ON p.mac_no = m.mac_no AND p.company_id = m.company_id AND m.deleted = 'F'
                  LEFT JOIN hcm.cas_org c ON c.id = m.org_id AND c.company_id = m.company_id AND c.deleted = 'F'
         WHERE p.crafwork_id = #{crafworkId,jdbcType=BIGINT}
           AND p.prod_no = #{prodNo,jdbcType=VARCHAR}

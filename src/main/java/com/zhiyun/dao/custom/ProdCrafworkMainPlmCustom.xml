@@ -127,17 +127,24 @@
         m.prod_no prodNo,
         m.prod_no midProdNo,
         m.versions versions,
-        m.PATH_NO pathNo
+        m.PATH_NO pathNo,
+        m.voucher_no voucherNo,
+        o.is_finished isFinished
         FROM prod_crafwork_main_plm m
         LEFT JOIN product_store_plm s ON s.prod_no = m.prod_no AND s.company_id = m.company_id AND s.deleted = 'F'
+        left join voucher_main_oa o on o.voucher_no = m.voucher_no and o.company_id = m.company_id and o.deleted = 'F'
         WHERE m.company_id = #{companyId,jdbcType=BIGINT}
-        AND m.status = 'true'
+        AND m.deleted = 'F'
+        AND m.voucher_no is not null
+        AND o.is_finished != 'AS003'
+        <if test="isFinished == 'AS001'">
+            AND m.status = 'true'
+        </if>
         <if test="pathNo != null and pathNo != ''">
             AND m.path_no = #{pathNo,jdbcType=VARCHAR}
         </if>
         <if test="prodNo != null and prodNo != ''">
             AND m.PROD_NO = #{prodNo,jdbcType=VARCHAR}
         </if>
-        AND m.deleted = 'F'
     </select>
 </mapper>   

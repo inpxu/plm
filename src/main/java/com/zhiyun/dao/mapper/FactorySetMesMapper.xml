@@ -1,382 +1,378 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--
-  ~ 嘉兴飞戎智云软件有限公司版权所有
-  ~ Copyright (c) 2018. zhiyun and/or its affiliates. All rights reserved.
-  -->
-
+<?xml version="1.0" encoding="UTF-8" ?>   
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyun.dao.impl.FactorySetMesDaoImpl">
 
-    <!-- 插入实体 -->
-    <insert id="insert" parameterType="com.zhiyun.entity.FactorySetMes">
-        INSERT INTO mes_jingcai.factory_set_mes (
-        ID,
-        FACTORY_ID,
-        FACTORY_NAME,
-        FACTORY_TYPE,
-        FACTORY_DESC,
-        MANAGER,
-        BUILDDATE,
-        LOSEDATE,
-        CREATE_TIME,
-        CREATE_BY,
-        MODIFY_TIME,
-        MODIFY_BY,
-        COMPANY_ID,
-        DELETED
-        ) VALUES (
-        #{id,jdbcType=BIGINT},
-        #{factoryId,jdbcType=BIGINT},
-        #{factoryName,jdbcType=VARCHAR},
-        #{factoryType,jdbcType=VARCHAR},
-        #{factoryDesc,jdbcType=VARCHAR},
-        #{manager,jdbcType=VARCHAR},
-        #{builddate,jdbcType=TIMESTAMP},
-        #{losedate,jdbcType=TIMESTAMP},
-        #{createTime,jdbcType=TIMESTAMP},
-        #{createBy,jdbcType=VARCHAR},
-        #{modifyTime,jdbcType=TIMESTAMP},
-        #{modifyBy,jdbcType=VARCHAR},
-        #{companyId,jdbcType=BIGINT},
-        #{deleted,jdbcType=VARCHAR}
-        )
-        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-            SELECT LAST_INSERT_ID() AS ID
-        </selectKey>
-        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-            SELECT SEQ_mes_jingcai.factory_set_mes .nextval as id FROM dual
-        </selectKey>
-    </insert>
+	<!-- 插入实体 -->
+	<insert id="insert" parameterType="com.zhiyun.entity.FactorySetMes">
+		INSERT INTO aps.FACTORY_SET_MES (
+		   	ID,
+		   	FACTORY_ID,
+		   	FACTORY_NAME,
+		   	FACTORY_TYPE,
+		   	FACTORY_DESC,
+		   	MANAGER,
+		   	BUILDDATE,
+		   	LOSEDATE,
+		   	COMPANY_ID,
+		   	DELETED,
+		   	CREATE_TIME,
+		   	CREATE_BY,
+		   	MODIFY_TIME,
+		   	MODIFY_BY
+		) VALUES (
+		   	#{id,jdbcType=BIGINT},
+		   	#{factoryId,jdbcType=BIGINT},
+		   	#{factoryName,jdbcType=VARCHAR},
+		   	#{factoryType,jdbcType=VARCHAR},
+		   	#{factoryDesc,jdbcType=TEXT},
+		   	#{manager,jdbcType=VARCHAR},
+		   	#{builddate,jdbcType=TIMESTAMP},
+		   	#{losedate,jdbcType=TIMESTAMP},
+		   	#{companyId,jdbcType=BIGINT},
+		   	#{deleted,jdbcType=VARCHAR},
+		   	#{createTime,jdbcType=TIMESTAMP},
+		   	#{createBy,jdbcType=VARCHAR},
+		   	#{modifyTime,jdbcType=TIMESTAMP},
+		   	#{modifyBy,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_aps.FACTORY_SET_MES.nextval as id FROM dual
+		</selectKey>
+	</insert>
 
-    <!-- 更新实体 -->
-    <update id="update" parameterType="com.zhiyun.entity.FactorySetMes">
-        UPDATE mes_jingcai.factory_set_mes
-        <set>
-            <if test="factoryId != null">
-                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
-            </if>
-            <if test="factoryName != null">
-                FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
-            </if>
-            <if test="factoryType != null">
-                FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
-            </if>
-            <if test="factoryDesc != null">
-                FACTORY_DESC = #{factoryDesc,jdbcType=VARCHAR},
-            </if>
-            <if test="manager != null">
-                MANAGER = #{manager,jdbcType=VARCHAR},
-            </if>
-            <if test="builddate != null">
-                BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="losedate != null">
-                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createTime != null">
-                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createBy != null">
-                CREATE_BY = #{createBy,jdbcType=VARCHAR},
-            </if>
-            <if test="modifyTime != null">
-                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="modifyBy != null">
-                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-            </if>
-            <if test="companyId != null">
-                COMPANY_ID = #{companyId,jdbcType=BIGINT},
-            </if>
-            <if test="deleted != null">
-                DELETED = #{deleted,jdbcType=VARCHAR},
-            </if>
-        </set>
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+	<!-- 更新实体 -->
+	<update id="update" parameterType="com.zhiyun.entity.FactorySetMes">
+		UPDATE aps.FACTORY_SET_MES
+		<set>
+			<if test="factoryId != null">
+				FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="factoryName != null">
+				FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryType != null">
+				FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryDesc != null">
+				FACTORY_DESC = #{factoryDesc,jdbcType=TEXT},
+			</if>
+			<if test="manager != null">
+				MANAGER = #{manager,jdbcType=VARCHAR},
+			</if>
+			<if test="builddate != null">
+				BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="losedate != null">
+				LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 更新实体 -->
+	<update id="updateFields" parameterType="com.zhiyun.entity.FactorySetMes">
+		UPDATE aps.FACTORY_SET_MES
+		<set>
+			FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+			FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+			FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
+			FACTORY_DESC = #{factoryDesc,jdbcType=TEXT},
+			MANAGER = #{manager,jdbcType=VARCHAR},
+			BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+			LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+			COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			DELETED = #{deleted,jdbcType=VARCHAR},
+			CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
-    <!-- 更新实体 -->
-    <update id="updateFields" parameterType="com.zhiyun.entity.FactorySetMes">
-        UPDATE mes_jingcai.factory_set_mes
-        <set>
-            FACTORY_ID = #{factoryId,jdbcType=BIGINT},
-            FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
-            FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
-            FACTORY_DESC = #{factoryDesc,jdbcType=VARCHAR},
-            MANAGER = #{manager,jdbcType=VARCHAR},
-            BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
-            LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
-            CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-            CREATE_BY = #{createBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-            MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-            COMPANY_ID = #{companyId,jdbcType=BIGINT},
-            DELETED = #{deleted,jdbcType=VARCHAR},
-        </set>
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+	<!-- 删除实体 -->
+	<update id="delete" parameterType="com.zhiyun.entity.FactorySetMes">
+		UPDATE aps.FACTORY_SET_MES
+		   SET DELETED     = #{deleted,jdbcType=VARCHAR},
+		       MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
+		       MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+		 WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
-    <!-- 删除实体 -->
-    <update id="delete" parameterType="com.zhiyun.entity.FactorySetMes">
-        UPDATE mes_jingcai.factory_set_mes
-        SET DELETED     = #{deleted,jdbcType=VARCHAR},
-            MODIFY_BY   = #{modifyBy,jdbcType=VARCHAR},
-            MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+	<!-- 查询字段 -->
+	<sql id="selectFieldSQL">
+		SELECT 
+		       ID id,
+		       FACTORY_ID factoryId,
+		       FACTORY_NAME factoryName,
+		       FACTORY_TYPE factoryType,
+		       FACTORY_DESC factoryDesc,
+		       MANAGER manager,
+		       BUILDDATE builddate,
+		       LOSEDATE losedate,
+		       COMPANY_ID companyId,
+		       DELETED deleted,
+		       CREATE_TIME createTime,
+		       CREATE_BY createBy,
+		       MODIFY_TIME modifyTime,
+		       MODIFY_BY modifyBy
+	</sql>
 
-    <!-- 查询字段 -->
-    <sql id="selectFieldSQL">
-        SELECT ID           id,
-               FACTORY_ID   factoryId,
-               FACTORY_NAME factoryName,
-               FACTORY_TYPE factoryType,
-               FACTORY_DESC factoryDesc,
-               MANAGER      manager,
-               BUILDDATE    builddate,
-               LOSEDATE     losedate,
-               CREATE_TIME  createTime,
-               CREATE_BY    createBy,
-               MODIFY_TIME  modifyTime,
-               MODIFY_BY    modifyBy,
-               COMPANY_ID   companyId,
-               DELETED      deleted
-    </sql>
+	<!-- 查询 -->
+	<select id="get" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		 WHERE ID = #{id,jdbcType=INTEGER}
+		   AND DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
 
-    <!-- 查询 -->
-    <select id="get" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        WHERE ID = #{id,jdbcType=INTEGER}
-        AND DELETED = #{deleted,jdbcType=VARCHAR}
-    </select>
+	<!-- 查询 -->
+	<select id="find" parameterType="com.zhiyun.entity.FactorySetMes" resultType="com.zhiyun.entity.FactorySetMes">
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		<where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="factoryId != null">
+				AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+			</if>
+			<if test="factoryName != null and factoryName != ''">
+				AND FACTORY_NAME = #{factoryName,jdbcType=VARCHAR}
+			</if>
+			<if test="factoryType != null and factoryType != ''">
+				AND FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR}
+			</if>
+			<if test="factoryDesc != null and factoryDesc != ''">
+				AND FACTORY_DESC = #{factoryDesc,jdbcType=TEXT}
+			</if>
+			<if test="manager != null and manager != ''">
+				AND MANAGER = #{manager,jdbcType=VARCHAR}
+			</if>
+			<if test="builddate != null">
+				AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="losedate != null">
+				AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="companyId != null">
+				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
 
-    <!-- 查询 -->
-    <select id="find" parameterType="com.zhiyun.entity.FactorySetMes" resultType="com.zhiyun.entity.FactorySetMes">
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        <where>
-            <if test="id != null">
-                AND ID = #{id,jdbcType=INTEGER}
-            </if>
-            <if test="factoryId != null">
-                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
-            </if>
-            <if test="factoryName != null and factoryName != ''">
-                AND FACTORY_NAME = #{factoryName,jdbcType=VARCHAR}
-            </if>
-            <if test="factoryType != null and factoryType != ''">
-                AND FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR}
-            </if>
-            <if test="factoryDesc != null and factoryDesc != ''">
-                AND FACTORY_DESC = #{factoryDesc,jdbcType=VARCHAR}
-            </if>
-            <if test="manager != null and manager != ''">
-                AND MANAGER = #{manager,jdbcType=VARCHAR}
-            </if>
-            <if test="builddate != null">
-                AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="losedate != null">
-                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="companyId != null">
-                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-            </if>
-            <if test="deleted != null and deleted != ''">
-                AND DELETED = #{deleted,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </select>
+	<!-- 查询所有 -->
+	<select id="findAll" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		 WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+	</select>
 
-    <!-- 查询所有 -->
-    <select id="findAll" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
-    </select>
+	<!-- 分页查询（条件） -->
+	<sql id="page_condition">
+		<where>
+				<if test="entity.factoryId != null">
+					AND FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.factoryName != null and entity.factoryName != ''">
+					AND FACTORY_NAME = #{entity.factoryName,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.factoryType != null and entity.factoryType != ''">
+					AND FACTORY_TYPE = #{entity.factoryType,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.factoryDesc != null and entity.factoryDesc != ''">
+					AND FACTORY_DESC = #{entity.factoryDesc,jdbcType=TEXT}
+				</if>
+				<if test="entity.manager != null and entity.manager != ''">
+					AND MANAGER = #{entity.manager,jdbcType=VARCHAR}
+				</if>
+				<if test="entity.builddate != null">
+					AND BUILDDATE = #{entity.builddate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="entity.losedate != null">
+					AND LOSEDATE = #{entity.losedate,jdbcType=TIMESTAMP}
+				</if>
+				<if test="entity.companyId != null">
+					AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+				</if>
+				<if test="entity.deleted != null and entity.deleted != ''">
+					AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+				</if>
+		</where>
+	</sql>
 
-    <!-- 分页查询（条件） -->
-    <sql id="page_condition">
-        <where>
-            <if test="entity.factoryId != null">
-                AND FACTORY_ID = #{entity.factoryId,jdbcType=BIGINT}
-            </if>
-            <if test="entity.factoryName != null and entity.factoryName != ''">
-                AND FACTORY_NAME = #{entity.factoryName,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.factoryType != null and entity.factoryType != ''">
-                AND FACTORY_TYPE = #{entity.factoryType,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.factoryDesc != null and entity.factoryDesc != ''">
-                AND FACTORY_DESC = #{entity.factoryDesc,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.manager != null and entity.manager != ''">
-                AND MANAGER = #{entity.manager,jdbcType=VARCHAR}
-            </if>
-            <if test="entity.builddate != null">
-                AND BUILDDATE = #{entity.builddate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="entity.losedate != null">
-                AND LOSEDATE = #{entity.losedate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="entity.companyId != null">
-                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
-            </if>
-            <if test="entity.deleted != null and entity.deleted != ''">
-                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
-            </if>
-        </where>
-    </sql>
+	<!-- 分页查询（计数） -->
+	<select id="page_count" parameterType="map" resultType="int">
+		SELECT count(*)
+		  FROM aps.FACTORY_SET_MES
+		<include refid="page_condition" />
+	</select>
 
-    <!-- 分页查询（计数） -->
-    <select id="page_count" parameterType="map" resultType="int">
-        SELECT count(*)
-        FROM mes_jingcai.factory_set_mes
-        <include refid="page_condition"/>
-    </select>
-
-    <!-- 分页查询（数据） -->
-    <select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
-        <include refid="mybatis.pageStartSQL"/>
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        <include refid="page_condition"/>
-        <include refid="mybatis.pageEndSQL"/>
-    </select>
-
-    <!-- Map查询所有 -->
-    <select id="findMapListAll" parameterType="map" resultType="map">
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        WHERE DELETED = "F"
-    </select>
-
-    <!-- Map条件查询 -->
-    <select id="findMapList" parameterType="map" resultType="map">
-        <include refid="selectFieldSQL"/>
-        FROM mes_jingcai.factory_set_mes
-        <where>
-            <if test="id != null">
-                AND ID = #{id,jdbcType=INTEGER}
-            </if>
-            <if test="factoryId != null">
-                AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
-            </if>
-            <if test="factoryName != null and factoryName != ''">
-                AND FACTORY_NAME = #{factoryName,jdbcType=VARCHAR}
-            </if>
-            <if test="factoryType != null and factoryType != ''">
-                AND FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR}
-            </if>
-            <if test="factoryDesc != null and factoryDesc != ''">
-                AND FACTORY_DESC = #{factoryDesc,jdbcType=VARCHAR}
-            </if>
-            <if test="manager != null and manager != ''">
-                AND MANAGER = #{manager,jdbcType=VARCHAR}
-            </if>
-            <if test="builddate != null">
-                AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="losedate != null">
-                AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
-            </if>
-            <if test="companyId != null">
-                AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
-            </if>
-            <if test="deleted != null and deleted != ''">
-                AND DELETED = #{deleted,jdbcType=VARCHAR}
-            </if>
-            WHERE DELETED = "F"
-        </where>
-    </select>
-
-    <!-- 插入实体map -->
-    <insert id="mapInsert" parameterType="map">
-        INSERT INTO mes_jingcai.factory_set_mes (
-        ID,
-        FACTORY_ID,
-        FACTORY_NAME,
-        FACTORY_TYPE,
-        FACTORY_DESC,
-        MANAGER,
-        BUILDDATE,
-        LOSEDATE,
-        CREATE_TIME,
-        CREATE_BY,
-        MODIFY_TIME,
-        MODIFY_BY,
-        COMPANY_ID,
-        DELETED
-        ) VALUES (
-        #{ id,jdbcType=BIGINT},
-        #{ factoryId,jdbcType=BIGINT},
-        #{ factoryName,jdbcType=VARCHAR},
-        #{ factoryType,jdbcType=VARCHAR},
-        #{ factoryDesc,jdbcType=VARCHAR},
-        #{ manager,jdbcType=VARCHAR},
-        #{ builddate,jdbcType=TIMESTAMP},
-        #{ losedate,jdbcType=TIMESTAMP},
-        #{ createTime,jdbcType=TIMESTAMP},
-        #{ createBy,jdbcType=VARCHAR},
-        #{ modifyTime,jdbcType=TIMESTAMP},
-        #{ modifyBy,jdbcType=VARCHAR},
-        #{ companyId,jdbcType=BIGINT},
-        #{ deleted,jdbcType=VARCHAR}
-        )
-        <selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
-            SELECT LAST_INSERT_ID() AS ID
-        </selectKey>
-        <selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
-            SELECT SEQ_mes_jingcai.factory_set_mes .nextval as id FROM dual
-        </selectKey>
-    </insert>
-
-    <!-- 更新实体Map -->
-    <update id="mapUpdate" parameterType="map">
-        UPDATE mes_jingcai.factory_set_mes
-        <set>
-            <if test="factoryId != null">
-                FACTORY_ID = #{factoryId,jdbcType=BIGINT},
-            </if>
-            <if test="factoryName != null">
-                FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
-            </if>
-            <if test="factoryType != null">
-                FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
-            </if>
-            <if test="factoryDesc != null">
-                FACTORY_DESC = #{factoryDesc,jdbcType=VARCHAR},
-            </if>
-            <if test="manager != null">
-                MANAGER = #{manager,jdbcType=VARCHAR},
-            </if>
-            <if test="builddate != null">
-                BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="losedate != null">
-                LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createTime != null">
-                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createBy != null">
-                CREATE_BY = #{createBy,jdbcType=VARCHAR},
-            </if>
-            <if test="modifyTime != null">
-                MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="modifyBy != null">
-                MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
-            </if>
-            <if test="companyId != null">
-                COMPANY_ID = #{companyId,jdbcType=BIGINT},
-            </if>
-            <if test="deleted != null">
-                DELETED = #{deleted,jdbcType=VARCHAR},
-            </if>
-        </set>
-        WHERE ID = #{id,jdbcType=INTEGER}
-    </update>
+	<!-- 分页查询（数据） -->
+	<select id="page_datas" parameterType="map" resultType="com.zhiyun.entity.FactorySetMes">
+		<include refid="mybatis.pageStartSQL" />
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		<include refid="page_condition" />
+		<include refid="mybatis.pageEndSQL" />
+	</select>
+	
+	<!-- Map查询所有 -->
+	<select id="findMapListAll" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		 WHERE DELETED = "F"
+	</select>
+	
+	<!-- Map条件查询 -->
+	<select id="findMapList" parameterType="map" resultType="map">
+		<include refid="selectFieldSQL" />
+		  FROM aps.FACTORY_SET_MES
+		 <where>
+			<if test="id != null">
+				AND ID = #{id,jdbcType=INTEGER}
+			</if>
+			<if test="factoryId != null">
+				AND FACTORY_ID = #{factoryId,jdbcType=BIGINT}
+			</if>
+			<if test="factoryName != null and factoryName != ''">
+				AND FACTORY_NAME = #{factoryName,jdbcType=VARCHAR}
+			</if>
+			<if test="factoryType != null and factoryType != ''">
+				AND FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR}
+			</if>
+			<if test="factoryDesc != null and factoryDesc != ''">
+				AND FACTORY_DESC = #{factoryDesc,jdbcType=TEXT}
+			</if>
+			<if test="manager != null and manager != ''">
+				AND MANAGER = #{manager,jdbcType=VARCHAR}
+			</if>
+			<if test="builddate != null">
+				AND BUILDDATE = #{builddate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="losedate != null">
+				AND LOSEDATE = #{losedate,jdbcType=TIMESTAMP}
+			</if>
+			<if test="companyId != null">
+				AND COMPANY_ID = #{companyId,jdbcType=BIGINT}
+			</if>
+			<if test="deleted != null and deleted != ''">
+				AND DELETED = #{deleted,jdbcType=VARCHAR}
+			</if>
+		 WHERE DELETED = "F"
+		</where>
+	</select>
+	
+	<!-- 插入实体map -->
+	<insert id="mapInsert" parameterType="map">
+		INSERT INTO aps.FACTORY_SET_MES (
+		   	ID,
+		   	FACTORY_ID,
+		   	FACTORY_NAME,
+		   	FACTORY_TYPE,
+		   	FACTORY_DESC,
+		   	MANAGER,
+		   	BUILDDATE,
+		   	LOSEDATE,
+		   	COMPANY_ID,
+		   	DELETED,
+		   	CREATE_TIME,
+		   	CREATE_BY,
+		   	MODIFY_TIME,
+		   	MODIFY_BY
+		) VALUES (
+		   	#{ id,jdbcType=BIGINT},
+		   	#{ factoryId,jdbcType=BIGINT},
+		   	#{ factoryName,jdbcType=VARCHAR},
+		   	#{ factoryType,jdbcType=VARCHAR},
+		   	#{ factoryDesc,jdbcType=TEXT},
+		   	#{ manager,jdbcType=VARCHAR},
+		   	#{ builddate,jdbcType=TIMESTAMP},
+		   	#{ losedate,jdbcType=TIMESTAMP},
+		   	#{ companyId,jdbcType=BIGINT},
+		   	#{ deleted,jdbcType=VARCHAR},
+		   	#{ createTime,jdbcType=TIMESTAMP},
+		   	#{ createBy,jdbcType=VARCHAR},
+		   	#{ modifyTime,jdbcType=TIMESTAMP},
+		   	#{ modifyBy,jdbcType=VARCHAR}
+		)
+		<selectKey databaseId="mysql" keyProperty="id" order="AFTER" resultType="long">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		<selectKey databaseId="oracle" keyProperty="id" order="BEFORE" resultType="long">
+			SELECT SEQ_aps.FACTORY_SET_MES.nextval as id FROM dual
+		</selectKey>
+	</insert>
+	
+	<!-- 更新实体Map -->
+	<update id="mapUpdate" parameterType="map">
+		UPDATE aps.FACTORY_SET_MES
+		<set>
+			<if test="factoryId != null">
+				FACTORY_ID = #{factoryId,jdbcType=BIGINT},
+			</if>
+			<if test="factoryName != null">
+				FACTORY_NAME = #{factoryName,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryType != null">
+				FACTORY_TYPE = #{factoryType,jdbcType=VARCHAR},
+			</if>
+			<if test="factoryDesc != null">
+				FACTORY_DESC = #{factoryDesc,jdbcType=TEXT},
+			</if>
+			<if test="manager != null">
+				MANAGER = #{manager,jdbcType=VARCHAR},
+			</if>
+			<if test="builddate != null">
+				BUILDDATE = #{builddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="losedate != null">
+				LOSEDATE = #{losedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="companyId != null">
+				COMPANY_ID = #{companyId,jdbcType=BIGINT},
+			</if>
+			<if test="deleted != null">
+				DELETED = #{deleted,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createBy != null">
+				CREATE_BY = #{createBy,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyBy != null">
+				MODIFY_BY = #{modifyBy,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE ID = #{id,jdbcType=INTEGER}
+	</update>
 
 </mapper>   

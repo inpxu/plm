@@ -74,7 +74,7 @@ public class PublicController extends BaseController {
             for (FactorySetMes factory : factorySetM) {
                 LabelValue labelValue = new LabelValue();
                 labelValue.setLabel(factory.getFactoryName());
-                labelValue.setValue(factory.getFactoryId().toString());
+                labelValue.setValue(factory.getId().toString());
                 labelValues.add(labelValue);
             }
             baseResult.setModel(labelValues);

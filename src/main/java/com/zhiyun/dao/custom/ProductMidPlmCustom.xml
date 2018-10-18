@@ -106,7 +106,7 @@
     <select id="pageMid_count" parameterType="map" resultType="int">
         SELECT count(*)
         FROM PRODUCT_MID_PLM pmp
-        left join mes_jingcai.factory_set_mes fsm on pmp.factory_id = fsm.factory_id and fsm.deleted = 'F'
+        left join aps.factory_set_mes fsm on pmp.factory_id = fsm.factory_id and fsm.deleted = 'F'
         left join product_store_plm psp on psp.prod_no = pmp.PROD_NO and psp.deleted = 'F'
         <include refid="pageMid_condition"/>
     </select>
@@ -117,7 +117,7 @@
         <include refid="selectFieldsSQL"/>
         ,fsm.FACTORY_NAME factoryName
         FROM PRODUCT_MID_PLM pmp
-        left join mes_jingcai.factory_set_mes fsm on pmp.factory_id = fsm.factory_id and fsm.deleted = 'F'
+        left join aps.factory_set_mes fsm on pmp.factory_id = fsm.factory_id and fsm.deleted = 'F'
         left join product_store_plm psp on psp.prod_no = pmp.PROD_NO and psp.deleted = 'F'
         <include refid="pageMid_condition"/>
         order by pmp.ID desc

@@ -33,4 +33,6 @@ public interface ProductMidPlmService extends BaseService<ProductMidPlm, Long> {
     List<ProdMidDto> getChild(ProductMidPlm productMidPlm);
 
     List<ProductMidPlm> getMidMess(ProductMidPlm productMidPlm);
+
+    List<ProductMidPlm> getParentNo(ProductMidPlm productMidPlm);
 }

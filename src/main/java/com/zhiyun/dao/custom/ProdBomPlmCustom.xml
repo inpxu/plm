@@ -183,6 +183,7 @@
           and matters_store_ios.is_midprod != 2
           and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{matterNo}
+
     </select>
     <select id="SearchBeforeAddMatters" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
         SELECT s.ID                                             id,
@@ -309,6 +310,16 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{matterNo}
+           AND prod_bom_plm.versions = (
+          SELECT
+            MAX( prod_bom_plm.versions )
+          FROM
+            prod_bom_plm
+          WHERE
+            prod_bom_plm.deleted = 'F'
+            AND prod_bom_plm.company_id = #{companyId}
+          AND prod_bom_plm.prod_no = #{matterNo}
+          )
     </select>
 
     <!-- 分页查询（计数） -->

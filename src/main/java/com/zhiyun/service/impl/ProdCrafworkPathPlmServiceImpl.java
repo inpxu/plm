@@ -70,7 +70,7 @@ public class ProdCrafworkPathPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
             dto1.setPathNo(path);
             dto1.setCompanyId(UserHolder.getCompanyId());
             String label = prodCrafworkMainPlmDao.getStatus(dto1).getLabel();
-            if (label == null || label == "") {
+            if (label == null || label == "" || "ready".equals(label)) {
                 dto.setStatus("未发起评审");
             } else {
                 dto.setStatus(label);

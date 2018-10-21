@@ -199,7 +199,6 @@
         WHERE s.deleted = 'F'
           and s.is_midprod != 2
           AND s.company_id = #{companyId}
-          AND s.matters_no != #{parentNo}
           AND (s.matters_no LIKE CONCAT('%', #{codeOrName}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName}, '%'))
 
     </select>

@@ -151,8 +151,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
     @Transactional
     public void audit(CrafworkChangeMainDto crafworkChangeMainDto) {
         List<ProdCrafworkPathPlmDto> paths = crafworkChangeMainDto.getProdCrafworkPathPlmDtos();
-        List<ProdCrafworkParamPlmDto> prodCrafworkParamPlmDtos = crafworkChangeMainDto.getProdCrafworkParamPlmDtos();
-        if (CollectionUtils.isEmpty(paths) && CollectionUtils.isEmpty(prodCrafworkParamPlmDtos)) {
+        if (CollectionUtils.isEmpty(paths)) {
             throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
         }
         String pathNo = paths.get(0).getPathNo();
@@ -232,6 +231,16 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Long crafworkId = prodCrafworkPathPlm.getCrafworkId();
                     String prodNo = prodCrafworkPathPlm.getProdNo();
                     String midProdNo = prodCrafworkPathPlm.getMidProdNo();
+                    ProdCrafworkPathPlm plm = new ProdCrafworkPathPlm();
+                    plm.setCompanyId(UserHolder.getCompanyId());
+                    plm.setMidProdNo(midProdNo);
+                    plm.setCrafworkId(crafworkId);
+                    if ( id == null) {
+                        Long oldSeq = null;
+                        Integer oldMac = null;
+                        Integer oldEmp = null;
+                        BigDecimal oldDay = null;
+                    }
                     ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.get(id);
                     Long oldSeq = aud.getCarfSeq();
                     Integer oldMac = aud.getMacMinutes();
@@ -248,7 +257,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     sub.setCompanyId(UserHolder.getCompanyId());
                     sub.setChangeEmp(UserHolder.getUserName());
                     sub.setUpdDate(new Date());
-                    if (mac == null && emp == null && day == null) {
                         if (!oldSeq.equals(seq)) {
                             sub.setId(null);
                             sub.setOldValue(oldSeq + "");
@@ -258,7 +266,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             sub.setVoucherNo(voucherNo);
                             crafworkChangeRecordPlmDao.insert(sub);
                         }
-                    } else {
                         if (!oldMac.equals(mac)) {
                             sub.setId(null);
                             sub.setOldValue(oldMac + "");
@@ -286,12 +293,14 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             sub.setVoucherNo(voucherNo);
                             crafworkChangeRecordPlmDao.insert(sub);
                         }
-                    }
                 } else if ("删除".equals(auditMethod)) {
-                    Long id = prodCrafworkPathPlm.getId();
-                    ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.get(id);
-                    Long craf = aud.getCrafworkId();
-                    String mid = aud.getMidProdNo();
+                    Long crafworkId = prodCrafworkPathPlm.getCrafworkId();
+                    String midProdNo = prodCrafworkPathPlm.getMidProdNo();
+                    ProdCrafworkPathPlm plm = new ProdCrafworkPathPlm();
+                    plm.setCompanyId(UserHolder.getCompanyId());
+                    plm.setMidProdNo(midProdNo);
+                    plm.setCrafworkId(crafworkId);
+                    ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.find(plm).get(0);
                     String path = aud.getPathNo();
                     ProdCrafworkMainPlm mn = new ProdCrafworkMainPlm();
                     mn.setPathNo(path);
@@ -301,8 +310,8 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                         String prodNo = list.get(0).getProdNo();
                         CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
                         sub.setProdNo(prodNo);
-                        sub.setMidProdNo(mid);
-                        sub.setCrafworkId(craf);
+                        sub.setMidProdNo(midProdNo);
+                        sub.setCrafworkId(crafworkId);
                         sub.setCompanyId(UserHolder.getCompanyId());
                         sub.setChangeEmp(UserHolder.getUserName());
                         sub.setUpdDate(new Date());
@@ -313,54 +322,54 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                 }
             }
         }
-
-        // 调整工艺顺序
-        if (CollectionUtils.isNotEmpty(prodCrafworkParamPlmDtos)){
-            for (ProdCrafworkParamPlmDto plmDto : prodCrafworkParamPlmDtos) {
-                ProdCrafworkPathPlmDto[] crafworkPathDtos = plmDto.getCrafworkPathDtos();
-                    Long afterId = crafworkPathDtos[0].getId();
-                    Long uqe1 = crafworkPathDtos[0].getCarfSeq();
-                    ProdCrafworkPathPlm after = prodCrafworkPathPlmDao.get(afterId);
-                    Long beforeId = crafworkPathDtos[1].getId();
-                    Long uqe2 = crafworkPathDtos[1].getCarfSeq();
-                    ProdCrafworkPathPlm before = prodCrafworkPathPlmDao.get(beforeId);
+//
+//        // 调整工艺顺序
+//        if (CollectionUtils.isNotEmpty(prodCrafworkParamPlmDtos)){
+//            for (ProdCrafworkParamPlmDto plmDto : prodCrafworkParamPlmDtos) {
+//                ProdCrafworkPathPlmDto[] crafworkPathDtos = plmDto.getCrafworkPathDtos();
+//                    Long afterId = crafworkPathDtos[0].getId();
+//                    Long uqe1 = crafworkPathDtos[0].getCarfSeq();
+//                    ProdCrafworkPathPlm after = prodCrafworkPathPlmDao.get(afterId);
+//                    Long beforeId = crafworkPathDtos[1].getId();
+//                    Long uqe2 = crafworkPathDtos[1].getCarfSeq();
+//                    ProdCrafworkPathPlm before = prodCrafworkPathPlmDao.get(beforeId);
 //                    after.setId(beforeId);
 //                    before.setId(afterId);
 //                    prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(after, ProdCrafworkPathPlmDto.class));
 //                    prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(before, ProdCrafworkPathPlmDto.class));
-                    CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
-                    ProductMidPlm mid = new ProductMidPlm();
-                    mid.setMidProdNo(after.getMidProdNo());
-                    mid.setCompanyId(UserHolder.getCompanyId());
-                    List<ProductMidPlm> midList = productMidPlmDao.find(mid);
-                    if (CollectionUtils.isNotEmpty(midList)) {
-                        String prodNo = midList.get(0).getProdNo();
-                        sub.setProdNo(prodNo);
-                    }
-                    sub.setMidProdNo(after.getMidProdNo());
-                    sub.setCompanyId(UserHolder.getCompanyId());
-                    sub.setChangeEmp(UserHolder.getUserName());
-                    sub.setUpdDate(new Date());
-                    if (!uqe1.equals(uqe2)) {
-                        sub.setCrafworkId(after.getCrafworkId());
-                        sub.setId(null);
-                        sub.setOldValue(uqe1 + "");
-                        sub.setNewValue(uqe2 + "");
-                        sub.setChangeFlag("调整工艺顺序");
-                        sub.setChangeItem("工艺顺序");
-                        sub.setVoucherNo(voucherNo);
-                        crafworkChangeRecordPlmDao.insert(sub);
-                        sub.setCrafworkId(before.getCrafworkId());
-                        sub.setId(null);
-                        sub.setOldValue(uqe2 + "");
-                        sub.setNewValue(uqe1 + "");
-                        sub.setChangeFlag("调整工艺顺序");
-                        sub.setChangeItem("工艺顺序");
-                        sub.setVoucherNo(voucherNo);
-                        crafworkChangeRecordPlmDao.insert(sub);
-                    }
-                }
-            }
+//                    CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
+//                    ProductMidPlm mid = new ProductMidPlm();
+//                    mid.setMidProdNo(after.getMidProdNo());
+//                    mid.setCompanyId(UserHolder.getCompanyId());
+//                    List<ProductMidPlm> midList = productMidPlmDao.find(mid);
+//                    if (CollectionUtils.isNotEmpty(midList)) {
+//                        String prodNo = midList.get(0).getProdNo();
+//                        sub.setProdNo(prodNo);
+//                    }
+//                    sub.setMidProdNo(after.getMidProdNo());
+//                    sub.setCompanyId(UserHolder.getCompanyId());
+//                    sub.setChangeEmp(UserHolder.getUserName());
+//                    sub.setUpdDate(new Date());
+//                    if (!uqe1.equals(uqe2)) {
+//                        sub.setCrafworkId(after.getCrafworkId());
+//                        sub.setId(null);
+//                        sub.setOldValue(uqe1 + "");
+//                        sub.setNewValue(uqe2 + "");
+//                        sub.setChangeFlag("调整工艺顺序");
+//                        sub.setChangeItem("工艺顺序");
+//                        sub.setVoucherNo(voucherNo);
+//                        crafworkChangeRecordPlmDao.insert(sub);
+//                        sub.setCrafworkId(before.getCrafworkId());
+//                        sub.setId(null);
+//                        sub.setOldValue(uqe2 + "");
+//                        sub.setNewValue(uqe1 + "");
+//                        sub.setChangeFlag("调整工艺顺序");
+//                        sub.setChangeItem("工艺顺序");
+//                        sub.setVoucherNo(voucherNo);
+//                        crafworkChangeRecordPlmDao.insert(sub);
+//                    }
+//                }
+//            }
 
 
 
@@ -402,7 +411,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                 voucherMainOa.setWkflowId(DEFAULT_WORKFLOW_ID);
             }
         }
-
         voucherMainOaDao.updateByVoucherNo(voucherMainOa);
     }
 }

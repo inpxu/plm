@@ -25,5 +25,6 @@ public class MattersStoreDto extends MattersStoreIos implements Serializable {
     private String backUpMatterNo;
     private Long amount;
     private Boolean leaf = false;
+    private Long serial;
 
 }

@@ -137,4 +137,14 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
     public List<MattersStoreDto> findAllMattersAndComponet(Map<String, Object> param) {
         return this.selectList(getMethodName(), param);
     }
+
+    @Override
+    public List<MattersStoreDto> findMattersAndComponentBySerialAndPno(Map<String, Object> param) {
+        return this.selectList(getMethodName(), param);
+    }
+
+    @Override
+    public List<MattersStoreDto> findAllChildByMattersNo(MattersStoreDto mattersStoreDto) {
+        return this.selectList(getMethodName(), mattersStoreDto);
+    }
 }

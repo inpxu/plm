@@ -172,6 +172,7 @@ public class ProdBomPlmController extends BaseController {
 
     /**
      * 新增物料
+     * 必须要添加serial
      *
      * @param prodBomDetailPlms 物料数组
      * @return java.lang.String
@@ -441,6 +442,35 @@ public class ProdBomPlmController extends BaseController {
             prodBomPlmService.changeNumber(isMidProduct, id, number, numberBefore);
             baseResult.setResult(true);
             baseResult.setModel(null);
+        } catch (BusinessException be) {
+            LOGGER.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
+    /**
+     * 修改前查询
+     *
+     * @param prodBomPlmDto
+     * @return java.lang.String
+     * @author 邓艺
+     * @date 2018/10/10 14:18
+     */
+    @RequestMapping(value = "beforeUpdateProductBom", method = RequestMethod.POST)
+    @ResponseBody
+    public String beforeUpdateProductBom(ProdBomPlmDto prodBomPlmDto) {
+        BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
+        try {
+            ProdBomPlmDto bomPlmDto = prodBomPlmService.beforeUpdateProductBom(prodBomPlmDto);
+            baseResult.setResult(true);
+            baseResult.setMessage("查询成功");
+            baseResult.setModel(bomPlmDto);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);

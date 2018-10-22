@@ -11,10 +11,18 @@ public class CrafworkChangeMainDto extends CrafworkChangeMain {
     private String orgName;
     // 审批状态
     private String label;
-
+    // 新增编辑删除
     private List<ProdCrafworkPathPlmDto> prodCrafworkPathPlmDtos;
+    // 调整顺序
+    private List<ProdCrafworkParamPlmDto> prodCrafworkParamPlmDtos;
 
-    private ProdCrafworkPathPlmDto[] crafworkPathDtos;
+    public List<ProdCrafworkParamPlmDto> getProdCrafworkParamPlmDtos() {
+        return prodCrafworkParamPlmDtos;
+    }
+
+    public void setProdCrafworkParamPlmDtos(List<ProdCrafworkParamPlmDto> prodCrafworkParamPlmDtos) {
+        this.prodCrafworkParamPlmDtos = prodCrafworkParamPlmDtos;
+    }
 
     public List<ProdCrafworkPathPlmDto> getProdCrafworkPathPlmDtos() {
         return prodCrafworkPathPlmDtos;
@@ -22,14 +30,6 @@ public class CrafworkChangeMainDto extends CrafworkChangeMain {
 
     public void setProdCrafworkPathPlmDtos(List<ProdCrafworkPathPlmDto> prodCrafworkPathPlmDtos) {
         this.prodCrafworkPathPlmDtos = prodCrafworkPathPlmDtos;
-    }
-
-    public ProdCrafworkPathPlmDto[] getCrafworkPathDtos() {
-        return crafworkPathDtos;
-    }
-
-    public void setCrafworkPathDtos(ProdCrafworkPathPlmDto[] crafworkPathDtos) {
-        this.crafworkPathDtos = crafworkPathDtos;
     }
 
     public String getOrgName() {

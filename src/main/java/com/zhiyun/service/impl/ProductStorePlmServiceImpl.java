@@ -168,7 +168,7 @@ public class ProductStorePlmServiceImpl extends BaseServiceImpl<ProductStorePlm,
             dto.setProdNo(prod.getProdNo());
             dto.setCompanyId(UserHolder.getCompanyId());
             String label = prodCrafworkMainPlmDao.getStatus(dto).getLabel();
-            if (label == null || "".equals(label)) {
+            if (label == null || "".equals(label) || "ready".equals(label)) {
                 prod.setStatus("未发起评审");
             } else {
                 prod.setStatus(label);

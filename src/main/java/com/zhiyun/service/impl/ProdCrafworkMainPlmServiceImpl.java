@@ -88,7 +88,7 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
         dto1.setProdNo(prodCrafworkMainPlm.getProdNo());
         dto1.setCompanyId(UserHolder.getCompanyId());
         String label = prodCrafworkMainPlmDao.getStatus(dto1).getLabel();
-        if (label == null || "".equals(label)) {
+        if (label == null || "".equals(label) || "ready".equals(label)) {
             mainPlm.setStatus("未发起评审");
         } else {
             mainPlm.setStatus(label);

@@ -10,6 +10,16 @@ public class ProdCrafworkParamPlmDto extends ProdCrafworkParamPlm {
     // id数组
     private Long ids;
 
+    private ProdCrafworkPathPlmDto[] crafworkPathDtos;
+
+    public ProdCrafworkPathPlmDto[] getCrafworkPathDtos() {
+        return crafworkPathDtos;
+    }
+
+    public void setCrafworkPathDtos(ProdCrafworkPathPlmDto[] crafworkPathDtos) {
+        this.crafworkPathDtos = crafworkPathDtos;
+    }
+
     public String getStatus() {
         return status;
     }

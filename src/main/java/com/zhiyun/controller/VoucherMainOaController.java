@@ -149,7 +149,7 @@ public class VoucherMainOaController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/audit ", method = {RequestMethod.GET, RequestMethod.POST})
-    public Object audit(CrafworkChangeMainDto crafworkChangeMainDto, BindingResult bindingResult) {
+    public Object audit(@RequestBody CrafworkChangeMainDto crafworkChangeMainDto, BindingResult bindingResult) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
         baseResult.setResult(true);
         baseResult.setMessage("审核已提交！");

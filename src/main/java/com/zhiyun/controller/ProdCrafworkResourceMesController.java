@@ -137,7 +137,7 @@ public class ProdCrafworkResourceMesController extends BaseController {
     /**
      * 工艺资料删除
      *
-     * @param ids
+     * @param prodCrafworkResourceMesDto
      * @return
      * @author xufei
      * @date 2018-9-18 10:29:19

@@ -224,6 +224,11 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     sub.setUpdDate(new Date());
                     sub.setChangeFlag("新增产品工艺");
                     sub.setVoucherNo(voucherNo);
+                    Long seq = prodCrafworkPathPlm.getCarfSeq();
+                    Integer mac = prodCrafworkPathPlm.getMacMinutes();
+                    Integer emp = prodCrafworkPathPlm.getEmpMinutes();
+                    BigDecimal day = prodCrafworkPathPlm.getDayAmount();
+                    sub.setNewValue(seq + "," + mac + "," + emp + "," + day);
                     crafworkChangeRecordPlmDao.insert(sub);
                 } else if ("编辑".equals(auditMethod)) {
                     // 判断如果是编辑
@@ -231,21 +236,31 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Long crafworkId = prodCrafworkPathPlm.getCrafworkId();
                     String prodNo = prodCrafworkPathPlm.getProdNo();
                     String midProdNo = prodCrafworkPathPlm.getMidProdNo();
-                    ProdCrafworkPathPlm plm = new ProdCrafworkPathPlm();
+                    CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
                     plm.setCompanyId(UserHolder.getCompanyId());
                     plm.setMidProdNo(midProdNo);
+                    plm.setProdNo(prodNo);
                     plm.setCrafworkId(crafworkId);
+                    plm.setChangeFlag("新增产品工艺");
+                    ProdCrafworkPathPlm aud = new ProdCrafworkPathPlm();
+                    CrafworkChangeRecordPlm cr = new CrafworkChangeRecordPlm();
+                    Long oldSeq = null;
+                    Integer oldMac = null;
+                    Integer oldEmp = null;
+                    BigDecimal oldDay = null;
                     if ( id == null) {
-                        Long oldSeq = null;
-                        Integer oldMac = null;
-                        Integer oldEmp = null;
-                        BigDecimal oldDay = null;
+                        cr = crafworkChangeRecordPlmDao.find(plm).get(0);
+//                        oldSeq = cr.getCarfSeq();
+//                        oldMac = cr.getMacMinutes();
+//                        oldEmp = cr.getEmpMinutes();
+//                        oldDay = cr.getDayAmount();
+                    } else {
+                        aud = prodCrafworkPathPlmDao.get(id);
+                        oldSeq = aud.getCarfSeq();
+                        oldMac = aud.getMacMinutes();
+                        oldEmp = aud.getEmpMinutes();
+                        oldDay = aud.getDayAmount();
                     }
-                    ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.get(id);
-                    Long oldSeq = aud.getCarfSeq();
-                    Integer oldMac = aud.getMacMinutes();
-                    Integer oldEmp = aud.getEmpMinutes();
-                    BigDecimal oldDay = aud.getDayAmount();
                     Long seq = prodCrafworkPathPlm.getCarfSeq();
                     Integer mac = prodCrafworkPathPlm.getMacMinutes();
                     Integer emp = prodCrafworkPathPlm.getEmpMinutes();

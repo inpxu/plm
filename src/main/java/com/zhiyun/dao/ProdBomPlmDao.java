@@ -67,4 +67,8 @@ public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
     List<ProdBomPlm> uniqueBom(Map<String, Object> param);
 
     List<MattersStoreDto> findAllMattersAndComponet(Map<String, Object> param);
+
+    List<MattersStoreDto> findMattersAndComponentBySerialAndPno(Map<String, Object> param);
+
+    List<MattersStoreDto> findAllChildByMattersNo(MattersStoreDto mattersStoreDto);
 }

@@ -31,10 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 产品物料构成主表Service接口实现类。
@@ -156,8 +153,22 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
-    public void addBomNo(ProdBomPlm prodBomPlm) {
+    @Transactional
+    public ProdBomPlmDto addBomNo(ProdBomPlm prodBomPlm) {
+        //bom编码唯一性校验
+        this.uniqueBomNo(prodBomPlm.getBomNo());
+        prodBomPlm.setCompanyId(UserHolder.getCompanyId());
+        prodBomPlm.setMakeEmp(UserHolder.getUserName());
+        prodBomPlm.setMakeDate(new Date());
+        prodBomPlm.setBomStatus("启用中");
+        prodBomPlm.setVersions(String.valueOf(1));
         prodBomPlmDao.insert(prodBomPlm);
+        //新增bom成功以后再次查询返回前段供显示
+        Map<String, Object> param = new HashMap<>(3);
+        param.put("prodNo", prodBomPlm.getProdNo());
+        param.put("versionNo", prodBomPlm.getVersions());
+        param.put("companyId", UserHolder.getCompanyId());
+        return this.findCommonBomByProdNo(param);
     }
 
     @Override
@@ -171,6 +182,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                     throw new BusinessException("物料不能递归添加");
                 }
                 mattersStoreIo.setCompanyId(UserHolder.getCompanyId());
+                mattersStoreIo.setSerial(1L);
                 prodBomDetailPlmDao.insert(mattersStoreIo);
                 List<ProdBomDetailPlm> list1 = prodBomDetailPlmDao.find(mattersStoreIo);
                 if (CollectionUtils.isNotEmpty(list1)) {
@@ -189,7 +201,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     @Override
     @Transactional
     public void commit2Approve(String bomCode) {
-        String bom = uniqueIdService.mixedId("Bom", 10, UserHolder.getCompanyId());
+        String bom = uniqueIdService.mixedId("BOM", 10, UserHolder.getCompanyId());
         VoucherMainOa voucherMainOa = new VoucherMainOa();
         voucherMainOa.setIsFinished("审批中");
         voucherMainOa.setVoucherNo(bom);
@@ -324,7 +336,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
      */
     @Override
     public ProdBomPlmDto findCommonBom(String matterNo) {
-        Map<String, Object> param = new HashMap<>(2);
+        Map<String, Object> param = new HashMap<>(4);
         param.put("companyId", UserHolder.getCompanyId());
         param.put("matterNo", matterNo);
         //查询bom是否存在，在查询的时候要查询版本号最大的，迫于无奈使用子查询
@@ -332,6 +344,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         if (bomByMatterName == null) {
             throw new BusinessException("BOM不存在");
         } else {
+            param.put("serial", Long.parseLong(bomByMatterName.getVersions()));
             //查询其下所有物料和公用组件
             List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersAndComponet(param);
             if (CollectionUtils.isNotEmpty(mattersStoreIosLists)) {
@@ -365,11 +378,8 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
      * @date 2018/10/13 17:16
      */
     @Override
-    public ProdBomPlmDto findCommonBomByProdNo(String prodNo) {
-        Map<String, Object> param = new HashMap<>(2);
-        param.put("companyId", UserHolder.getCompanyId());
-        param.put("prodNo", prodNo);
-        return prodBomPlmDao.findCommonBomByProdNo(param);
+    public ProdBomPlmDto findCommonBomByProdNo(Map<String, Object> prodNo) {
+        return prodBomPlmDao.findCommonBomByProdNo(prodNo);
     }
 
     /**
@@ -442,28 +452,150 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         if (prodBomPlmDto.getVersions() == null) {
             throw new BusinessException("BOM历史版本还未审批");
         }
-        //升级版本
-        prodBomPlmDto.setVersions(String.valueOf(Integer.parseInt(prodBomPlmDto.getVersions())));
-        //升级数据的封装
-
-        //将下属版本全进行更新，然后插入数据库
+        //1.升级BOM表数据的封装
+        ProdBomPlm updateProdBomPlm = new ProdBomPlm();
+        updateProdBomPlm.setVoucherNo(uniqueIdService.mixedId("BOM", 10, UserHolder.getCompanyId()));
+        updateProdBomPlm.setBomNo(prodBomPlmDto.getBomNo());
+        updateProdBomPlm.setProdNo(prodBomPlmDto.getMattersNo());
+        updateProdBomPlm.setMakeDate(prodBomPlmDto.getMakeDate());
+        updateProdBomPlm.setVersions(prodBomPlmDto.getVersions());
+        updateProdBomPlm.setBomStatus(prodBomPlmDto.getBomStatus());
+        updateProdBomPlm.setCompanyId(UserHolder.getCompanyId());
+        prodBomPlmDao.insert(updateProdBomPlm);
+        //2.遍历所有物料及公用组件，升级版本信息然后保存
+        ProdBomDetailPlm updateBomDetailPlm = new ProdBomDetailPlm();
         List<MattersStoreDto> mattersStoreDtos = prodBomPlmDto.getMattersStoreDtos();
+        upDateAllMattersAndComponent(prodBomPlmDto, updateBomDetailPlm, mattersStoreDtos);
+    }
+
+    /**
+     * 递归修改
+     *
+     * @param prodBomPlmDto
+     * @param updateBomDetailPlm
+     * @param mattersStoreDtos
+     */
+    public void upDateAllMattersAndComponent(ProdBomPlmDto prodBomPlmDto, ProdBomDetailPlm updateBomDetailPlm, List<MattersStoreDto> mattersStoreDtos) {
         if (CollectionUtils.isNotEmpty(mattersStoreDtos)) {
             //判断是否是公用组件
             for (MattersStoreDto mattersStoreDto : mattersStoreDtos) {
-                //如果是公用组件，则递归
                 if ("1".equals(mattersStoreDto.getIsMidprod())) {
                     Map<String, Object> param = new HashMap<>(2);
                     param.put("companyId", UserHolder.getCompanyId());
-                    param.put("mattersNo", mattersStoreDto.getMattersNo());
-                    //查询所有物料和通用组件
-
-
+                    param.put("paranetNo", mattersStoreDto.getMattersNo());
+                    param.put("serial", Long.parseLong(prodBomPlmDto.getVersions()));
+                    //查询
+                    List<MattersStoreDto> mattersList = prodBomPlmDao.findMattersAndComponentBySerialAndPno(param);
+                    upDateAllMattersAndComponent(prodBomPlmDto, updateBomDetailPlm, mattersList);
                 } else {
-
+                    //封装物料信息
+                    updateBomDetailPlm.setSerial(Long.parseLong(prodBomPlmDto.getVersions()));
+                    updateBomDetailPlm.setMattersNo(mattersStoreDto.getMattersNo());
+                    updateBomDetailPlm.setParentNo(prodBomPlmDto.getMattersNo());
+                    updateBomDetailPlm.setAmount(Double.valueOf(mattersStoreDto.getAmount()));
+                    updateBomDetailPlm.setBackupMatter(mattersStoreDto.getBackUpMatterNo());
+                    updateBomDetailPlm.setPlmDesc(mattersStoreDto.getPlmDesc());
+                    prodBomDetailPlmDao.insert(updateBomDetailPlm);
                 }
             }
         }
+    }
+
+    /**
+     * 更新bom前显示数据封装
+     *
+     * @param prodBomPlmDto
+     * @return com.zhiyun.dto.ProdBomPlmDto
+     * @author 邓艺
+     * @date 2018/10/19 10:43
+     */
+    @Override
+    @Transactional
+    public ProdBomPlmDto beforeUpdateBom(ProdBomPlmDto prodBomPlmDto) {
+        //查询出之前的所有物料信息
+        Map<String, Object> param = new HashMap<>(3);
+        param.put("matterNo", prodBomPlmDto.getMattersNo());
+        param.put("serial", Long.parseLong(prodBomPlmDto.getVersions()));
+        param.put("companyId", UserHolder.getCompanyId());
+        prodBomPlmDto.setMakeDate(new Date());
+        prodBomPlmDto.setVersions(String.valueOf(Long.parseLong(prodBomPlmDto.getVersions()) + 1L));
+        //查询其下所有物料和公用组件
+        List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersAndComponet(param);
+        if (CollectionUtils.isNotEmpty(mattersStoreIosLists)) {
+            for (MattersStoreDto mattersStoreIosList : mattersStoreIosLists) {
+                //  如果是公用组件
+                if ("1".equals(mattersStoreIosList.getIsMidprod())) {
+                    param.put("matterNo", mattersStoreIosList.getMattersNo());
+                    List<MattersStoreDto> componets = prodBomPlmDao.findAllMattersAndComponet(param);
+                    if (CollectionUtils.isEmpty(componets)) {
+                        mattersStoreIosList.setLeaf(true);
+                    }
+                } else {
+                    mattersStoreIosList.setLeaf(true);
+                }
+            }
+        }
+        prodBomPlmDto.setMattersStoreDtos(mattersStoreIosLists);
+        return prodBomPlmDto;
+    }
+
+    @Override
+    public List<MattersStoreDto> findAllChildByMattersNo(MattersStoreDto mattersStoreDto) {
+        Map<String, Object> param = new HashMap<>(3);
+        param.put("matterNo", mattersStoreDto.getMattersNo());
+        param.put("serial", mattersStoreDto.getSerial());
+        param.put("companyId", UserHolder.getCompanyId());
+        //查询其下所有物料和公用组件
+        List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersAndComponet(param);
+        if (CollectionUtils.isNotEmpty(mattersStoreIosLists)) {
+            for (MattersStoreDto mattersStoreIosList : mattersStoreIosLists) {
+                //  如果是公用组件
+                if ("1".equals(mattersStoreIosList.getIsMidprod())) {
+                    param.put("matterNo", mattersStoreIosList.getMattersNo());
+                    List<MattersStoreDto> componets = prodBomPlmDao.findAllMattersAndComponet(param);
+                    if (CollectionUtils.isEmpty(componets)) {
+                        mattersStoreIosList.setLeaf(true);
+                    }
+                } else {
+                    mattersStoreIosList.setLeaf(true);
+                }
+            }
+        }
+        return prodBomPlmDao.findAllChildByMattersNo(mattersStoreDto);
+    }
+
+    @Override
+    public ProdBomPlmDto beforeUpdateProductBom(ProdBomPlmDto prodBomPlmDto) {
+        Map<String, Object> param = new HashMap<>(3);
+        param.put("companyId", UserHolder.getCompanyId());
+        //通过产品编码查询
+        param.put("productNo", prodBomPlmDto.getProdNo());
+        //查询bom
+        ProdBomPlmDto bomByPno = prodBomPlmDao.findBomByPno(param);
+        if (bomByPno != null) {
+            //查询半成品封装
+            List<MattersStoreDto> mattersStoreIosList = prodBomPlmDao.findAllMattersFroProduct(param);
+            List<ProductMidPlmDto> list = prodBomPlmDao.findAllMidProductByPno(param);
+            if (CollectionUtils.isNotEmpty(list)) {
+                for (ProductMidPlmDto productMidPlmDto : list) {
+                    param.put("productNo", productMidPlmDto.getMidProdNo());
+                    List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersFroProduct(param);
+                    List<ProductMidPlmDto> list1 = prodBomPlmDao.findAllMidProductByPno(param);
+                    if (CollectionUtils.isEmpty(mattersStoreIosLists) && CollectionUtils.isEmpty(list1)) {
+                        productMidPlmDto.setLeaf(true);
+                    }
+                }
+            }
+            //设置是否包含
+            if (CollectionUtils.isEmpty(list) && CollectionUtils.isEmpty(mattersStoreIosList)) {
+                bomByPno.setLeaf(true);
+            }
+            bomByPno.setProductMidPlms(list);
+            bomByPno.setMattersStoreDtos(mattersStoreIosList);
+            return bomByPno;
+        }
+
+        return null;
     }
 
 }

@@ -14,6 +14,7 @@ import com.zhiyun.entity.ProdBomDetailPlm;
 import com.zhiyun.entity.ProdBomPlm;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品物料构成主表Service接口。
@@ -37,7 +38,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno);
 
-    void addBomNo(ProdBomPlm prodBomPlm);
+    ProdBomPlmDto addBomNo(ProdBomPlm prodBomPlm);
 
     List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlm[] mattersStoreIos);
 
@@ -61,7 +62,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     ProdBomPlmDto findCommonBom(String matterNo);
 
-    ProdBomPlmDto findCommonBomByProdNo(String prodNo);
+    ProdBomPlmDto findCommonBomByProdNo(Map<String, Object> prodNo);
 
     List<MattersStoreDto> SearchBeforeAddMattersForCom(String codeOrName);
 
@@ -99,4 +100,10 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
     void uniqueBomNo(String bomNo);
 
     void upGradeCommonBom(ProdBomPlmDto prodBomPlmDto);
+
+    ProdBomPlmDto beforeUpdateBom(ProdBomPlmDto prodBomPlmDto);
+
+    List<MattersStoreDto> findAllChildByMattersNo(MattersStoreDto mattersStoreDto);
+
+    ProdBomPlmDto beforeUpdateProductBom(ProdBomPlmDto prodBomPlmDto);
 }

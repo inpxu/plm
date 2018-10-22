@@ -35,10 +35,12 @@
     <select id="findBomByPno" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
         SELECT prod_bom_plm.bom_no         AS bomNo,
                prod_bom_plm.versions,
+               prod_bom_plm.voucher_no     AS voucherNo,
                prod_bom_plm.make_emp       AS makeEmp,
                prod_bom_plm.bom_status     AS bomStatus,
                prod_bom_plm.`status`,
                prod_bom_plm.make_date      AS makeDate,
+               prod_bom_plm.prod_no        as prodNO,
                voucher_main_oa.is_finished AS voucherStatus,
                product_store_plm.id        AS productId,
                product_store_plm.prod_no   AS productNo,
@@ -51,6 +53,11 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           and prod_bom_plm.prod_no = #{productNo}
+          AND prod_bom_plm.versions = (SELECT MAX(prod_bom_plm.versions)
+                                       FROM prod_bom_plm
+                                       WHERE prod_bom_plm.deleted = 'F'
+                                         AND prod_bom_plm.company_id = #{companyId}
+                                         AND prod_bom_plm.prod_no = #{productNo})
     </select>
     <select id="findBomByMpno" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
         SELECT prod_bom_plm.bom_no     AS  bomNo,
@@ -160,9 +167,28 @@
           AND prod_bom_detail_plm.parent_no = #{productNo}
     </select>
 
+    <select id="SearchBeforeAddMatters" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT s.ID                                             id,
+               CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)        mattersInfo,
+               s.MATTERS_NO                                     mattersNo,
+               CONCAT(s.NORMS, '/', s.PARAM, '/', s.MODEL_DESC) allInfo,
+               s.UNIT                                           unit,
+               s.WEIGHT                                         weight,
+               t.type_name                                      typeName
+        FROM MATTERS_STORE_IOS s
+                 LEFT JOIN matters_type_ios t ON s.TYPE_ID = t.id
+                                                     AND t.deleted = 'F'
+        WHERE s.deleted = 'F'
+          and s.is_midprod != 2
+          AND s.company_id = #{companyId}
+#           AND s.matters_no != #{parentNo}
+          AND (s.matters_no LIKE CONCAT('%', #{codeOrName}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName}, '%'))
+
+    </select>
     <select id="findAllMattersAndComponet" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
         SELECT prod_bom_detail_plm.id,
                prod_bom_detail_plm.amount,
+               prod_bom_detail_plm.serial,
                prod_bom_detail_plm.plm_desc                                                                     plmDesc,
                backMatter.MATTERS_NO                                                                            backUpMatterNo,
                CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
@@ -183,24 +209,7 @@
           and matters_store_ios.is_midprod != 2
           and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{matterNo}
-
-    </select>
-    <select id="SearchBeforeAddMatters" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
-        SELECT s.ID                                             id,
-               CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)        mattersInfo,
-               s.MATTERS_NO                                     mattersNo,
-               CONCAT(s.NORMS, '/', s.PARAM, '/', s.MODEL_DESC) allInfo,
-               s.UNIT                                           unit,
-               s.WEIGHT                                         weight,
-               t.type_name                                      typeName
-        FROM MATTERS_STORE_IOS s
-                 LEFT JOIN matters_type_ios t ON s.TYPE_ID = t.id
-                                                     AND t.deleted = 'F'
-        WHERE s.deleted = 'F'
-          and s.is_midprod != 2
-          AND s.company_id = #{companyId}
-          AND (s.matters_no LIKE CONCAT('%', #{codeOrName}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName}, '%'))
-
+          and prod_bom_detail_plm.serial = #{serial}
     </select>
 
     <select id="findMidProduct" parameterType="map" resultType="com.zhiyun.dto.ProductMidPlmDto">
@@ -277,6 +286,7 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{prodNo}
+          AND prod_bom_plm.versions = #{versionNo}
     </select>
 
     <select id="optionComponent" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -291,6 +301,7 @@
     <select id="findCommonBomByMatterNo" resultType="com.zhiyun.dto.ProdBomPlmDto" parameterType="map">
         SELECT prod_bom_plm.bom_no         AS bomNo,
                prod_bom_plm.versions,
+               prod_bom_plm.voucher_no     as voucherNo,
                prod_bom_plm.make_emp       AS makeEmp,
                prod_bom_plm.bom_status     AS bomStatus,
                prod_bom_plm.`status`,
@@ -309,16 +320,11 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{matterNo}
-           AND prod_bom_plm.versions = (
-          SELECT
-            MAX( prod_bom_plm.versions )
-          FROM
-            prod_bom_plm
-          WHERE
-            prod_bom_plm.deleted = 'F'
-            AND prod_bom_plm.company_id = #{companyId}
-          AND prod_bom_plm.prod_no = #{matterNo}
-          )
+          AND prod_bom_plm.versions = (SELECT MAX(prod_bom_plm.versions)
+                                       FROM prod_bom_plm
+                                       WHERE prod_bom_plm.deleted = 'F'
+                                         AND prod_bom_plm.company_id = #{companyId}
+                                         AND prod_bom_plm.prod_no = #{matterNo})
     </select>
 
     <!-- 分页查询（计数） -->
@@ -438,19 +444,43 @@
           AND company_id = #{companyId}
           AND bom_no = #{bomNo}
     </select>
-    <select id="findByVoucherNO" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">
-        SELECT
-               prod_bom_plm.id,
-               prod_bom_plm.voucher_no voucherNo,
-               prod_bom_plm.bom_no bomNo,
-               prod_bom_plm.prod_no prodNo,
-               prod_bom_plm.versions
-        FROM
-             prod_bom_plm
-        WHERE
-                prod_bom_plm.deleted = 'F'
-          AND prod_bom_plm.company_id = #{companyId}
-          AND prod_bom_plm.voucher_no=#{voucherNo}
+    <!--<select id="findByVoucherNO" parameterType="map" resultType="com.zhiyun.entity.ProdBomPlm">-->
+    <!--SELECT prod_bom_plm.id, prod_bom_plm.voucher_no voucherNo, prod_bom_plm.bom_no bomNo, prod_bom_plm.prod_no prodNo, prod_bom_plm.versions-->
+    <!--FROM prod_bom_plm-->
+    <!--WHERE prod_bom_plm.deleted = 'F'-->
+    <!--AND prod_bom_plm.company_id = #{companyId}-->
+    <!--AND prod_bom_plm.voucher_no = #{voucherNo}-->
+    <!--</select>-->
+
+    <select id="findMattersAndComponentBySerialAndPno" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
+        SELECT prod_bom_detail_plm.id,
+               prod_bom_detail_plm.amount,
+               prod_bom_detail_plm.serial,
+               prod_bom_detail_plm.plm_desc                                                                     plmDesc,
+               backMatter.MATTERS_NO                                                                            backUpMatterNo,
+               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
+               CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
+               CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
+               matters_store_ios.versions,
+               matters_store_ios.unit,
+               matters_store_ios.is_midprod                                                                     isMidprod,
+               matters_store_ios.matters_no                                                                     mattersNo
+        FROM prod_bom_detail_plm
+                 INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
+                                                     AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}
+                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
+                                                                   AND backMatter.deleted = 'F'
+                                                                   and backMatter.company_id = #{companyId}
+        WHERE prod_bom_detail_plm.company_id = #{companyId}
+          AND prod_bom_detail_plm.deleted = 'F'
+          and matters_store_ios.is_midprod != 2
+          and backMatter.is_midprod != 2
+          AND prod_bom_detail_plm.parent_no = #{paranetNo}
+          and prod_bom_detail_plm.serial = #{serial}
     </select>
+
+    <!--<select id="findAllChildByMattersNo" parameterType="map" resultType="">-->
+
+    <!--</select>-->
 
 </mapper>

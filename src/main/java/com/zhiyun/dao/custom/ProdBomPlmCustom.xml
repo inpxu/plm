@@ -6,13 +6,10 @@
         product_store_plm.id id,
         product_store_plm.prod_name prodName,
         product_store_plm.prod_no prodNo
-        # product_mid_plm.id midProductId,
-        # product_mid_plm.mid_prod_name midProdName,
-        # product_mid_plm.mid_prod_no midProdNo
         FROM
         product_store_plm
-        # LEFT JOIN product_mid_plm ON product_store_plm.prod_no = product_mid_plm.prod_no
-        # AND product_mid_plm.deleted = 'F'
+        <!-- LEFT JOIN product_mid_plm ON product_store_plm.prod_no = product_mid_plm.prod_no-->
+        <!--  AND product_mid_plm.deleted = 'F'-->
         WHERE
         product_store_plm.company_id = #{companyId}
         AND product_store_plm.deleted = 'F'
@@ -181,8 +178,7 @@
         WHERE s.deleted = 'F'
           and s.is_midprod != 2
           AND s.company_id = #{companyId}
-#           AND s.matters_no != #{parentNo}
-          AND (s.matters_no LIKE CONCAT('%', #{codeOrName}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName}, '%'))
+          AND (s.matters_no LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%'))
 
     </select>
     <select id="findAllMattersAndComponet" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">

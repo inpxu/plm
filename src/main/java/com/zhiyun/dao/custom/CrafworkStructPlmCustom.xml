@@ -87,13 +87,7 @@
         SELECT cp.id id, cp.crafwork_name crafworkName, cp.unit unit, cp.quarters_emp quartersEmp, qh.quarters_desc quarterName
         FROM crafwork_struct_plm cp
                  left join hcm.quarters_hcm qh on cp.quarters_emp = qh.quarters_no and cp.company_id = qh.company_id and qh.deleted = 'F'
-        WHERE cp.id NOT IN (SELECT tp.crafwork_id
-                            FROM prod_crafwork_path_plm tp
-                            WHERE tp.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
-                              AND tp.path_no = #{pathNo,jdbcType=VARCHAR}
-                              AND cp.company_id = tp.company_id
-                              AND tp.deleted = 'F')
-          AND cp.deleted = 'F'
+        WHERE cp.deleted = 'F'
           AND cp.company_id = #{companyId,jdbcType=BIGINT}
     </select>
 

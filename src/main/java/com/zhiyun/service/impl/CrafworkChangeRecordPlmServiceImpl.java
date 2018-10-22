@@ -86,6 +86,13 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
     @Override
     public List<CrafworkChangeRecordPlmDto> getDetail(CrafworkChangeRecordPlm crafworkChangeRecordPlm) {
         crafworkChangeRecordPlm.setCompanyId(UserHolder.getCompanyId());
+        List<CrafworkChangeRecordPlmDto> list = crafworkChangeRecordPlmDao.getDetail(crafworkChangeRecordPlm);
+        for (CrafworkChangeRecordPlmDto dto : list) {
+            String changeFlag = dto.getChangeFlag();
+            if ("新增产品工艺".equals(changeFlag)) {
+                dto.setNewValue("");
+            }
+        }
         return crafworkChangeRecordPlmDao.getDetail(crafworkChangeRecordPlm);
     }
 

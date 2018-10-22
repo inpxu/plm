@@ -81,7 +81,7 @@
     </select>
 
     <!-- 查询 -->
-    <select id="get" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
+    <select id="getMes" parameterType="map" resultType="com.zhiyun.entity.CrafworkChangeRecordPlm">
         SELECT ID          id,
                VOUCHER_NO  voucherNo,
                PROD_NO     prodNo,
@@ -92,16 +92,22 @@
                OLD_VALUE   oldValue,
                NEW_VALUE   newValue,
                CHANGE_EMP  changeEmp,
-               UPD_DATE    updDate,
-               DELETED     deleted,
-               CREATE_TIME createTime,
-               CREATE_BY   createBy,
-               COMPANY_ID  companyId,
-               MODIFY_TIME modifyTime,
-               MODIFY_BY   modifyBy
+               UPD_DATE    updDate
         FROM CRAFWORK_CHANGE_RECORD_PLM
-        WHERE DELETED = #{deleted,jdbcType=VARCHAR}
-        AND DELETED = #{deleted,jdbcType=VARCHAR}
+        WHERE DELETED = 'F'
+        <if test="prodNo != null and prodNo != ''">
+            AND PROD_NO = #{prodNo,jdbcType=VARCHAR}
+        </if>
+        <if test="midProdNo != null and midProdNo != ''">
+            AND MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
+        </if>
+        <if test="crafworkId != null">
+            AND CRAFWORK_ID = #{crafworkId,jdbcType=BIGINT}
+        </if>
+        <if test="changeFlag != null and changeFlag != ''">
+            AND CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR}
+        </if>
+        AND company_id = #{companyId,jdbcType=BIGINT}
         GROUP BY id DESC
     </select>
 </mapper>

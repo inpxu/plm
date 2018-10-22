@@ -24,12 +24,14 @@ import com.zhiyun.util.ProcessDto;
 import com.zhiyun.util.ResponseStatusConsts;
 import com.zhiyun.util.VoucherEnum;
 import com.zhiyun.util.WorkFlowStateConsts;
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.List;
 
@@ -243,17 +245,24 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     plm.setCrafworkId(crafworkId);
                     plm.setChangeFlag("新增产品工艺");
                     ProdCrafworkPathPlm aud = new ProdCrafworkPathPlm();
-                    CrafworkChangeRecordPlm cr = new CrafworkChangeRecordPlm();
                     Long oldSeq = null;
                     Integer oldMac = null;
                     Integer oldEmp = null;
                     BigDecimal oldDay = null;
                     if ( id == null) {
-                        cr = crafworkChangeRecordPlmDao.find(plm).get(0);
-//                        oldSeq = cr.getCarfSeq();
-//                        oldMac = cr.getMacMinutes();
-//                        oldEmp = cr.getEmpMinutes();
-//                        oldDay = cr.getDayAmount();
+                        String value = crafworkChangeRecordPlmDao.getMes(plm).get(0).getNewValue();
+                        String[] values = value.split(",");
+                        for (int i = 0; i < values.length; i++) {
+                            if (i == 0) {
+                                oldSeq = Long.valueOf(values[i]);
+                            } else if (i == 1) {
+                                oldMac = Integer.valueOf(values[i]);
+                            } else if (i == 2) {
+                                oldEmp = Integer.valueOf(values[i]);
+                            }else if (i == 3) {
+                                oldDay = BigDecimal.valueOf(Long.parseLong(values[i]));
+                            }
+                        }
                     } else {
                         aud = prodCrafworkPathPlmDao.get(id);
                         oldSeq = aud.getCarfSeq();
@@ -272,7 +281,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     sub.setCompanyId(UserHolder.getCompanyId());
                     sub.setChangeEmp(UserHolder.getUserName());
                     sub.setUpdDate(new Date());
-                        if (!oldSeq.equals(seq)) {
+                        if (seq != null && !seq.equals(oldSeq)) {
                             sub.setId(null);
                             sub.setOldValue(oldSeq + "");
                             sub.setNewValue(seq + "");
@@ -281,7 +290,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             sub.setVoucherNo(voucherNo);
                             crafworkChangeRecordPlmDao.insert(sub);
                         }
-                        if (!oldMac.equals(mac)) {
+                        if (mac != null && !mac.equals(oldMac)) {
                             sub.setId(null);
                             sub.setOldValue(oldMac + "");
                             sub.setNewValue(mac + "");
@@ -290,7 +299,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             sub.setVoucherNo(voucherNo);
                             crafworkChangeRecordPlmDao.insert(sub);
                         }
-                        if (!oldEmp.equals(emp)) {
+                        if (emp != null && !emp.equals(oldEmp)) {
                             sub.setId(null);
                             sub.setOldValue(oldEmp + "");
                             sub.setNewValue(emp + "");
@@ -299,7 +308,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             sub.setVoucherNo(voucherNo);
                             crafworkChangeRecordPlmDao.insert(sub);
                         }
-                        if (!oldDay.equals(day)) {
+                        if (day != null && !day.equals(oldDay)) {
                             sub.setId(null);
                             sub.setOldValue(oldDay + "");
                             sub.setNewValue(day + "");

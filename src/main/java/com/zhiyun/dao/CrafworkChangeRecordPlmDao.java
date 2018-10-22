@@ -25,4 +25,6 @@ public interface CrafworkChangeRecordPlmDao extends BaseDao<CrafworkChangeRecord
     List<CrafworkChangeRecordPlmDto> getDetail(CrafworkChangeRecordPlm crafworkChangeRecordPlm);
 
     List<CrafworkChangeRecordPlmDto> getRecordDetail(CrafworkChangeRecordPlmDto crafworkChangeRecordPlmDto);
+
+    List<CrafworkChangeRecordPlm> getMes(CrafworkChangeRecordPlm crafworkChangeRecordPlm);
 }

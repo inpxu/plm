@@ -13,9 +13,29 @@ public class ProdCrafworkPathPlmDto extends ProdCrafworkPathPlm {
     private String status;
     private Long[] ids;
     private String prodNo;
+    // 是否品检
+    private String check;
+
+    private String leaf;
 
     // 调用的方法
     private String auditMethod;
+
+    public String getLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(String leaf) {
+        this.leaf = leaf;
+    }
+
+    public String getCheck() {
+        return check;
+    }
+
+    public void setCheck(String check) {
+        this.check = check;
+    }
 
     public String getAuditMethod() {
         return auditMethod;

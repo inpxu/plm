@@ -242,7 +242,16 @@ public class ProdCrafworkPathPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     @Override
     public List<ProdCrafworkPathPlmDto> pathCraf(ProdCrafworkPathPlm prodCrafworkPathPlm) {
         prodCrafworkPathPlm.setCompanyId(UserHolder.getCompanyId());
-        return prodCrafworkPathPlmDao.pathCraf(prodCrafworkPathPlm);
+        List<ProdCrafworkPathPlmDto> list = prodCrafworkPathPlmDao.pathCraf(prodCrafworkPathPlm);
+        for (ProdCrafworkPathPlmDto dto : list) {
+            int ischeck = dto.getIsCheck();
+            if (ischeck == 0) {
+                dto.setCheck("否");
+            } else if (ischeck == 1) {
+                dto.setCheck("是");
+            }
+        }
+        return list;
     }
 
     @Override

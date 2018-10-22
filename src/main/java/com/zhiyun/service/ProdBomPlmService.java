@@ -40,7 +40,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     ProdBomPlmDto addBomNo(ProdBomPlm prodBomPlm);
 
-    List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlm[] mattersStoreIos);
+    List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlmDto[] mattersStoreIos);
 
     void commit2Approve(String bomCode);
 

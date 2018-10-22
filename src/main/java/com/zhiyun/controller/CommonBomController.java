@@ -126,9 +126,9 @@ public class CommonBomController {
      * @author 邓艺
      * @date 2018/10/17 16:46
      */
-    @RequestMapping(value = "upGradeCommonBom", method = RequestMethod.GET)
+    @RequestMapping(value = "upGradeCommonBom", method = RequestMethod.POST)
     @ResponseBody
-    public String upGradeCommonBom(ProdBomPlmDto prodBomPlmDto) {
+    public String upGradeCommonBom(@RequestBody ProdBomPlmDto prodBomPlmDto) {
         BaseResult<String> baseResult = new BaseResult<>();
         try {
             prodBomPlmService.upGradeCommonBom(prodBomPlmDto);

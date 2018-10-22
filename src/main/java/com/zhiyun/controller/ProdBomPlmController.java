@@ -181,7 +181,7 @@ public class ProdBomPlmController extends BaseController {
      */
     @RequestMapping(value = "addMatters", method = RequestMethod.POST)
     @ResponseBody
-    public String addMatters(@RequestBody ProdBomDetailPlm[] prodBomDetailPlms) {
+    public String addMatters(@RequestBody ProdBomDetailPlmDto[] prodBomDetailPlms) {
         BaseResult<List<ProdBomDetailPlmDto>> baseResult = new BaseResult<>();
         try {
             List<ProdBomDetailPlmDto> list = prodBomPlmService.addMatters(prodBomDetailPlms);

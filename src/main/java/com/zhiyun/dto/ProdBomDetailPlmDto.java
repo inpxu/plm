@@ -30,5 +30,6 @@ public class ProdBomDetailPlmDto extends ProdBomDetailPlm {
     private String plmDesc;
     private String backMattersInfo;
     private String backUpMatterNo;
+    private Boolean leaf;
 
 }

@@ -30,7 +30,7 @@
         GROUP BY d.id
     </select>
 
-    <select id="ReturnInfoForFront" resultType="com.zhiyun.dto.ProdBomDetailPlmDto" parameterType="map">
+    <select id="returnInfoForFront" resultType="com.zhiyun.dto.ProdBomDetailPlmDto" parameterType="map">
         SELECT s.ID                                                        id,
                CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)                   mattersInfo,
                s.MATTERS_NO                                                mattersNo,

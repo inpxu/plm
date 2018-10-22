@@ -173,16 +173,18 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
 
     @Override
     @Transactional
-    public List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlm[] mattersStoreIos) {
+    public List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlmDto[] mattersStoreIos) {
         List<ProdBomDetailPlmDto> list = new ArrayList<>();
         if (ArrayUtils.isNotEmpty(mattersStoreIos)) {
-            for (ProdBomDetailPlm mattersStoreIo : mattersStoreIos) {
+            for (ProdBomDetailPlmDto mattersStoreIo : mattersStoreIos) {
                 //保证自己不能添加自己
                 if (mattersStoreIo.getMattersNo().equals(mattersStoreIo.getParentNo())) {
                     throw new BusinessException("物料不能递归添加");
                 }
                 mattersStoreIo.setCompanyId(UserHolder.getCompanyId());
                 mattersStoreIo.setSerial(1L);
+                mattersStoreIo.setId(null);
+                mattersStoreIo.setParentNo(mattersStoreIo.getParentNo());
                 prodBomDetailPlmDao.insert(mattersStoreIo);
                 List<ProdBomDetailPlm> list1 = prodBomDetailPlmDao.find(mattersStoreIo);
                 if (CollectionUtils.isNotEmpty(list1)) {
@@ -457,8 +459,8 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         updateProdBomPlm.setVoucherNo(uniqueIdService.mixedId("BOM", 10, UserHolder.getCompanyId()));
         updateProdBomPlm.setBomNo(prodBomPlmDto.getBomNo());
         updateProdBomPlm.setProdNo(prodBomPlmDto.getMattersNo());
-        updateProdBomPlm.setMakeDate(prodBomPlmDto.getMakeDate());
-        updateProdBomPlm.setVersions(prodBomPlmDto.getVersions());
+        updateProdBomPlm.setMakeDate(new Date());
+        updateProdBomPlm.setVersions(String.valueOf(Long.valueOf(prodBomPlmDto.getVersions())+1L));
         updateProdBomPlm.setBomStatus(prodBomPlmDto.getBomStatus());
         updateProdBomPlm.setCompanyId(UserHolder.getCompanyId());
         prodBomPlmDao.insert(updateProdBomPlm);
@@ -489,12 +491,15 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                     upDateAllMattersAndComponent(prodBomPlmDto, updateBomDetailPlm, mattersList);
                 } else {
                     //封装物料信息
-                    updateBomDetailPlm.setSerial(Long.parseLong(prodBomPlmDto.getVersions()));
+                    updateBomDetailPlm.setSerial(Long.valueOf(prodBomPlmDto.getVersions())+1L);
                     updateBomDetailPlm.setMattersNo(mattersStoreDto.getMattersNo());
                     updateBomDetailPlm.setParentNo(prodBomPlmDto.getMattersNo());
                     updateBomDetailPlm.setAmount(Double.valueOf(mattersStoreDto.getAmount()));
                     updateBomDetailPlm.setBackupMatter(mattersStoreDto.getBackUpMatterNo());
                     updateBomDetailPlm.setPlmDesc(mattersStoreDto.getPlmDesc());
+                    updateBomDetailPlm.setCompanyId(UserHolder.getCompanyId());
+                    updateBomDetailPlm.setBomNo(prodBomPlmDto.getBomNo());
+                    updateBomDetailPlm.setId(null);
                     prodBomDetailPlmDao.insert(updateBomDetailPlm);
                 }
             }

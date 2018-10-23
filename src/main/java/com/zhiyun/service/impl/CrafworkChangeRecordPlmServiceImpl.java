@@ -88,12 +88,17 @@ public class CrafworkChangeRecordPlmServiceImpl extends BaseServiceImpl<Crafwork
         crafworkChangeRecordPlm.setCompanyId(UserHolder.getCompanyId());
         List<CrafworkChangeRecordPlmDto> list = crafworkChangeRecordPlmDao.getDetail(crafworkChangeRecordPlm);
         for (CrafworkChangeRecordPlmDto dto : list) {
+            String prodNo = dto.getProdNo();
+            String midProdNo = dto.getMidProdNo();
+            if (prodNo.equals(midProdNo)) {
+                dto.setMidProdMsg("");
+            }
             String changeFlag = dto.getChangeFlag();
             if ("新增产品工艺".equals(changeFlag)) {
                 dto.setNewValue("");
             }
         }
-        return crafworkChangeRecordPlmDao.getDetail(crafworkChangeRecordPlm);
+        return list;
     }
 
     @Override

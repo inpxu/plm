@@ -12,10 +12,7 @@ import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.base.util.BeanCopyUtil;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.*;
-import com.zhiyun.dto.CrafworkChangeMainDto;
-import com.zhiyun.dto.CrafworkChangeRecordPlmDto;
-import com.zhiyun.dto.ProdCrafworkParamPlmDto;
-import com.zhiyun.dto.ProdCrafworkPathPlmDto;
+import com.zhiyun.dto.*;
 import com.zhiyun.entity.*;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.service.ProdCrafworkPathPlmService;
@@ -49,6 +46,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
     private final static String UNIQUE_ID_HEAD = "PCWM";
     private final static Long APPROVER_USER_ID = 232526L;
     private final static Long DEFAULT_WORKFLOW_ID = 1L;
+    private final static String AUDIT_ID_HEAD = "PCWM-AU";
 
     @Resource
     private VoucherMainOaDao voucherMainOaDao;
@@ -68,6 +66,8 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
     private ProductMidPlmDao productMidPlmDao;
     @Resource
     private ProdCrafworkPathHirstoryPlmDao prodCrafworkPathHirstoryPlmDao;
+    @Resource
+    private CrafworkStructPlmDao crafworkStructPlmDao;
 
     @Override
     protected BaseDao<VoucherMainOa, Long> getBaseDao() {
@@ -99,7 +99,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         }
 
         //生成单据号
-        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 20, UserHolder.getCompanyId());
+        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 12, UserHolder.getCompanyId());
         //创建流程
         //        ProcessDto processDto = processService.startProcess(processKey, String.valueOf(UserHolder.getId()));
         //        if (!ResponseStatusConsts.OK.equals(processDto.getStatus())) {
@@ -159,7 +159,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         if (CollectionUtils.isEmpty(paths)) {
             throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
         }
-        String pathNo = paths.get(0).getPathNo();
+        String pathNo = crafworkChangeMainDto.getPathNo();
         CrafworkChangeRecordPlmDto change = new CrafworkChangeRecordPlmDto();
         change.setCompanyId(UserHolder.getCompanyId());
         change.setPathNo(pathNo);
@@ -168,7 +168,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
 //            throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
 //        }
         //生成单据号
-        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 20, UserHolder.getCompanyId());
+        String voucherNo = uniqueIdService.mixedId(AUDIT_ID_HEAD, 10, UserHolder.getCompanyId());
         //创建流程
         //        ProcessDto processDto = processService.startProcess(processKey, String.valueOf(UserHolder.getId()));
         //        if (!ResponseStatusConsts.OK.equals(processDto.getStatus())) {
@@ -241,6 +241,16 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Long crafworkId = prodCrafworkPathPlm.getCrafworkId();
                     String prodNo = prodCrafworkPathPlm.getProdNo();
                     String midProdNo = prodCrafworkPathPlm.getMidProdNo();
+                    if (prodNo == null) {
+                        ProductMidPlm midPlm = new ProductMidPlm();
+                        midPlm.setMidProdNo(midProdNo);
+                        midPlm.setCompanyId(UserHolder.getCompanyId());
+                        List<ProductMidPlm> list = productMidPlmDao.find(midPlm);
+                        if (CollectionUtils.isEmpty(list)) {
+                            throw new BusinessException("半成品信息错误！");
+                        }
+                        prodNo = list.get(0).getProdNo();
+                    }
                     CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
                     plm.setCompanyId(UserHolder.getCompanyId());
                     plm.setMidProdNo(midProdNo);
@@ -252,7 +262,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Integer oldEmp = null;
                     BigDecimal oldDay = null;
                     // 判断id是否为空
-                    if ( id == null) {
+                    if ( id == 0) {
                         // 为空表示是新增的数据
                         String value = crafworkChangeRecordPlmDao.getMes(plm).get(0).getNewValue();
                         String[] values = value.split(",");
@@ -495,6 +505,10 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                         }
                     }
                 }
+                CrafworkStructPlm structPlm =  crafworkStructPlmDao.get(crafWorkId);
+                pathPlm.setQuartersEmp(structPlm.getQuartersEmp());
+                pathPlm.setUnit(structPlm.getUnit());
+                pathPlm.setIsCheck(structPlm.getIsCheck());
                 pathPlm.setId(null);
                 prodCrafworkPathPlmDao.insert(pathPlm);
             }

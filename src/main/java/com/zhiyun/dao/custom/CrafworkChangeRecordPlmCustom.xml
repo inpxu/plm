@@ -107,6 +107,9 @@
         <if test="changeFlag != null and changeFlag != ''">
             AND CHANGE_FLAG = #{changeFlag,jdbcType=VARCHAR}
         </if>
+        <if test="changeItem != null and changeItem != ''">
+            AND CHANGE_ITEM = #{changeItem,jdbcType=VARCHAR}
+        </if>
         AND company_id = #{companyId,jdbcType=BIGINT}
         GROUP BY id DESC
     </select>

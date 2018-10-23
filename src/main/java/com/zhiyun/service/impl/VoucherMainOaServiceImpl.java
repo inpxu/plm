@@ -244,7 +244,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     plm.setProdNo(prodNo);
                     plm.setCrafworkId(crafworkId);
                     plm.setChangeFlag("新增产品工艺");
-                    ProdCrafworkPathPlm aud = new ProdCrafworkPathPlm();
                     Long oldSeq = null;
                     Integer oldMac = null;
                     Integer oldEmp = null;
@@ -263,8 +262,30 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                                 oldDay = BigDecimal.valueOf(Long.parseLong(values[i]));
                             }
                         }
+                        plm.setChangeFlag("编辑产品工艺");
+                        plm.setChangeItem("设备单耗标准工时");
+                        List<CrafworkChangeRecordPlm> list1 = crafworkChangeRecordPlmDao.getMes(plm);
+                        if (CollectionUtils.isNotEmpty(list1)) {
+                            oldMac = Integer.valueOf(list1.get(0).getNewValue());
+                        }
+                        plm.setChangeItem("人员单耗标准工时");
+                        List<CrafworkChangeRecordPlm> list2 = crafworkChangeRecordPlmDao.getMes(plm);
+                        if (CollectionUtils.isNotEmpty(list2)) {
+                            oldEmp = Integer.valueOf(list2.get(0).getNewValue());
+                        }
+                        plm.setChangeItem("每班标准产量");
+                        List<CrafworkChangeRecordPlm> list3 = crafworkChangeRecordPlmDao.getMes(plm);
+                        if (CollectionUtils.isNotEmpty(list3)) {
+                            oldDay = BigDecimal.valueOf(Long.parseLong(list3.get(0).getNewValue()));
+                        }
+                        plm.setChangeFlag("调整工艺顺序");
+                        plm.setChangeItem("工艺顺序");
+                        List<CrafworkChangeRecordPlm> list4 = crafworkChangeRecordPlmDao.getMes(plm);
+                        if (CollectionUtils.isNotEmpty(list4)) {
+                            oldSeq = Long.valueOf(list4.get(0).getNewValue());
+                        }
                     } else {
-                        aud = prodCrafworkPathPlmDao.get(id);
+                        ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.get(id);
                         oldSeq = aud.getCarfSeq();
                         oldMac = aud.getMacMinutes();
                         oldEmp = aud.getEmpMinutes();
@@ -346,56 +367,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                 }
             }
         }
-//
-//        // 调整工艺顺序
-//        if (CollectionUtils.isNotEmpty(prodCrafworkParamPlmDtos)){
-//            for (ProdCrafworkParamPlmDto plmDto : prodCrafworkParamPlmDtos) {
-//                ProdCrafworkPathPlmDto[] crafworkPathDtos = plmDto.getCrafworkPathDtos();
-//                    Long afterId = crafworkPathDtos[0].getId();
-//                    Long uqe1 = crafworkPathDtos[0].getCarfSeq();
-//                    ProdCrafworkPathPlm after = prodCrafworkPathPlmDao.get(afterId);
-//                    Long beforeId = crafworkPathDtos[1].getId();
-//                    Long uqe2 = crafworkPathDtos[1].getCarfSeq();
-//                    ProdCrafworkPathPlm before = prodCrafworkPathPlmDao.get(beforeId);
-//                    after.setId(beforeId);
-//                    before.setId(afterId);
-//                    prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(after, ProdCrafworkPathPlmDto.class));
-//                    prodCrafworkPathPlmDao.update(BeanCopyUtil.copy(before, ProdCrafworkPathPlmDto.class));
-//                    CrafworkChangeRecordPlm sub = new CrafworkChangeRecordPlm();
-//                    ProductMidPlm mid = new ProductMidPlm();
-//                    mid.setMidProdNo(after.getMidProdNo());
-//                    mid.setCompanyId(UserHolder.getCompanyId());
-//                    List<ProductMidPlm> midList = productMidPlmDao.find(mid);
-//                    if (CollectionUtils.isNotEmpty(midList)) {
-//                        String prodNo = midList.get(0).getProdNo();
-//                        sub.setProdNo(prodNo);
-//                    }
-//                    sub.setMidProdNo(after.getMidProdNo());
-//                    sub.setCompanyId(UserHolder.getCompanyId());
-//                    sub.setChangeEmp(UserHolder.getUserName());
-//                    sub.setUpdDate(new Date());
-//                    if (!uqe1.equals(uqe2)) {
-//                        sub.setCrafworkId(after.getCrafworkId());
-//                        sub.setId(null);
-//                        sub.setOldValue(uqe1 + "");
-//                        sub.setNewValue(uqe2 + "");
-//                        sub.setChangeFlag("调整工艺顺序");
-//                        sub.setChangeItem("工艺顺序");
-//                        sub.setVoucherNo(voucherNo);
-//                        crafworkChangeRecordPlmDao.insert(sub);
-//                        sub.setCrafworkId(before.getCrafworkId());
-//                        sub.setId(null);
-//                        sub.setOldValue(uqe2 + "");
-//                        sub.setNewValue(uqe1 + "");
-//                        sub.setChangeFlag("调整工艺顺序");
-//                        sub.setChangeItem("工艺顺序");
-//                        sub.setVoucherNo(voucherNo);
-//                        crafworkChangeRecordPlmDao.insert(sub);
-//                    }
-//                }
-//            }
-
-
 
 
     }

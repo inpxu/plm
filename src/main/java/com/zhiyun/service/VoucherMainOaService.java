@@ -20,12 +20,15 @@ import com.zhiyun.entity.VoucherMainOa;
  */
 public interface VoucherMainOaService extends BaseService<VoucherMainOa, Long> {
 
-    // 工艺路线审核
+    // 工艺路线提交审核
     void submit(ProdCrafworkMainPlm prodCrafworkMainPlm);
 
-    // 路线变更审核
+    // 路线变更提交审核
     void audit(CrafworkChangeMainDto crafworkChangeMainDto);
-
+    // 路线审批
     void examine(String voucherNo, boolean isPass);
+    void pass(String voucherNo, boolean isPass);
+    // 路线变更审批
+    void changeExamine(String voucherNo, boolean isPass);
 
 }

@@ -26,6 +26,7 @@ import com.zhiyun.util.VoucherEnum;
 import com.zhiyun.util.WorkFlowStateConsts;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +66,8 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
     private ProdCrafworkPathPlmDao prodCrafworkPathPlmDao;
     @Resource
     private ProductMidPlmDao productMidPlmDao;
+    @Resource
+    private ProdCrafworkPathHirstoryPlmDao prodCrafworkPathHirstoryPlmDao;
 
     @Override
     protected BaseDao<VoucherMainOa, Long> getBaseDao() {
@@ -248,20 +251,25 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Integer oldMac = null;
                     Integer oldEmp = null;
                     BigDecimal oldDay = null;
+                    // 判断id是否为空
                     if ( id == null) {
+                        // 为空表示是新增的数据
                         String value = crafworkChangeRecordPlmDao.getMes(plm).get(0).getNewValue();
                         String[] values = value.split(",");
                         for (int i = 0; i < values.length; i++) {
-                            if (i == 0) {
-                                oldSeq = Long.valueOf(values[i]);
-                            } else if (i == 1) {
-                                oldMac = Integer.valueOf(values[i]);
-                            } else if (i == 2) {
-                                oldEmp = Integer.valueOf(values[i]);
-                            }else if (i == 3) {
-                                oldDay = BigDecimal.valueOf(Long.parseLong(values[i]));
+                            if (values[i] != null && values[i] != "") {
+                                if (i == 0) {
+                                    oldSeq = Long.valueOf(values[i]);
+                                } else if (i == 1) {
+                                    oldMac = Integer.valueOf(values[i]);
+                                } else if (i == 2) {
+                                    oldEmp = Integer.valueOf(values[i]);
+                                } else if (i == 3) {
+                                    oldDay = BigDecimal.valueOf(Long.parseLong(values[i]));
+                                }
                             }
                         }
+                        // 新增数据是否被编辑过
                         plm.setChangeFlag("编辑产品工艺");
                         plm.setChangeItem("设备单耗标准工时");
                         List<CrafworkChangeRecordPlm> list1 = crafworkChangeRecordPlmDao.getMes(plm);
@@ -285,6 +293,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                             oldSeq = Long.valueOf(list4.get(0).getNewValue());
                         }
                     } else {
+                        // 不为空直接通过id查询
                         ProdCrafworkPathPlm aud = prodCrafworkPathPlmDao.get(id);
                         oldSeq = aud.getCarfSeq();
                         oldMac = aud.getMacMinutes();
@@ -371,9 +380,21 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
 
     }
 
-    @Transactional
     @Override
-    synchronized public void examine(String voucherNo, boolean isPass) {
+    @Transactional
+    public void examine(String voucherNo, boolean isPass) {
+        pass(voucherNo,isPass);
+        // 添加版本号
+        ProdCrafworkMainPlm mainPlm = new ProdCrafworkMainPlm();
+        mainPlm.setCompanyId(UserHolder.getCompanyId());
+        mainPlm.setVoucherNo(voucherNo);
+        mainPlm.setVersions("1");
+        prodCrafworkMainPlmDao.update(mainPlm);
+    }
+
+    @Override
+    @Transactional
+    synchronized public void pass(String voucherNo, boolean isPass) {
 
         VoucherMainOa voucherMainOa = voucherMainOaDao.getByVoucherNo(voucherNo, UserHolder.getCompanyId());
         if (VoucherEnum.APPROVAL_STATUS_SUCCESS.getId().equals(voucherMainOa.getIsFinished()) || VoucherEnum.APPROVAL_STATUS_FAILURE.getId()
@@ -407,5 +428,127 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             }
         }
         voucherMainOaDao.updateByVoucherNo(voucherMainOa);
+    }
+
+    @Override
+    @Transactional
+    public void changeExamine(String voucherNo, boolean isPass) {
+        CrafworkChangeRecordPlm changeRecordPlm = new CrafworkChangeRecordPlm();
+        changeRecordPlm.setVoucherNo(voucherNo);
+        changeRecordPlm.setCompanyId(UserHolder.getCompanyId());
+        List<CrafworkChangeRecordPlm> list = crafworkChangeRecordPlmDao.find(changeRecordPlm);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new BusinessException("数据有误，审批未成功！");
+        }
+        // 产品编码获取路线号
+        String prodNo = list.get(0).getProdNo();
+        ProdCrafworkMainPlm prodCrafworkMainPlm = new ProdCrafworkMainPlm();
+        prodCrafworkMainPlm.setProdNo(prodNo);
+        prodCrafworkMainPlm.setCompanyId(UserHolder.getCompanyId());
+        List<ProdCrafworkMainPlm> mains = prodCrafworkMainPlmDao.find(prodCrafworkMainPlm);
+        if (CollectionUtils.isEmpty(mains)) {
+            throw new BusinessException("数据错误，审批未成功！");
+        }
+        String pathNo = mains.get(0).getPathNo();
+        String version = mains.get(0).getVersions();
+        // 之前的单据号
+        String voucher = mains.get(0).getVoucherNo();
+        ProdCrafworkPathPlm prodCrafworkPathPlm = new ProdCrafworkPathPlm();
+        prodCrafworkPathPlm.setCompanyId(UserHolder.getCompanyId());
+        prodCrafworkPathPlm.setPathNo(pathNo);
+        List<ProdCrafworkPathPlm> paths = prodCrafworkPathPlmDao.find(prodCrafworkPathPlm);
+        if (CollectionUtils.isEmpty(paths)) {
+            throw new BusinessException("数据错误，审批失败！");
+        }
+        // 把原来的数据添加到历史表中
+        for (ProdCrafworkPathPlm path : paths) {
+            ProdCrafworkPathHirstoryPlm hirstoryPlm = new ProdCrafworkPathHirstoryPlm();
+            BeanUtils.copyProperties(path, hirstoryPlm);
+            hirstoryPlm.setVersions(version);
+            prodCrafworkPathHirstoryPlmDao.insert(hirstoryPlm);
+        }
+        // 对原来的数据遍历更改
+        ProdCrafworkPathPlm pathPlm = new ProdCrafworkPathPlm();
+        pathPlm.setCompanyId(UserHolder.getCompanyId());
+        pathPlm.setPathNo(pathNo);
+        for (CrafworkChangeRecordPlm recordPlm : list) {
+            String midProdNo = recordPlm.getMidProdNo();
+            Long crafWorkId = recordPlm.getCrafworkId();
+            String changeFlag = recordPlm.getChangeFlag();
+            String changeItem = recordPlm.getChangeItem();
+            pathPlm.setMidProdNo(midProdNo);
+            pathPlm.setCrafworkId(crafWorkId);
+            // 变更新值
+            String value = recordPlm.getNewValue();
+            if ("新增产品工艺".equals(changeFlag)) {
+                String[] values = value.split(",");
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i] != null && values[i] != "") {
+                        if (i == 0) {
+                            pathPlm.setCarfSeq(Long.valueOf(values[i]));
+                        } else if (i == 1) {
+                            pathPlm.setMacMinutes(Integer.valueOf(values[i]));
+                        } else if (i == 2) {
+                            pathPlm.setEmpMinutes(Integer.valueOf(values[i]));
+                        } else if (i == 3) {
+                            pathPlm.setDayAmount(BigDecimal.valueOf(Long.parseLong(values[i])));
+                        }
+                    }
+                }
+                pathPlm.setId(null);
+                prodCrafworkPathPlmDao.insert(pathPlm);
+            }
+
+            // 获取id
+            List<ProdCrafworkPathPlm> plmList = prodCrafworkPathPlmDao.find(pathPlm);
+            if (CollectionUtils.isEmpty(plmList)) {
+                throw new BusinessException("数据有误，审批失败！");
+            }
+
+            Long id = plmList.get(0).getId();
+            if ("编辑产品工艺".equals(changeFlag)) {
+                if ("设备单耗标准工时".equals(changeItem)) {
+                    pathPlm.setMacMinutes(Integer.valueOf(value));
+                }
+                if ("人员单耗标准工时".equals(changeItem)) {
+                    pathPlm.setEmpMinutes(Integer.valueOf(value));
+                }
+                if ("每班标准产量".equals(changeItem)) {
+                    pathPlm.setDayAmount(BigDecimal.valueOf(Long.parseLong(value)));
+                }
+                pathPlm.setId(id);
+                prodCrafworkPathPlmDao.update(pathPlm);
+            }
+            if ("调整工艺顺序".equals(changeFlag) && "工艺顺序".equals(changeItem)) {
+                pathPlm.setCarfSeq(Long.valueOf(value));
+                pathPlm.setId(id);
+                prodCrafworkPathPlmDao.update(pathPlm);
+            }
+            if ("删除产品工艺".equals(changeFlag)) {
+                prodCrafworkPathPlmDao.delete(id);
+            }
+        }
+        // 路线主表更改单据号
+        Long mainId = mains.get(0).getId();
+        ProdCrafworkMainPlm mainPlm = new ProdCrafworkMainPlm();
+        mainPlm.setCompanyId(UserHolder.getCompanyId());
+        mainPlm.setVoucherNo(voucherNo);
+        mainPlm.setId(mainId);
+        prodCrafworkMainPlmDao.update(mainPlm);
+
+        // 路线详情表更改单据号
+        ProdCrafworkPathPlm plm = new ProdCrafworkPathPlm();
+        plm.setCompanyId(UserHolder.getCompanyId());
+        plm.setVoucherNo(voucher);
+        List<ProdCrafworkPathPlm> prodCrafworkPath = prodCrafworkPathPlmDao.find(plm);
+        if (CollectionUtils.isNotEmpty(prodCrafworkPath)) {
+            for (ProdCrafworkPathPlm crafworkPathPlm : prodCrafworkPath) {
+                plm.setVoucherNo(voucherNo);
+                plm.setId(crafworkPathPlm.getId());
+                prodCrafworkPathPlmDao.update(plm);
+            }
+        }
+        // 单据号审批
+        pass(voucherNo,isPass);
     }
 }

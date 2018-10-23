@@ -169,7 +169,7 @@ public class VoucherMainOaController extends BaseController {
     }
 
     /**
-     * 工艺路线变更审核
+     * 工艺路线审批
      *
      * @param voucherNo
      * @param isPass
@@ -182,11 +182,40 @@ public class VoucherMainOaController extends BaseController {
     public Object examine(@RequestParam(value = "voucherNo", required = true) String voucherNo,
             @RequestParam(value = "isPass", required = true) boolean isPass) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
-
         baseResult.setResult(true);
         baseResult.setMessage("操作成功");
         try {
             voucherMainOaService.examine(voucherNo, isPass);
+        } catch (BusinessException be) {
+            LOGGER.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            LOGGER.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
+    /**
+     * 工艺路线变更审批
+     *
+     * @param voucherNo
+     * @param isPass
+     * @return
+     * @author xufei
+     * @date 2018-10-23 11:06:22
+     */
+    @ResponseBody
+    @RequestMapping("changeExamine")
+    public Object changeExamine(@RequestParam(value = "voucherNo", required = true) String voucherNo,
+                          @RequestParam(value = "isPass", required = true) boolean isPass) {
+        BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
+        baseResult.setResult(true);
+        baseResult.setMessage("操作成功");
+        try {
+            voucherMainOaService.changeExamine(voucherNo, isPass);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);
             baseResult.setResult(false);

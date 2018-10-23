@@ -26,5 +26,85 @@ public class MattersStoreDto extends MattersStoreIos implements Serializable {
     private Long amount;
     private Boolean leaf = false;
     private Long serial;
+    private String backupMatter;
 
+    public String getBackupMatter() {
+        return backupMatter;
+    }
+
+    public void setBackupMatter(String backupMatter) {
+        this.backupMatter = backupMatter;
+    }
+
+    public String getMattersInfo() {
+        return mattersInfo;
+    }
+
+    public void setMattersInfo(String mattersInfo) {
+        this.mattersInfo = mattersInfo;
+    }
+
+    public String getAllInfo() {
+        return allInfo;
+    }
+
+    public void setAllInfo(String allInfo) {
+        this.allInfo = allInfo;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getBackMattersInfo() {
+        return backMattersInfo;
+    }
+
+    public void setBackMattersInfo(String backMattersInfo) {
+        this.backMattersInfo = backMattersInfo;
+    }
+
+    public String getPlmDesc() {
+        return plmDesc;
+    }
+
+    public void setPlmDesc(String plmDesc) {
+        this.plmDesc = plmDesc;
+    }
+
+    public String getBackUpMatterNo() {
+        return backUpMatterNo;
+    }
+
+    public void setBackUpMatterNo(String backUpMatterNo) {
+        this.backUpMatterNo = backUpMatterNo;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+    public Boolean getLeaf() {
+        return leaf;
+    }
+
+    public void setLeaf(Boolean leaf) {
+        this.leaf = leaf;
+    }
+
+    public Long getSerial() {
+        return serial;
+    }
+
+    public void setSerial(Long serial) {
+        this.serial = serial;
+    }
 }

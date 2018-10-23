@@ -179,6 +179,7 @@
           and s.is_midprod != 2
           AND s.company_id = #{companyId}
           AND (s.matters_no LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%'))
+          AND s.matters_no != #{parentNo};
 
     </select>
     <select id="findAllMattersAndComponet" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -301,6 +302,7 @@
                prod_bom_plm.make_emp       AS makeEmp,
                prod_bom_plm.bom_status     AS bomStatus,
                prod_bom_plm.`status`,
+               prod_bom_plm.prod_no        AS prodNo,
                prod_bom_plm.make_date      AS makeDate,
                voucher_main_oa.is_finished AS voucherStatus,
                matters_store_ios.id,

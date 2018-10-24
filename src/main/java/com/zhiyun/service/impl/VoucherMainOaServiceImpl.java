@@ -43,7 +43,7 @@ import java.util.List;
 @Service("voucherMainOaService")
 public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Long> implements VoucherMainOaService {
 
-    private final static String UNIQUE_ID_HEAD = "PCWM";
+    private final static String UNIQUE_ID_HEAD = "PCWM-UN";
     private final static Long APPROVER_USER_ID = 232526L;
     private final static Long DEFAULT_WORKFLOW_ID = 1L;
     private final static String AUDIT_ID_HEAD = "PCWM-AU";
@@ -99,7 +99,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         }
 
         //生成单据号
-        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 12, UserHolder.getCompanyId());
+        String voucherNo = uniqueIdService.mixedId(UNIQUE_ID_HEAD, 18, UserHolder.getCompanyId());
         //创建流程
         //        ProcessDto processDto = processService.startProcess(processKey, String.valueOf(UserHolder.getId()));
         //        if (!ResponseStatusConsts.OK.equals(processDto.getStatus())) {
@@ -168,7 +168,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
 //            throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
 //        }
         //生成单据号
-        String voucherNo = uniqueIdService.mixedId(AUDIT_ID_HEAD, 10, UserHolder.getCompanyId());
+        String voucherNo = uniqueIdService.mixedId(AUDIT_ID_HEAD, 18, UserHolder.getCompanyId());
         //创建流程
         //        ProcessDto processDto = processService.startProcess(processKey, String.valueOf(UserHolder.getId()));
         //        if (!ResponseStatusConsts.OK.equals(processDto.getStatus())) {
@@ -475,6 +475,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             ProdCrafworkPathHirstoryPlm hirstoryPlm = new ProdCrafworkPathHirstoryPlm();
             BeanUtils.copyProperties(path, hirstoryPlm);
             hirstoryPlm.setVersions(version);
+            hirstoryPlm.setId(null);
             prodCrafworkPathHirstoryPlmDao.insert(hirstoryPlm);
         }
         // 对原来的数据遍历更改
@@ -548,6 +549,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         mainPlm.setCompanyId(UserHolder.getCompanyId());
         mainPlm.setVoucherNo(voucherNo);
         mainPlm.setId(mainId);
+        mainPlm.setVersions(String.valueOf(Long.valueOf(version)+1L));
         prodCrafworkMainPlmDao.update(mainPlm);
 
         // 路线详情表更改单据号

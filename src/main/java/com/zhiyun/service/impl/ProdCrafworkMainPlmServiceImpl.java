@@ -235,6 +235,7 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
             if (CollectionUtils.isNotEmpty(list2)) {
                 dto.setLeaf(false);
             }
+            dto.setVersions("");
         }
         return list;
     }

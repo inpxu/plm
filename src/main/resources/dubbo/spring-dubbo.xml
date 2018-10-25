@@ -12,6 +12,7 @@
     <!-- 使用zookeeper注册中心暴露服务地址 -->
     <dubbo:registry address="${dubbo.registryAdd}" protocol="${dubbo.registryProtocol}" timeout="${regist.tomeout}"/>
     <dubbo:monitor protocol="registry"/>
+    <dubbo:protocol port="${dubbo.protocolPort}"></dubbo:protocol>
     <import resource="spring-dubbo-consumer.xml"/>
     <import resource="spring-dubbo-provider.xml"/>
 </beans>

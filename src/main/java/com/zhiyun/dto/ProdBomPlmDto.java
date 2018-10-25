@@ -13,10 +13,13 @@ import java.util.List;
  */
 @Data
 public class ProdBomPlmDto extends ProdBomPlm {
+
+    private static final long serialVersionUID = 4354186085406852029L;
     private String productName;
     private List<MattersStoreDto> mattersStoreDtos;
     private ProductStorePlm productStorePlm;
     private List<ProductMidPlmDto> productMidPlms;
+    private List<ProdBomPlmDto> prodBomPlmDtos;
     //默认是有下级
     private Boolean leaf = false;
     private String voucherStatus;
@@ -24,6 +27,14 @@ public class ProdBomPlmDto extends ProdBomPlm {
     private String mattersNo;
     private String materielMsg;
     private String prodMes;
+
+    public List<ProdBomPlmDto> getProdBomPlmDtos() {
+        return prodBomPlmDtos;
+    }
+
+    public void setProdBomPlmDtos(List<ProdBomPlmDto> prodBomPlmDtos) {
+        this.prodBomPlmDtos = prodBomPlmDtos;
+    }
 
     public String getProdMes() {
         return prodMes;

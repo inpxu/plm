@@ -5,6 +5,7 @@
 
 package com.zhiyun.controller;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.alibaba.fastjson.JSON;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
@@ -14,6 +15,7 @@ import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.base.util.CommonUtils;
 import com.zhiyun.client.UserHolder;
+import com.zhiyun.dao.MattersStoreIosDao;
 import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.MattersStoreIos;
 import com.zhiyun.entity.ProductMidPlm;
@@ -53,6 +55,8 @@ public class ProductMidController extends PublicController {
     private MattersStoreIosService mattersStoreIosService;
     @Resource
     private ProductStorePlmService productStorePlmService;
+    @Resource
+    private MattersStoreIosDao mattersStoreIosDao;
 
     /**
      * 分页查询
@@ -99,6 +103,14 @@ public class ProductMidController extends PublicController {
         baseResult.setMessage("新增成功");
         try {
             vaildParamsDefault(baseResult, bindingResult);
+            String midProdNo = productMidPlm.getMidProdNo();
+            MattersStoreIos ios = new MattersStoreIos();
+            ios.setMattersNo(midProdNo);
+            ios.setCompanyId(UserHolder.getCompanyId());
+            List<MattersStoreIos> storeIosList = mattersStoreIosDao.find(ios);
+            if (CollectionUtils.isNotEmpty(storeIosList)) {
+                throw new BusinessException("半成品编码与物料编码重复！");
+            }
             // 新增半成品
             // 通过产品编码查寻产品信息
             String paraentNo = productMidPlm.getParentNo();

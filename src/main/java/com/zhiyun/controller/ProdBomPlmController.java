@@ -112,10 +112,10 @@ public class ProdBomPlmController extends BaseController {
      */
     @RequestMapping(value = "findBomByPnoOrMpno", method = RequestMethod.POST)
     @ResponseBody
-    public String findBomByPnoOrMpno(String pNo, String mpno) {
+    public String findBomByPnoOrMpno(String pNo, String mpno, String versions) {
         BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
         try {
-            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findBomByPnoOrMpno(pNo, mpno);
+            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findBomByPnoOrMpno(pNo, mpno,versions);
             if (prodBomPlmDto == null) {
                 baseResult.setResult(false);
                 baseResult.setMessage("还未添加bom编码");
@@ -228,6 +228,8 @@ public class ProdBomPlmController extends BaseController {
         return JSON.toJSONString(baseResult);
     }
 
+
+
     /**
      * 提交审核
      *
@@ -321,10 +323,10 @@ public class ProdBomPlmController extends BaseController {
      */
     @RequestMapping(value = "startOrStopBom", method = RequestMethod.POST)
     @ResponseBody
-    public String startOrStopBom(String bomCode) {
+    public String startOrStopBom(String bomCode, String versions) {
         BaseResult<String> baseResult = new BaseResult<>();
         try {
-            prodBomPlmService.startOrStopBom(bomCode);
+            prodBomPlmService.startOrStopBom(bomCode, versions);
             baseResult.setResult(true);
             baseResult.setMessage("操作成功");
         } catch (BusinessException be) {

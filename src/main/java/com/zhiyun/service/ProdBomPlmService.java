@@ -36,7 +36,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
      */
     ProductStorePlmDto searchForProduct(String productName, String bomCode);
 
-    ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno);
+    ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno, String versions);
 
     ProdBomPlmDto addBomNo(ProdBomPlm prodBomPlm);
 
@@ -46,7 +46,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
 
     void deleteMatters(Long[] ids);
 
-    void startOrStopBom(String bomCode);
+    void startOrStopBom(String bomCode, String versions);
 
     ProdBomPlm searchForCompnent(String productName, String bomCode);
 
@@ -100,6 +100,8 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
     void uniqueBomNo(String bomNo);
 
     void upGradeCommonBom(ProdBomPlmDto prodBomPlmDto);
+
+    void upCommonBom(ProdDto prodDto);
 
     ProdBomPlmDto beforeUpdateBom(ProdBomPlmDto prodBomPlmDto);
 

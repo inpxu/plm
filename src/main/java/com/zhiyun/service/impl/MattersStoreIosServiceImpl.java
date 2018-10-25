@@ -5,6 +5,7 @@
 
 package com.zhiyun.service.impl;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.base.model.DataGrid;
@@ -15,9 +16,11 @@ import com.zhiyun.base.util.StringUtil;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.MattersStoreIosDao;
 import com.zhiyun.dao.ProductMidPlmDao;
+import com.zhiyun.dao.ProductStorePlmDao;
 import com.zhiyun.dto.MattersStoreDto;
 import com.zhiyun.entity.MattersStoreIos;
 import com.zhiyun.entity.ProductMidPlm;
+import com.zhiyun.entity.ProductStorePlm;
 import com.zhiyun.service.MattersStoreIosService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +44,9 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
     private MattersStoreIosDao mattersStoreIosDao;
     @Resource
     private ProductMidPlmDao productMidPlmDao;
+    @Resource
+    private ProductStorePlmDao productStorePlmDao;
+
 
     @Override
     protected BaseDao<MattersStoreIos, Long> getBaseDao() {
@@ -50,8 +56,23 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
     @Transactional
     @Override
     public void insertStore(MattersStoreIos mattersStoreIos) {
-        if (StringUtil.isBlank(mattersStoreIos.getMattersNo())) {
+        String mattersNo = mattersStoreIos.getMattersNo();
+        if (StringUtil.isBlank(mattersNo)) {
             throw new BusinessException("物料编码不能为空");
+        }
+        ProductMidPlm midPlm = new ProductMidPlm();
+        midPlm.setMidProdNo(mattersNo);
+        midPlm.setCompanyId(UserHolder.getCompanyId());
+        List<ProductMidPlm> midPlmList = productMidPlmDao.find(midPlm);
+        if (CollectionUtils.isNotEmpty(midPlmList)) {
+            throw new BusinessException("物料编码与半成品编码重复！");
+        }
+        ProductStorePlm storePlm = new ProductStorePlm();
+        storePlm.setProdNo(mattersNo);
+        storePlm.setCompanyId(UserHolder.getCompanyId());
+        List<ProductStorePlm> storePlms = productStorePlmDao.find(storePlm);
+        if (CollectionUtils.isNotEmpty(storePlms)) {
+            throw new BusinessException("物料编码与产品编码重复！");
         }
         //唯一校验
         MattersStoreIos storeIos = new MattersStoreIos();

@@ -3,8 +3,10 @@ package com.zhiyun.controller;
 import com.alibaba.fastjson.JSON;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
+import com.zhiyun.dto.BomPlmDto;
 import com.zhiyun.dto.MattersStoreDto;
 import com.zhiyun.dto.ProdBomPlmDto;
+import com.zhiyun.dto.ProdDto;
 import com.zhiyun.entity.ProdBomPlm;
 import com.zhiyun.service.ProdBomPlmService;
 import lombok.extern.slf4j.Slf4j;
@@ -132,6 +134,30 @@ public class CommonBomController {
         BaseResult<String> baseResult = new BaseResult<>();
         try {
             prodBomPlmService.upGradeCommonBom(prodBomPlmDto);
+            baseResult.setResult(true);
+        } catch (BusinessException be) {
+            log.debug("业务异常" + be);
+            baseResult.setResult(false);
+            baseResult.setMessage(be.getMessage());
+        } catch (Exception e) {
+            log.debug("系统异常" + e);
+            baseResult.setResult(false);
+            baseResult.setMessage("系统异常");
+        }
+        return JSON.toJSONString(baseResult);
+    }
+
+    /**
+     *  修改产品bom保存
+     * @param prodDto
+     * @return
+     */
+    @RequestMapping(value = "upCommonBom", method = RequestMethod.POST)
+    @ResponseBody
+    public String upCommonBom(@RequestBody ProdDto prodDto) {
+        BaseResult<String> baseResult = new BaseResult<>();
+        try {
+            prodBomPlmService.upCommonBom(prodDto);
             baseResult.setResult(true);
         } catch (BusinessException be) {
             log.debug("业务异常" + be);

@@ -91,6 +91,9 @@
         where deleted = 'F'
           and company_id = #{companyId}
           and bom_no = #{bomCode}
+        <if test="versions != null and versions!= '' ">
+            AND versions = #{versions}
+        </if>
 
     </select>
     <select id="searchForCompnent" resultMap="searchComponentMap" parameterType="map">
@@ -417,6 +420,9 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{productNo}
+          <if test="versions!=null and versions!= '' ">
+              AND prod_bom_plm.versions = #{versions}
+          </if>
     </select>
     <resultMap id="formulaMap" type="com.zhiyun.dto.FormulaDto">
         <result column="bomNo" property="bomNo"/>

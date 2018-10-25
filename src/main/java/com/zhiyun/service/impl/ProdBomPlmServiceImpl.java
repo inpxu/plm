@@ -17,10 +17,7 @@ import com.zhiyun.dao.ProdBomPlmDao;
 import com.zhiyun.dao.ProductMidPlmDao;
 import com.zhiyun.dao.VoucherMainOaDao;
 import com.zhiyun.dto.*;
-import com.zhiyun.entity.ProdBomDetailPlm;
-import com.zhiyun.entity.ProdBomPlm;
-import com.zhiyun.entity.ProductMidPlm;
-import com.zhiyun.entity.VoucherMainOa;
+import com.zhiyun.entity.*;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.service.ProdBomPlmService;
 import org.apache.commons.collections.CollectionUtils;
@@ -68,7 +65,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
-    public ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno) {
+    public ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno, String versions) {
         Map<String, Object> param = new HashMap<>(3);
         param.put("companyId", UserHolder.getCompanyId());
         //查询产品
@@ -103,8 +100,20 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
 
             return bomByPno;
         } else if (StringUtils.isBlank(pNo) && StringUtils.isNotBlank(mpno)) {
+            // 获取半成品的bom信息
+            ProductMidPlm midPlm = new ProductMidPlm();
+            midPlm.setMidProdNo(mpno);
+            midPlm.setCompanyId(UserHolder.getCompanyId());
+            List<ProductMidPlm> plmList = productMidPlmDao.find(midPlm);
             //查询半成品
             ProdBomPlmDto bomByPnor = new ProdBomPlmDto();
+            if (CollectionUtils.isNotEmpty(plmList)) {
+                String prodNo = plmList.get(0).getProdNo();
+                param.put("productNo", prodNo);
+                //查询bom
+                bomByPnor = prodBomPlmDao.findBomByPno(param);
+            }
+
             //通过半成品编码查询r
             param.put("productNo", mpno);
             //查询产品级下有无物料
@@ -228,10 +237,11 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
 
     @Override
     @Transactional
-    public void startOrStopBom(String bomCode) {
+    public void startOrStopBom(String bomCode, String versions) {
         Map<String, Object> param = new HashMap<>(3);
         param.put("companyId", UserHolder.getCompanyId());
         param.put("bomCode", bomCode);
+        param.put("versions", versions);
         ProdBomPlm prodBomPlm = prodBomPlmDao.selectBeforeUpdate(param);
         if (prodBomPlm != null) {
             if ("启用中".equals(prodBomPlm.getBomStatus())) {
@@ -446,6 +456,26 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         if (CollectionUtils.isNotEmpty(list)) {
             throw new BusinessException("BOM编码已存在");
         }
+    }
+
+
+    @Override
+    @Transactional
+    public void upCommonBom(ProdDto prodDto) {
+        BomPlmDto bomPlmDto  = prodDto.getProdBomPlmDto();
+        if (bomPlmDto == null) {
+            throw new BusinessException("保存的数据不能为空！");
+        }
+        List<ProdBomPlmDto> prodBomPlmDtos = bomPlmDto.getProdBomPlmDtos();
+        if (CollectionUtils.isNotEmpty(prodBomPlmDtos)) {
+            for (ProdBomPlmDto prodBomDto : prodBomPlmDtos) {
+                prodBomDto.setBomNo(bomPlmDto.getBomNo());
+                prodBomDto.setBomStatus(bomPlmDto.getBomStatus());
+                prodBomDto.setVersions(bomPlmDto.getVersions());
+                upGradeCommonBom(prodBomDto);
+            }
+        }
+
     }
 
     @Override

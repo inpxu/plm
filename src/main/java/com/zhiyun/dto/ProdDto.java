@@ -22,6 +22,16 @@ public class ProdDto extends ProductStorePlm {
     // 半成品
     private List<ProdMidDto> prodMidDtos;
 
+    private BomPlmDto prodBomPlmDto;
+
+    public BomPlmDto getProdBomPlmDto() {
+        return prodBomPlmDto;
+    }
+
+    public void setProdBomPlmDto(BomPlmDto prodBomPlmDto) {
+        this.prodBomPlmDto = prodBomPlmDto;
+    }
+
     public List<ProdMidDto> getProdMidDtos() {
         return prodMidDtos;
     }

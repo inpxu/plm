@@ -13,11 +13,13 @@ import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
+import com.zhiyun.dao.MattersStoreIosDao;
 import com.zhiyun.dao.ProdCrafworkMainPlmDao;
 import com.zhiyun.dao.ProductMidPlmDao;
 import com.zhiyun.dao.ProductStorePlmDao;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
 import com.zhiyun.dto.ProductStorePlmDto;
+import com.zhiyun.entity.MattersStoreIos;
 import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.entity.ProductStorePlm;
 import com.zhiyun.service.ProductStorePlmService;
@@ -44,6 +46,8 @@ public class ProductStorePlmServiceImpl extends BaseServiceImpl<ProductStorePlm,
     private ProductMidPlmDao productMidPlmDao;
     @Resource
     private ProdCrafworkMainPlmDao prodCrafworkMainPlmDao;
+    @Resource
+    private MattersStoreIosDao mattersStoreIosDao;
 
     @Override
     protected BaseDao<ProductStorePlm, Long> getBaseDao() {
@@ -59,6 +63,13 @@ public class ProductStorePlmServiceImpl extends BaseServiceImpl<ProductStorePlm,
     public void add(ProductStorePlm productStorePlm) {
         String prodNo = productStorePlm.getProdNo();
         String prodName = productStorePlm.getProdName();
+        MattersStoreIos ios = new MattersStoreIos();
+        ios.setMattersNo(prodNo);
+        ios.setCompanyId(UserHolder.getCompanyId());
+        List<MattersStoreIos> storeIosList = mattersStoreIosDao.find(ios);
+        if (CollectionUtils.isNotEmpty(storeIosList)) {
+            throw new BusinessException("产品编码与物料编码重复！");
+        }
         ProductStorePlm p = new ProductStorePlm();
         p.setProdNo(prodNo);
         p.setCompanyId(UserHolder.getCompanyId());

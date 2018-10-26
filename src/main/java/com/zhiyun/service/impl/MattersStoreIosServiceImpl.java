@@ -89,7 +89,7 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
 
     @Transactional
     @Override
-    public void updateStore(MattersStoreIos mattersStoreIos) {
+    public void updateStore(MattersStoreDto mattersStoreIos) {
         if (mattersStoreIos != null) {
             if (mattersStoreIos.getId() != null) {
                 //查询选中物料库信息
@@ -130,6 +130,7 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
                 //                mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
                 //                mattersStoreIos.setIsMidprod(mattersStoreIos.getIsMidprodId());
                 //修改物料库
+                mattersStoreIos.setStatus(String.valueOf(mattersStoreIos.getStatusId()));
                 this.mattersStoreIosDao.update(mattersStoreIos);
             }
         } else {

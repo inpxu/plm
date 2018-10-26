@@ -140,10 +140,15 @@ public class ProductMidController extends PublicController {
                 productMidPlm1.setMidProdNo(productMidPlm.getParentNo());
                 productMidPlm1.setMidProdName(null);
                 midPlms = productMidPlmService.find(productMidPlm1);
-                if (midPlms.get(0).getHierarchy() >= 7) {
-                    throw new BusinessException("超过层级上限");
+                if (CollectionUtils.isNotEmpty(midPlms)) {
+                    if (midPlms.get(0).getHierarchy() >= 7) {
+                        throw new BusinessException("超过层级上限");
+                    }
+                    productMidPlm.setHierarchy(midPlms.get(0).getHierarchy() + 1);
+                } else {
+                    productMidPlm.setHierarchy(1L);
                 }
-                productMidPlm.setHierarchy(midPlms.get(0).getHierarchy() + 1);
+
             }
 
             if (paraentNo == null || paraentNo == ""){

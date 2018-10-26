@@ -76,10 +76,8 @@ public class MattersStoreIos extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,18}", message = "版本号字段过长")
     private String versions;
     // 物料类型
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "物料类型字段过长")
     private String isMidprod;
     // 状态
-    @Pattern(regexp = "[\\s\\S]{0,1}", message = "状态字段过长")
     private String status;
     // 安全库存
     private Double secureStock;

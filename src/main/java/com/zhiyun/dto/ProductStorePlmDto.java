@@ -13,6 +13,8 @@ public class ProductStorePlmDto extends ProductStorePlm {
     private String typeDesc;
     // 规格、参数、型号
     private String prodMess;
+    // 产品信息
+    private String prodMsg;
     // 仓库名称
     private String storeName;
     // 生产场地
@@ -29,9 +31,17 @@ public class ProductStorePlmDto extends ProductStorePlm {
     private String versions;
     // 半成品编码
     private String midProdNo;
-    // 产品信息
+    // 半产品信息
     private String midMsg;
     private List<ProductMidPlm> midProducts;
+
+    public String getProdMsg() {
+        return prodMsg;
+    }
+
+    public void setProdMsg(String prodMsg) {
+        this.prodMsg = prodMsg;
+    }
 
     public List<ProductMidPlm> getMidProducts() {
         return midProducts;

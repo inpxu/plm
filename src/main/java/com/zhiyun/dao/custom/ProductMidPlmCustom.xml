@@ -114,10 +114,36 @@
     <!-- 分页查询（数据） -->
     <select id="pageMid_datas" parameterType="map" resultType="com.zhiyun.dto.ProdMidDto">
         <include refid="mybatis.pageStartSQL"/>
-        <include refid="selectFieldsSQL"/>
-        ,fsm.FACTORY_NAME factoryName
+        SELECT
+        pmp.ID                                               id,
+        pmp.MID_PROD_NAME                                    cosName,
+        pmp.PROD_NO                                          prodNo,
+        psp.PROD_NAME                                        prodName,
+        pmp.MID_PROD_NO                                      midProdNo,
+        pmp.MID_PROD_NAME                                    midProdName,
+        pmp.PARENT_NO                                        parentNo,
+        pmp.NORMS                                            norms,
+        pmp.PARAM                                            param,
+        pmp.MODEL_DESC                                       modelDesc,
+        pmp.UNIT                                             unit,
+        pmp.AMOUNT                                           amount,
+        pmp.STORE_ID                                         storeId,
+        pmp.ROCK_POSITION                                    rockPosition,
+        pmp.FACTORY_ID                                       factoryId,
+        pmp.SOURCE                                           source,
+        pmp.REMARK                                           remark,
+        pmp.DELETED                                          deleted,
+        pmp.COMPANY_ID                                       companyId,
+        pmp.CREATE_TIME                                      createTime,
+        pmp.CREATE_BY                                        createBy,
+        pmp.MODIFY_TIME                                      modifyTime,
+        pmp.MODIFY_BY                                        modifyBy,
+        concat_ws("|", pmp.PROD_NO, psp.PROD_NAME)           prodMsg,
+        concat_ws("|", pmp.MID_PROD_NO, pmp.MID_PROD_NAME)   midMsg,
+        concat_ws("|", pmp.param, pmp.norms, pmp.MODEL_DESC) SyntheticField,
+        fsm.FACTORY_NAME factoryName
         FROM PRODUCT_MID_PLM pmp
-        left join aps.factory_set_mes fsm on pmp.factory_id = fsm.factory_id and fsm.deleted = 'F'
+        left join aps.factory_set_mes fsm on pmp.factory_id = fsm.id and fsm.deleted = 'F'
         left join product_store_plm psp on psp.prod_no = pmp.PROD_NO and psp.deleted = 'F'
         <include refid="pageMid_condition"/>
         order by pmp.ID desc

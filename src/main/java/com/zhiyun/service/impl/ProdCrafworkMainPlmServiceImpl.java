@@ -19,6 +19,7 @@ import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.*;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.zookeeper.data.Id;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +57,10 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     @Override
     @Transactional
     public void addPathNo(ProdCrafworkMainPlm prodCrafworkMainPlm) {
+        String pathNo = prodCrafworkMainPlm.getPathNo();
+        if (pathNo == null || pathNo == ""){
+            throw new BusinessException("工艺路线号不能为空");
+        }
         ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
         plm.setCompanyId(UserHolder.getCompanyId());
         plm.setProdNo(prodCrafworkMainPlm.getProdNo());

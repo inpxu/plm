@@ -26,7 +26,7 @@ public interface MattersStoreIosService extends BaseService<MattersStoreIos, Lon
     void insertStore(MattersStoreIos mattersStoreIos);
 
     //编辑物料库
-    void updateStore(MattersStoreIos mattersStoreIos);
+    void updateStore(MattersStoreDto mattersStoreIos);
 
     //删除物料库
     void deletedStore(Long[] id);

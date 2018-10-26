@@ -27,6 +27,15 @@ public class MattersStoreDto extends MattersStoreIos implements Serializable {
     private Boolean leaf = false;
     private Long serial;
     private String backupMatter;
+    private Integer statusId;
+
+    public Integer getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
+    }
 
     public String getBackupMatter() {
         return backupMatter;

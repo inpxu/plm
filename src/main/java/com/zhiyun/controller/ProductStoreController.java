@@ -64,7 +64,7 @@ public class ProductStoreController extends PublicController {
             DataGrid<ProductStorePlmDto> dataGrid = productStorePlmService.pg(params, pager);
             for (ProductStorePlmDto sp : dataGrid.getItems()) {
                 sp.setProdMess(sp.getNorms() + "/" + sp.getParam() + "/" + sp.getModelDesc());
-                sp.setProdName(sp.getProdNo() + "/" + sp.getProdName());
+                sp.setProdMsg(sp.getProdNo() + "/" + sp.getProdName());
             }
             baseResult.setModel(dataGrid);
         } catch (BusinessException be) {

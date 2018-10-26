@@ -206,7 +206,7 @@ public class MattersStoreController extends BaseController {
      */
     @RequestMapping("/updateStore")
     @ResponseBody
-    public Object updateStore(MattersStoreIos mattersStoreIos) {
+    public Object updateStore(MattersStoreDto mattersStoreIos) {
         BaseResult<String> baseResult = new BaseResult<String>();
         baseResult.setResult(true);
         baseResult.setMessage("编辑成功");
@@ -342,6 +342,22 @@ public class MattersStoreController extends BaseController {
         baseResult.setMessage("查询成功");
         try {
             DataGrid<MattersStoreDto> dataGrid = this.mattersStoreIosService.select(Params.create().add("entity", mattersStoreDto), pager);
+            for (MattersStoreDto storeDto : dataGrid.getItems()) {
+                String status = storeDto.getStatus();
+                if ("缺货".equals(status)) {
+                    storeDto.setStatusId(0);
+                } else if ("正常供货".equals(status)) {
+                    storeDto.setStatusId(1);
+                } else if ("关闭".equals(status)) {
+                    storeDto.setStatusId(2);
+                }
+                String imp = storeDto.getIsMidprod();
+                if ("原料".equals(imp)){
+                    storeDto.setIsMidprod(String.valueOf(0));
+                } else if ("公用组件".equals(imp)) {
+                    storeDto.setIsMidprod(String.valueOf(1));
+                }
+            }
             baseResult.setModel(dataGrid);
         } catch (BusinessException be) {
             logger.debug("业务异常" + be);

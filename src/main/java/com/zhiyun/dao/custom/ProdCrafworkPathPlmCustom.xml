@@ -95,6 +95,6 @@
           AND tp.path_no = #{pathNo,jdbcType=VARCHAR}
           AND tp.DELETED = 'F'
           AND tp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
-        order by tp.id desc
+        order by tp.carf_seq
     </select>
 </mapper>   

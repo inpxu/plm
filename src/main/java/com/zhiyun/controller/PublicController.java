@@ -165,13 +165,12 @@ public class PublicController extends BaseController {
      */
     @ResponseBody
     @RequestMapping(value = "/midTree", method = {RequestMethod.GET, RequestMethod.POST})
-    public String midTree() {
+    public String midTree(ProductStorePlm storePlm) {
         BaseResult<List<ProdDto>> baseResult = new BaseResult<List<ProdDto>>();
         baseResult.setResult(true);
         baseResult.setMessage("查询成功");
         try {
 
-            ProductStorePlm storePlm = new ProductStorePlm();
             // 查询所有的产品
             storePlm.setCompanyId(UserHolder.getCompanyId());
             List<ProductStorePlm> prodDtos = productStorePlmService.find(storePlm);

@@ -398,6 +398,7 @@
             OR prod_bom_plm.prod_no = #{entity.mattersNo,jdbcType=VARCHAR}
         </if>
         <include refid="mybatis.pageEndSQL"/>
+        order by prod_bom_plm.id desc
     </select>
     <!--resultType="com.zhiyun.dto.FormulaDto"-->
     <select id="findBomByPnoForFormula" parameterType="map" resultMap="formulaMap">

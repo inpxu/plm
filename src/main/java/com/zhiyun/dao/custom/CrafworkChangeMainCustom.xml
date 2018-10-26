@@ -61,6 +61,7 @@
         LEFT JOIN crm.dict_crm d ON d.`value` = v.is_finished
         <include refid="changePage_condition"/>
         <include refid="mybatis.pageEndSQL"/>
+        order by m.id desc
     </select>
     <select id="findVoucher" parameterType="com.zhiyun.entity.CrafworkChangeMain" resultType="com.zhiyun.entity.CrafworkChangeMain">
         SELECT

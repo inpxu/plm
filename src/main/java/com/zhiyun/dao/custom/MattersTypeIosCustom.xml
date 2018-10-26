@@ -50,6 +50,7 @@
         <include refid="selectField"/>
         FROM MATTERS_TYPE_IOS
         <include refid="select_condition"/>
+        order by id desc
         <include refid="mybatis.pageEndSQL"/>
     </select>
 </mapper>

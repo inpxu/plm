@@ -5,7 +5,10 @@
 
 package com.zhiyun.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Max;
 
@@ -37,8 +40,12 @@ public class FactorySetMes extends BaseEntity<Long> {
 	@Pattern(regexp="[\\S]{0,60}", message="管理者字段过长")
 	private String manager;
 	// 建立日期
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private java.util.Date builddate;
 	// 失效日期
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private java.util.Date losedate;
 	// company_id
 	@Max(value=9223372036854775807L,message="company_id字段过长")

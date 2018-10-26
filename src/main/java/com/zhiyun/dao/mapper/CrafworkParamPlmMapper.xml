@@ -172,6 +172,7 @@
         <include refid="selectFieldSQL"/>
         FROM CRAFWORK_PARAM_PLM
         <include refid="page_condition"/>
+        order by ID desc
         <include refid="mybatis.pageEndSQL"/>
     </select>
 

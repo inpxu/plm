@@ -5,7 +5,9 @@
 
 package com.zhiyun.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -26,6 +28,8 @@ public class CrafworkChangeMain extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "单据号字段过长")
     private String voucherNo;
     // 申请日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date raiseDate;
     // 申请人
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "申请人字段过长")

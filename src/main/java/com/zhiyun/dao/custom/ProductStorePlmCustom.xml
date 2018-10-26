@@ -149,6 +149,7 @@
         LEFT JOIN aps.factory_set_mes fsm ON fsm.id = psp.factory_id AND fsm.company_id = psp.company_id AND fsm.deleted = 'F'
         LEFT JOIN ios.store_set_ios ssi ON ssi.id = psp.store_id AND ssi.company_id = psp.company_id AND ssi.deleted = 'F'
         <include refid="pg_condition"/>
+        order by psp.ID desc
         <include refid="mybatis.pageEndSQL"/>
     </select>
 

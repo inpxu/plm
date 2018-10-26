@@ -185,6 +185,7 @@
         <include refid="selectFieldSQL"/>
         FROM PROD_TYPE_CRM
         <include refid="page_condition"/>
+        order by ID desc
         <include refid="mybatis.pageEndSQL"/>
     </select>
 

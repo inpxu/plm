@@ -247,7 +247,12 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                         midPlm.setCompanyId(UserHolder.getCompanyId());
                         List<ProductMidPlm> list = productMidPlmDao.find(midPlm);
                         if (CollectionUtils.isEmpty(list)) {
-                            throw new BusinessException("半成品信息错误！");
+                            midPlm.setMidProdNo(null);
+                            midPlm.setParentNo(midProdNo);
+                            list = productMidPlmDao.find(midPlm);
+                            if (CollectionUtils.isEmpty(list)) {
+                                throw new BusinessException("半成品信息错误！");
+                            }
                         }
                         prodNo = list.get(0).getProdNo();
                     }

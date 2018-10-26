@@ -354,6 +354,7 @@
         <include refid="selectFieldSQL"/>
         FROM PRODUCT_MID_PLM
         <include refid="page_condition"/>
+        order by ID desc
         <include refid="mybatis.pageEndSQL"/>
     </select>
 

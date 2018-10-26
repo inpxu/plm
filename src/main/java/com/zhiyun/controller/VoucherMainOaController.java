@@ -183,7 +183,7 @@ public class VoucherMainOaController extends BaseController {
             @RequestParam(value = "isPass", required = true) boolean isPass) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
         baseResult.setResult(true);
-        baseResult.setMessage("操作成功");
+        baseResult.setMessage("审批成功！");
         try {
             voucherMainOaService.examine(voucherNo, isPass);
         } catch (BusinessException be) {
@@ -213,7 +213,7 @@ public class VoucherMainOaController extends BaseController {
                           @RequestParam(value = "isPass", required = true) boolean isPass) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
         baseResult.setResult(true);
-        baseResult.setMessage("操作成功");
+        baseResult.setMessage("审批成功！");
         try {
             voucherMainOaService.changeExamine(voucherNo, isPass);
         } catch (BusinessException be) {

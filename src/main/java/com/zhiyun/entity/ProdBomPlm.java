@@ -54,8 +54,12 @@ public class ProdBomPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,10}", message = "bom状态字段过长")
     private String bomStatus;
     // 生效日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date startDate;
     // 失效日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date loseDate;
     // company_id
     @Max(value = 9223372036854775807L, message = "company_id字段过长")

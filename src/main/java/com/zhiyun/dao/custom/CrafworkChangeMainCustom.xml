@@ -60,8 +60,8 @@
         LEFT JOIN voucher_main_oa v ON v.voucher_no = m.voucher_no AND v.company_id = m.company_id AND v.deleted = 'F'
         LEFT JOIN crm.dict_crm d ON d.`value` = v.is_finished
         <include refid="changePage_condition"/>
-        <include refid="mybatis.pageEndSQL"/>
         order by m.id desc
+        <include refid="mybatis.pageEndSQL"/>
     </select>
     <select id="findVoucher" parameterType="com.zhiyun.entity.CrafworkChangeMain" resultType="com.zhiyun.entity.CrafworkChangeMain">
         SELECT

@@ -5,7 +5,9 @@
 
 package com.zhiyun.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -76,6 +78,8 @@ public class ProdDependPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "保质期限字段过长")
     private String qualtyTime;
     // 下架日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date loseDate;
     // 产品状态
     @Pattern(regexp = "[\\s\\S]{0,20}", message = "产品状态字段过长")

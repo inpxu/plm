@@ -5,7 +5,9 @@
 
 package com.zhiyun.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhiyun.base.entity.BaseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Pattern;
@@ -66,8 +68,12 @@ public class ProdCrafworkPathPlm extends BaseEntity<Long> {
     // 每班标准产量
     private java.math.BigDecimal dayAmount;
     // 生效日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date startDate;
     // 失效日期
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private java.util.Date endDate;
     // 备注
     @Pattern(regexp = "[\\s\\S]{0,40}", message = "备注字段过长")

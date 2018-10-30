@@ -28,9 +28,9 @@
                pmp.CREATE_BY                                        createBy,
                pmp.MODIFY_TIME                                      modifyTime,
                pmp.MODIFY_BY                                        modifyBy,
-               concat_ws("|", pmp.PROD_NO, psp.PROD_NAME)           prodMsg,
-               concat_ws("|", pmp.MID_PROD_NO, pmp.MID_PROD_NAME)   midMsg,
-               concat_ws("|", pmp.param, pmp.norms, pmp.MODEL_DESC) SyntheticField
+               concat_ws("/", pmp.PROD_NO, psp.PROD_NAME)           prodMsg,
+               concat_ws("/", pmp.MID_PROD_NO, pmp.MID_PROD_NAME)   midMsg,
+               concat_ws("/", pmp.param, pmp.norms, pmp.MODEL_DESC) SyntheticField
     </sql>
     <sql id="pageMid_condition">
         <where>

@@ -13,6 +13,7 @@ import com.zhiyun.dto.*;
 import com.zhiyun.entity.ProdBomDetailPlm;
 import com.zhiyun.entity.ProdBomPlm;
 import com.zhiyun.service.ProdBomPlmService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -85,6 +86,9 @@ public class ProdBomPlmController extends BaseController {
     public String searchForProduct(String productName, String bomCode) {
         BaseResult<ProductStorePlmDto> baseResult = new BaseResult<>();
         try {
+            if (StringUtils.isBlank(productName) && StringUtils.isBlank(bomCode)) {
+                throw new BusinessException("查询参数必须输入");
+            }
             ProductStorePlmDto productStorePlmDto = prodBomPlmService.searchForProduct(productName, bomCode);
             baseResult.setResult(true);
             baseResult.setMessage("查询成功");
@@ -115,7 +119,7 @@ public class ProdBomPlmController extends BaseController {
     public String findBomByPnoOrMpno(String pNo, String mpno, String versions) {
         BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
         try {
-            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findBomByPnoOrMpno(pNo, mpno,versions);
+            ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findBomByPnoOrMpno(pNo, mpno, versions);
             if (prodBomPlmDto == null) {
                 baseResult.setResult(false);
                 baseResult.setMessage("还未添加bom编码");
@@ -227,8 +231,6 @@ public class ProdBomPlmController extends BaseController {
         }
         return JSON.toJSONString(baseResult);
     }
-
-
 
     /**
      * 提交审核

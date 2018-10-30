@@ -7,9 +7,9 @@
             <if test="entity.prodNo != null and entity.prodNo != ''">
                 AND psp.PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
             </if>
-            <if test="entity.prodName != null and entity.prodName != ''">
-                AND (psp.PROD_NAME LIKE CONCAT ('%',#{entity.prodName,jdbcType=VARCHAR}, '%') or (psp.PROD_NO LIKE CONCAT
-                ('%',#{entity.prodNo,jdbcType=VARCHAR}, '%') )
+            <if test="entity.prodMsg != null and entity.prodMsg != ''">
+                AND (psp.PROD_NAME LIKE CONCAT ('%',#{entity.prodMsg,jdbcType=VARCHAR}, '%') or (psp.PROD_NO LIKE CONCAT
+                ('%',#{entity.prodMsg,jdbcType=VARCHAR}, '%') ))
             </if>
             <if test="entity.norms != null and entity.norms != ''">
                 AND psp.NORMS = #{entity.norms,jdbcType=VARCHAR}

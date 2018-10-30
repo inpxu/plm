@@ -7,6 +7,9 @@ package com.zhiyun.service.impl;
 
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.exception.BusinessException;
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseServiceImpl;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.ProdTypeCrmDao;
@@ -98,5 +101,10 @@ public class ProdTypeCrmServiceImpl extends BaseServiceImpl<ProdTypeCrm, Long> i
     public List<ProdTypeCrm> getType(ProdTypeCrm prodTypeCrm) {
         prodTypeCrm.setCompanyId(UserHolder.getCompanyId());
         return prodTypeCrmDao.getType(prodTypeCrm);
+    }
+
+    @Override
+    public DataGrid<ProdTypeCrm> pages(Params params, Pager pager) {
+        return prodTypeCrmDao.pages(params,pager);
     }
 }

@@ -123,7 +123,7 @@ public class ProductMidController extends PublicController {
             if (!CommonUtils.isEmpty(productStorePlms) && productStorePlms.size() == 1) {
                 productMidPlm.setProdName(productStorePlms.get(0).getProdName());
             } else {
-                throw new BusinessException("产品编码不唯一");
+                throw new BusinessException("产品编码不存在");
             }
             ProductMidPlm productMidPlm1 = new ProductMidPlm();
             productMidPlm1.setCompanyId(UserHolder.getCompanyId());
@@ -255,7 +255,7 @@ public class ProductMidController extends PublicController {
                 // 查询产品下面的半成品
                 ProdMidDto prodMidDtos = new ProdMidDto();
                 prodMidDtos.setCompanyId(UserHolder.getCompanyId());
-                prodMidDtos.setParentNo(productMidPlm.getProdNo());
+                prodMidDtos.setParentNo(productMidPlm.getMidProdNo());
                 List<ProdMidDto> prodMidDto = productMidPlmService.findMid(prodMidDtos);
                 // 递归查询删除子集
                 if (!CommonUtils.isEmpty(prodMidDto)) {
@@ -415,6 +415,4 @@ public class ProductMidController extends PublicController {
         }
         return JSON.toJSONString(baseResult);
     }
-
-
 }

@@ -57,7 +57,7 @@ public class MattersTypeIosServiceImpl extends BaseServiceImpl<MattersTypeIos, L
         ios.setTypeNo(mattersTypeIos.getTypeNo());
         List<MattersTypeIos> list = this.mattersTypeIosDao.find(ios);
         if (list != null && list.size() > 0) {
-            throw new BusinessException("改编码已存在，请重新输入");
+            throw new BusinessException("该编码已存在，请重新输入");
         }
         mattersTypeIos.setCompanyId(UserHolder.getCompanyId());
         this.mattersTypeIosDao.insert(mattersTypeIos);

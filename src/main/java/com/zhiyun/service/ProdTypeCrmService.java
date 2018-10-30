@@ -5,6 +5,9 @@
 
 package com.zhiyun.service;
 
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.entity.ProdTypeCrm;
 
@@ -29,5 +32,8 @@ public interface ProdTypeCrmService extends BaseService<ProdTypeCrm, Long> {
 
     //    产品分类模糊查询下拉
     List<ProdTypeCrm> getType(ProdTypeCrm prodTypeCrm);
+
+
+    DataGrid<ProdTypeCrm> pages(Params params, Pager pager);
 
 }

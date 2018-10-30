@@ -92,7 +92,7 @@ public class ProdTypeController extends PublicController {
             vaildParamsDefault(baseResult, bindingResult);
             prodTypeCrm.setCompanyId(UserHolder.getCompanyId());
             Params params = Params.create().add("entity", prodTypeCrm);
-            DataGrid<ProdTypeCrm> dataGrid = prodTypeCrmService.page(params, pager);
+            DataGrid<ProdTypeCrm> dataGrid = prodTypeCrmService.pages(params, pager);
             baseResult.setModel(dataGrid);
         } catch (BusinessException be) {
             LOGGER.debug("业务异常" + be);

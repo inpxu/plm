@@ -16,4 +16,44 @@
             </if>
         </where>
     </select>
+
+
+
+    <!-- 分页查询（条件） -->
+    <sql id="pages_condition">
+        <where>
+            <if test="entity.typeDesc != null and entity.typeDesc != ''">
+                AND TYPE_DESC LIKE CONCAT ('%',#{entity.typeDesc,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="entity.startDate != null">
+                AND START_DATE = #{entity.startDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.loseDate != null">
+                AND LOSE_DATE = #{entity.loseDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="entity.deleted != null and entity.deleted != ''">
+                AND DELETED = #{entity.deleted,jdbcType=VARCHAR}
+            </if>
+            <if test="entity.companyId != null">
+                AND COMPANY_ID = #{entity.companyId,jdbcType=BIGINT}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 分页查询（计数） -->
+    <select id="pages_count" parameterType="map" resultType="int">
+        SELECT count(*)
+        FROM PROD_TYPE_CRM
+        <include refid="pages_condition"/>
+    </select>
+
+    <!-- 分页查询（数据） -->
+    <select id="pages_datas" parameterType="map" resultType="com.zhiyun.entity.ProdTypeCrm">
+        <include refid="mybatis.pageStartSQL"/>
+        <include refid="selectFieldSQL"/>
+        FROM PROD_TYPE_CRM
+        <include refid="pages_condition"/>
+        order by ID desc
+        <include refid="mybatis.pageEndSQL"/>
+    </select>
 </mapper>   

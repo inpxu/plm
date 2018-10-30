@@ -135,7 +135,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                 m.setId(mainPlm.getId());
                 m.setVoucherNo(voucherNo);
                 m.setStatus("ready");
-                m.setVersions("1.0");
+                m.setVersions("1");
                 prodCrafworkMainPlmDao.update(m);
             }
         } else {
@@ -247,14 +247,10 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                         midPlm.setCompanyId(UserHolder.getCompanyId());
                         List<ProductMidPlm> list = productMidPlmDao.find(midPlm);
                         if (CollectionUtils.isEmpty(list)) {
-                            midPlm.setMidProdNo(null);
-                            midPlm.setParentNo(midProdNo);
-                            list = productMidPlmDao.find(midPlm);
-                            if (CollectionUtils.isEmpty(list)) {
-                                throw new BusinessException("半成品信息错误！");
-                            }
+                            prodNo = midProdNo;
+                        } else {
+                            prodNo = list.get(0).getProdNo();
                         }
-                        prodNo = list.get(0).getProdNo();
                     }
                     CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
                     plm.setCompanyId(UserHolder.getCompanyId());

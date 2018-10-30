@@ -6,6 +6,9 @@
 package com.zhiyun.dao.impl;
 
 import com.zhiyun.base.dao.BaseDaoImpl;
+import com.zhiyun.base.model.DataGrid;
+import com.zhiyun.base.model.Pager;
+import com.zhiyun.base.model.Params;
 import com.zhiyun.dao.ProdTypeCrmDao;
 import com.zhiyun.entity.ProdTypeCrm;
 import org.springframework.stereotype.Repository;
@@ -25,5 +28,10 @@ public class ProdTypeCrmDaoImpl extends BaseDaoImpl<ProdTypeCrm, Long> implement
     @Override
     public List<ProdTypeCrm> getType(ProdTypeCrm prodTypeCrm) {
         return this.selectList(getMethodName(), prodTypeCrm);
+    }
+
+    @Override
+    public DataGrid<ProdTypeCrm> pages(Params params, Pager pager) {
+        return this.selectPage(getMethodName(), params, pager);
     }
 }

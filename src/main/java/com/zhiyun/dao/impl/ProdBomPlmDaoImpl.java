@@ -5,6 +5,7 @@
 
 package com.zhiyun.dao.impl;
 
+import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.zhiyun.base.dao.BaseDaoImpl;
 import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
@@ -29,7 +30,12 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
 
     @Override
     public ProductStorePlmDto searchForProduct(Map<String, Object> param) {
-        return this.selectOne(getMethodName(), param);
+        List<Object> objects = this.selectList(getMethodName(), param);
+        if (CollectionUtils.isNotEmpty(objects)) {
+            return (ProductStorePlmDto) objects.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override

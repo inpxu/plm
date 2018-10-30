@@ -181,11 +181,12 @@ public class MattersStoreController extends BaseController {
      */
     @RequestMapping("/insetStore")
     @ResponseBody
-    public Object insetStore(MattersStoreIos mattersStoreIos) {
+    public Object insetStore(@Valid MattersStoreIos mattersStoreIos, BindingResult bindingResultn) {
         BaseResult<String> baseResult = new BaseResult<String>();
         baseResult.setResult(true);
         baseResult.setMessage("新增成功");
         try {
+            vaildParamsDefault(baseResult, bindingResultn);
             this.mattersStoreIosService.insertStore(mattersStoreIos);
         } catch (BusinessException be) {
             logger.debug("业务异常" + be);
@@ -352,7 +353,7 @@ public class MattersStoreController extends BaseController {
                     storeDto.setStatusId(2);
                 }
                 String imp = storeDto.getIsMidprod();
-                if ("原料".equals(imp)){
+                if ("原料".equals(imp)) {
                     storeDto.setIsMidprod(String.valueOf(0));
                 } else if ("公用组件".equals(imp)) {
                     storeDto.setIsMidprod(String.valueOf(1));

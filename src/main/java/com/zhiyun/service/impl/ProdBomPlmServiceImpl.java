@@ -17,7 +17,10 @@ import com.zhiyun.dao.ProdBomPlmDao;
 import com.zhiyun.dao.ProductMidPlmDao;
 import com.zhiyun.dao.VoucherMainOaDao;
 import com.zhiyun.dto.*;
-import com.zhiyun.entity.*;
+import com.zhiyun.entity.ProdBomDetailPlm;
+import com.zhiyun.entity.ProdBomPlm;
+import com.zhiyun.entity.ProductMidPlm;
+import com.zhiyun.entity.VoucherMainOa;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.service.ProdBomPlmService;
 import org.apache.commons.collections.CollectionUtils;
@@ -458,11 +461,10 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         }
     }
 
-
     @Override
     @Transactional
     public void upCommonBom(ProdDto prodDto) {
-        BomPlmDto bomPlmDto  = prodDto.getProdBomPlmDto();
+        BomPlmDto bomPlmDto = prodDto.getProdBomPlmDto();
         if (bomPlmDto == null) {
             throw new BusinessException("保存的数据不能为空！");
         }
@@ -490,7 +492,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         updateProdBomPlm.setBomNo(prodBomPlmDto.getBomNo());
         updateProdBomPlm.setProdNo(prodBomPlmDto.getMattersNo());
         updateProdBomPlm.setMakeDate(new Date());
-        updateProdBomPlm.setVersions(String.valueOf(Long.valueOf(prodBomPlmDto.getVersions())+1L));
+        updateProdBomPlm.setVersions(String.valueOf(Long.valueOf(prodBomPlmDto.getVersions()) + 1L));
         updateProdBomPlm.setBomStatus(prodBomPlmDto.getBomStatus());
         updateProdBomPlm.setCompanyId(UserHolder.getCompanyId());
         prodBomPlmDao.insert(updateProdBomPlm);
@@ -521,7 +523,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                     upDateAllMattersAndComponent(prodBomPlmDto, updateBomDetailPlm, mattersList);
                 } else {
                     //封装物料信息
-                    updateBomDetailPlm.setSerial(Long.valueOf(prodBomPlmDto.getVersions())+1L);
+                    updateBomDetailPlm.setSerial(Long.valueOf(prodBomPlmDto.getVersions()) + 1L);
                     updateBomDetailPlm.setMattersNo(mattersStoreDto.getMattersNo());
                     updateBomDetailPlm.setParentNo(prodBomPlmDto.getMattersNo());
                     updateBomDetailPlm.setAmount(Double.valueOf(mattersStoreDto.getAmount()));

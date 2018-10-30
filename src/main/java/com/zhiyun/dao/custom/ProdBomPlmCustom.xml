@@ -421,9 +421,16 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{productNo}
-          <if test="versions!=null and versions!= '' ">
-              AND prod_bom_plm.versions = #{versions}
-          </if>
+          AND prod_bom_plm.versions = (
+                                      SELECT
+                                             MAX( prod_bom_plm.versions ) maxversion
+                                      FROM
+                                           prod_bom_plm
+                                      WHERE
+                                              prod_bom_plm.deleted = 'F'
+                                        AND prod_bom_plm.company_id = #{companyId}
+                                        AND prod_bom_plm.prod_no = #{productNo}
+                                      )
     </select>
     <resultMap id="formulaMap" type="com.zhiyun.dto.FormulaDto">
         <result column="bomNo" property="bomNo"/>

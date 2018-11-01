@@ -19,12 +19,15 @@
                s.versions                                     version
         FROM crafwork_input_mater_plm m
                  LEFT JOIN matters_store_ios s ON s.matters_no = m.mater_no AND s.company_id = m.company_id AND s.deleted = 'F'
+                 AND s.store_id is null
                  LEFT JOIN matters_type_ios t ON t.id = s.type_id AND t.company_id = m.company_id AND t.deleted = 'F'
-                 LEFT JOIN product_mid_plm p ON p.mid_prod_no = m.in_prod_no AND p.company_id = m.company_id AND p.deleted = 'F'
+                 LEFT JOIN product_mid_plm p ON p.mid_prod_no = m.in_prod_no AND p.store_id is null AND p.company_id = m.company_id AND p.deleted = 'F'
         WHERE m.prod_no = #{prodNo,jdbcType=VARCHAR}
           AND m.mid_pord_no = #{midPordNo,jdbcType=VARCHAR}
           AND m.crafwork_id = #{crafworkId,jdbcType=BIGINT}
           AND m.company_id = #{companyId,jdbcType=BIGINT}
           AND m.deleted = 'F'
+          AND s.store_id is null
+          AND p.store_id is null
     </select>
 </mapper>   

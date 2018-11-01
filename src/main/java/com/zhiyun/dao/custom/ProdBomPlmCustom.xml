@@ -12,6 +12,7 @@
         <!--  AND product_mid_plm.deleted = 'F'-->
         WHERE
         product_store_plm.company_id = #{companyId}
+        AND product_store_plm.store_id is null
         AND product_store_plm.deleted = 'F'
         AND product_store_plm.prod_name like concat('%',#{productName},'%')
         <!--<if test="bomCode!=null and bomCode!= '' ">-->
@@ -47,6 +48,7 @@
                                                   AND voucher_main_oa.deleted = 'F'
                  INNER JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
                                                      AND product_store_plm.deleted = 'F'
+                                                     AND product_store_plm.store_id is null
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           and prod_bom_plm.prod_no = #{productNo}
@@ -54,7 +56,9 @@
                                        FROM prod_bom_plm
                                        WHERE prod_bom_plm.deleted = 'F'
                                          AND prod_bom_plm.company_id = #{companyId}
-                                         AND prod_bom_plm.prod_no = #{productNo})
+                                         AND prod_bom_plm.prod_no = #{productNo}
+                                         AND product_store_plm.store_id is null)
+                                         AND product_store_plm.store_id is null
     </select>
     <select id="findBomByMpno" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
         SELECT prod_bom_plm.bom_no     AS  bomNo,
@@ -112,6 +116,8 @@
         product_store_plm.company_id = #{companyId}
         AND product_store_plm.deleted = 'F'
         AND product_store_plm.prod_name=#{productName}
+        AND product_mid_plm.store_id is null
+        AND product_store_plm.store_id is null
         <if test="bomCode!=null and bomCode!= '' ">
             OR product_mid_plm.mid_prod_no = #{bomCode}
         </if>
@@ -134,6 +140,7 @@
         WHERE deleted = 'F'
           and is_midprod != 2
           AND company_id = #{companyId}
+          AND store_id is null
     </select>
 
 
@@ -143,6 +150,7 @@
         WHERE deleted = 'F'
           AND company_id = #{companyId}
           AND parent_no = #{productNo}
+          AND store_id is null
     </select>
 
     <select id="findAllMattersFroProduct" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -160,10 +168,12 @@
         FROM prod_bom_detail_plm
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
+                                                     AND matters_store_ios.store_id is null
                  INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
                                                                    AND matters_store_ios.deleted = 'F'
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
+          AND matters_store_ios.store_id is null
           AND prod_bom_detail_plm.parent_no = #{productNo}
           AND prod_bom_detail_plm.serial = (SELECT MAX(prod_bom_detail_plm.serial)
                                             FROM prod_bom_detail_plm
@@ -187,7 +197,8 @@
           and s.is_midprod != 2
           AND s.company_id = #{companyId}
           AND (s.matters_no LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%'))
-          AND s.matters_no != #{parentNo};
+          AND s.matters_no != #{parentNo}
+          AND s.store_id is null ;
 
     </select>
     <select id="findAllMattersAndComponet" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -206,6 +217,7 @@
         FROM prod_bom_detail_plm
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}
+                                                      AND matters_store_ios.store_id is null
                  INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
                                                                    AND backMatter.deleted = 'F'
                                                                    and backMatter.company_id = #{companyId}
@@ -215,6 +227,7 @@
           and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{matterNo}
           and prod_bom_detail_plm.serial = #{serial}
+          AND matters_store_ios.store_id is null
     </select>
 
     <select id="findMidProduct" parameterType="map" resultType="com.zhiyun.dto.ProductMidPlmDto">
@@ -223,6 +236,7 @@
         WHERE deleted = 'F'
           AND company_id = #{companyId}
           AND parent_no = #{parentNo}
+          AND store_id is null
     </select>
 
     <select id="findCommonBomByMatterName" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
@@ -243,10 +257,10 @@
                  INNER JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
                                                      AND matters_store_ios.company_id = #{companyId}
-                                                     and matters_store_ios.is_midprod = 1
+                                                     and matters_store_ios.is_midprod = 1 AND matters_store_ios.store_id is null
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
-          AND matters_store_ios.matters_name LIKE CONCAT('%', #{matterName}, '%')
+          AND matters_store_ios.matters_name LIKE CONCAT('%', #{matterName}, '%') AND matters_store_ios.store_id is null
     </select>
 
     <select id="findCommonBomByBomCode" parameterType="map" resultType="com.zhiyun.dto.ProdBomPlmDto">
@@ -265,9 +279,11 @@
                                                   AND voucher_main_oa.deleted = 'F'
                  INNER JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
                                                      AND product_store_plm.deleted = 'F'
+                                                     AND product_store_plm.store_id is null
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.bom_no = #{bomCode}
+          AND product_store_plm.store_id is null
     </select>
 
     <select id="findCommonBomByProdNo" resultType="com.zhiyun.dto.ProdBomPlmDto" parameterType="map">
@@ -288,10 +304,12 @@
                  INNER JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
                                                      AND matters_store_ios.company_id = #{companyId}
+                                                     AND matters_store_ios.store_id is null
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{prodNo}
           AND prod_bom_plm.versions = #{versionNo}
+          AND matters_store_ios.store_id is null
     </select>
 
     <select id="optionComponent" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -300,6 +318,7 @@
         WHERE deleted = 'F'
           and is_midprod = 1
           AND company_id = #{companyId}
+          AND matters_store_ios.store_id is null
     </select>
 
 
@@ -322,6 +341,7 @@
                                                   AND voucher_main_oa.company_id = #{companyId}
                  INNER JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
+                                                     AND matters_store_ios.store_id is null
                                                      AND matters_store_ios.company_id = #{companyId}
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
@@ -331,6 +351,7 @@
                                        WHERE prod_bom_plm.deleted = 'F'
                                          AND prod_bom_plm.company_id = #{companyId}
                                          AND prod_bom_plm.prod_no = #{matterNo})
+                                         AND matters_store_ios.store_id is null
     </select>
 
     <!-- 分页查询（计数） -->
@@ -344,12 +365,15 @@
         LEFT JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
         AND matters_store_ios.company_id = #{entity.companyId}
         AND matters_store_ios.deleted = 'F'
+        AND matters_store_ios.store_id is null
         LEFT JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
         AND product_store_plm.company_id = #{entity.companyId}
         AND product_store_plm.deleted = 'F'
+        AND product_store_plm.store_id is null
         WHERE
         prod_bom_plm.deleted = 'F'
         AND prod_bom_plm.company_id = #{entity.companyId}
+        AND product_store_plm.store_id is null
         <if test="entity.voucherNo != null and entity.voucherNo != ''">
             AND prod_bom_plm.voucher_no = #{entity.voucherNo,jdbcType=VARCHAR}
         </if>
@@ -383,13 +407,16 @@
         AND voucher_main_oa.deleted = 'F'
         LEFT JOIN matters_store_ios ON prod_bom_plm.prod_no = matters_store_ios.matters_no
         AND matters_store_ios.company_id = #{entity.companyId}
-        AND matters_store_ios.deleted = 'F'
+        AND matters_store_ios.deleted = 'F' AND matters_store_ios.store_id is null
         LEFT JOIN product_store_plm ON prod_bom_plm.prod_no = product_store_plm.prod_no
         AND product_store_plm.company_id = #{entity.companyId}
         AND product_store_plm.deleted = 'F'
+        AND product_store_plm.store_id is null
         WHERE
         prod_bom_plm.deleted = 'F'
         AND prod_bom_plm.company_id = #{entity.companyId}
+        AND matters_store_ios.store_id is null
+        AND product_store_plm.store_id is null
         <if test="entity.voucherNo != null and entity.voucherNo != ''">
             AND prod_bom_plm.voucher_no = #{entity.voucherNo,jdbcType=VARCHAR}
         </if>
@@ -421,6 +448,7 @@
         FROM prod_bom_plm
                  INNER JOIN product_store_plm ON product_store_plm.prod_no = prod_bom_plm.prod_no
                                                      AND product_store_plm.deleted = 'F'
+                                                      AND product_store_plm.store_id is null
                  LEFT JOIN formula_bom_plm ON formula_bom_plm.bom_no = prod_bom_plm.bom_no
                                                   AND formula_bom_plm.deleted = 'F'
         WHERE prod_bom_plm.deleted = 'F'
@@ -480,15 +508,17 @@
         FROM prod_bom_detail_plm
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}
+                                                     AND matters_store_ios.store_id is null
                  INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
                                                                    AND backMatter.deleted = 'F'
-                                                                   and backMatter.company_id = #{companyId}
+                                                                   and backMatter.company_id = #{companyId} AND matters_store_ios.store_id is null
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
           and matters_store_ios.is_midprod != 2
           and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{paranetNo}
           and prod_bom_detail_plm.serial = #{serial}
+          AND matters_store_ios.store_id is null
     </select>
 
     <!--<select id="findAllChildByMattersNo" parameterType="map" resultType="">-->

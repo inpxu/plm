@@ -53,7 +53,7 @@
     </sql>
     <!-- 分页查询（条件） -->
     <sql id="select_condition">
-        <where>
+        <where> s.store_id is null
             <if test="entity.mattersNo != null">
                 AND s.MATTERS_NO like CONCAT('%',#{entity.mattersNo,jdbcType=VARCHAR},'%')
                 OR s.MATTERS_NAME like CONCAT('%',#{entity.mattersNo,jdbcType=VARCHAR},'%')
@@ -165,14 +165,14 @@
         <if test="mattersName != null and mattersName != ''">
             AND (s.MATTERS_NAME LIKE CONCAT ('%',#{mattersName,jdbcType=VARCHAR}, '%')or s.MATTERS_NO LIKE CONCAT ('%',#{mattersName,jdbcType=VARCHAR}, '%'))
         </if>
-        AND s.DELETED = 'F'
+        AND s.DELETED = 'F' AND s.store_id is null
     </select>
     <select id="mattersOption" parameterType="map" resultType="com.zhiyun.entity.MattersStoreIos">
         SELECT matters_store_ios.id, matters_store_ios.matters_no mattersNo, matters_store_ios.matters_name mattersName
         FROM matters_store_ios
         WHERE deleted = 'F'
           AND company_id = #{companyId}
-          AND is_midprod != 2
+          AND is_midprod != 2 AND matters_store_ios.store_id is null
     </select>
 
     <select id="queryAllMatters" resultType="com.zhiyun.internal.plm.MattersStoreDto">
@@ -181,5 +181,15 @@
         WHERE matters_store_ios.deleted = 'F'
           AND matters_store_ios.is_midprod != 1
           AND matters_store_ios.company_id = #{companyId}
+          AND matters_store_ios.store_id is null
+    </select>
+
+    <select id="findMatter" parameterType="com.zhiyun.entity.MattersStoreIos" resultType="com.zhiyun.dto.MattersStoreDto">
+        <include refid="selectField"/>
+        FROM MATTERS_STORE_IOS s LEFT JOIN matters_type_ios t ON s.TYPE_ID=t.id and t.deleted='F'
+        where
+        s.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND s.DELETED = 'F'
+        AND s.store_id is null
     </select>
 </mapper>   

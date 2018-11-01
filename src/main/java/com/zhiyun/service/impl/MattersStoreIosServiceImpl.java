@@ -177,4 +177,11 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
         param.put("companyId", UserHolder.getCompanyId());
         return mattersStoreIosDao.mattersOption(param);
     }
+
+    @Override
+    public List<MattersStoreDto> findMatter() {
+        MattersStoreIos mattersStoreIos = new MattersStoreIos();
+        mattersStoreIos.setCompanyId(UserHolder.getCompanyId());
+        return mattersStoreIosDao.findMatter(mattersStoreIos);
+    }
 }

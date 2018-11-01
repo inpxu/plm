@@ -3,7 +3,7 @@
 <mapper namespace="com.zhiyun.dao.impl.ProductStorePlmDaoImpl">
     <!-- 分页查询（条件） -->
     <sql id="pg_condition">
-        <where>
+        <where> psp.store_id is null
             <if test="entity.prodNo != null and entity.prodNo != ''">
                 AND psp.PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
             </if>
@@ -162,6 +162,7 @@
         where psp.id = #{id,jdbcType=BIGINT}
         AND psp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
         AND psp.deleted = 'F'
+        AND psp.store_id is null
     </select>
 
     <select id="prodDrop" parameterType="com.zhiyun.entity.ProductStorePlm" resultType="com.zhiyun.dto.ProductStorePlmDto">
@@ -175,6 +176,7 @@
         left join prod_crafwork_main_plm mp on mp.PROD_NO = psp.PROD_NO and mp.COMPANY_ID = psp.COMPANY_ID and mp.deleted = 'F'
         where
         psp.DELETED = 'F'
+        AND psp.store_id is null
         <if test="prodName != null and prodName != ''">
             AND psp.PROD_NAME LIKE CONCAT ('%',#{prodName,jdbcType=VARCHAR}, '%')
         </if>
@@ -185,6 +187,7 @@
         SELECT product_store_plm.id, product_store_plm.prod_no prodNo, product_store_plm.prod_name prodName
         FROM product_store_plm
         WHERE product_store_plm.deleted = 'F'
+          AND product_store_plm.store_id is null
           AND product_store_plm.company_id = #{companyId}
     </select>
 

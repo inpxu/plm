@@ -16,12 +16,13 @@
                mp.`status`      status
         FROM prod_crafwork_path_plm_aud tp
                  LEFT JOIN crafwork_struct_plm cp ON cp.id = tp.crafwork_id AND cp.company_id = tp.company_id AND cp.deleted = 'F'
-                 LEFT JOIN product_mid_plm pmp ON pmp.mid_prod_no = tp.mid_prod_no AND pmp.company_id = tp.company_id AND pmp.deleted = 'F'
+                 LEFT JOIN product_mid_plm pmp ON pmp.mid_prod_no = tp.mid_prod_no AND pmp.store_id is null AND pmp.company_id = tp.company_id AND pmp.deleted = 'F'
                  LEFT JOIN prod_crafwork_main_plm mp ON mp.prod_no = pmp.prod_no AND mp.company_id = pmp.company_id AND mp.deleted = 'F'
         where tp.MID_PROD_NO = #{midProdNo,jdbcType=VARCHAR}
           AND tp.path_no = #{pathNo,jdbcType=VARCHAR}
           AND tp.DELETED = 'F'
           AND tp.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+          AND pmp.store_id is null
         order by tp.carf_seq
     </select>
 </mapper>   

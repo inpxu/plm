@@ -15,7 +15,7 @@
         p.mid_prod_no midProdNo
         FROM prod_bom_detail_plm d
         LEFT JOIN prod_bom_plm p ON p.bom_no = d.bom_no AND p.mid_prod_no = d.parent_no AND p.company_id = d.company_id AND p.deleted = 'F'
-        LEFT JOIN matters_store_ios i ON i.matters_no = d.matters_no AND i.company_id = d.company_id AND i.deleted = 'F'
+        LEFT JOIN matters_store_ios i ON i.matters_no = d.matters_no AND i.company_id = d.company_id AND i.deleted = 'F' AND i.store_id is null
         LEFT JOIN matters_type_ios t ON t.id = i.type_id AND t.company_id = i.company_id AND t.deleted = 'F'
         WHERE p.prod_no = #{prodNo,jdbcType=VARCHAR}
         <if test="midProdNo == null or midProdNo == ''">
@@ -27,6 +27,7 @@
         AND d.crafwork_id = #{crafworkId,jdbcType=BIGINT}
         AND d.deleted = 'F'
         AND d.company_id = #{companyId,jdbcType=BIGINT}
+        AND i.store_id is null
         GROUP BY d.id
     </select>
 
@@ -46,6 +47,7 @@
                  INNER JOIN MATTERS_STORE_IOS s ON prod_bom_detail_plm.matters_no = s.matters_no
                                                        AND s.deleted = 'F'
                                                        AND s.company_id = #{companyId}
+                                                       AND s.store_id is null
                  INNER JOIN matters_type_ios t ON s.TYPE_ID = t.id
                                                       AND t.deleted = 'F'
                                                       AND t.company_id = #{companyId}
@@ -55,6 +57,7 @@
         WHERE prod_bom_detail_plm.id = #{id}
           AND prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
+          AND s.store_id is null
     </select>
 
 

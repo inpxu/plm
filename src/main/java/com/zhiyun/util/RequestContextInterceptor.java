@@ -77,7 +77,7 @@ public class RequestContextInterceptor extends HandlerInterceptorAdapter impleme
         if (user != null && (user.getCompanyName() == null)) {
             CasUser casUser = new CasUser();
             casUser.setAccount("p13511111111");
-            //            casUser.setAccount(user.getAccountName());
+//            casUser.setAccount(user.getAccountName());
             List<CasUser> casUsers = casUserService.customeFind(casUser);
             if (!CollectionUtils.isEmpty(casUsers) && casUsers.size() == 1) {
                 //                if (!interfaceForUser.getIsAble(casUsers.get(0).getId(), "plm", hcmVersion)) {

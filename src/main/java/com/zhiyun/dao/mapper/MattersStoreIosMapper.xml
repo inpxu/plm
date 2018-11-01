@@ -270,13 +270,14 @@
         FROM MATTERS_STORE_IOS
         WHERE ID = #{id,jdbcType=INTEGER}
         AND DELETED = #{deleted,jdbcType=VARCHAR}
+        AND store_id is null
     </select>
 
     <!-- 查询 -->
     <select id="find" parameterType="com.zhiyun.entity.MattersStoreIos" resultType="com.zhiyun.entity.MattersStoreIos">
         <include refid="selectFieldSQL"/>
         FROM MATTERS_STORE_IOS
-        <where>
+        <where> store_id is null
             <if test="id != null">
                 AND ID = #{id,jdbcType=INTEGER}
             </if>
@@ -369,11 +370,13 @@
         <include refid="selectFieldSQL"/>
         FROM MATTERS_STORE_IOS
         WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+        AND store_id is null
     </select>
 
     <!-- 分页查询（条件） -->
     <sql id="page_condition">
         <where>
+            store_id is null
             <if test="entity.mattersNo != null">
                 AND MATTERS_NO = #{entity.mattersNo,jdbcType=VARCHAR}
             </if>
@@ -479,13 +482,14 @@
         <include refid="selectFieldSQL"/>
         FROM MATTERS_STORE_IOS
         WHERE DELETED = "F"
+        AND store_id is null
     </select>
 
     <!-- Map条件查询 -->
     <select id="findMapList" parameterType="map" resultType="map">
         <include refid="selectFieldSQL"/>
         FROM MATTERS_STORE_IOS
-        <where>
+        <where> store_id is null
             <if test="id != null">
                 AND ID = #{id,jdbcType=INTEGER}
             </if>

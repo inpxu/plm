@@ -46,4 +46,6 @@ public interface MattersStoreIosService extends BaseService<MattersStoreIos, Lon
      * @date 2018/10/14 19:50
      */
     List<MattersStoreIos> mattersOption();
+
+    List<MattersStoreDto> findMatter();
 }

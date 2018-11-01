@@ -188,4 +188,13 @@
           AND matters_store_ios.company_id = #{companyId}
           AND matters_store_ios.store_id is null
     </select>
+
+    <select id="findMatter" parameterType="com.zhiyun.entity.MattersStoreIos" resultType="com.zhiyun.dto.MattersStoreDto">
+        <include refid="selectField"/>
+        FROM MATTERS_STORE_IOS s LEFT JOIN matters_type_ios t ON s.TYPE_ID=t.id and t.deleted='F'
+        where
+        s.COMPANY_ID = #{companyId,jdbcType=BIGINT}
+        AND s.DELETED = 'F'
+        AND s.store_id is null
+    </select>
 </mapper>   

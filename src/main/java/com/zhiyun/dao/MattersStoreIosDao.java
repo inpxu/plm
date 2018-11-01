@@ -40,4 +40,6 @@ public interface MattersStoreIosDao extends BaseDao<MattersStoreIos, Long> {
 
     List<com.zhiyun.internal.plm.MattersStoreDto> queryAllMatters(Long companyId);
 
+    List<MattersStoreDto> findMatter(MattersStoreIos mattersStoreIos);
+
 }

@@ -15,13 +15,23 @@ public class CrafworkInputMaterPlmDto extends CrafworkInputMaterPlm {
     // 分类
     private String typeName;
     // 参数/型号/规格
-    private String syntheticField;
+    private String allInfo;
     // 单位
     private String unit;
     // 版本
-    private String version;
+    private String versions;
 
     private String midProdMsg;
+
+    private String syntheticField;
+
+    public String getSyntheticField() {
+        return syntheticField;
+    }
+
+    public void setSyntheticField(String syntheticField) {
+        this.syntheticField = syntheticField;
+    }
 
     public String getMidProdMsg() {
         return midProdMsg;
@@ -63,27 +73,27 @@ public class CrafworkInputMaterPlmDto extends CrafworkInputMaterPlm {
         this.typeName = typeName;
     }
 
-    public String getSyntheticField() {
-        return syntheticField;
+    public String getAllInfo() {
+        return allInfo;
     }
 
-    public void setSyntheticField(String syntheticField) {
-        this.syntheticField = syntheticField;
+    public void setAllInfo(String allInfo) {
+        this.allInfo = allInfo;
     }
 
     public String getUnit() {
         return unit;
     }
 
+    public String getVersions() {
+        return versions;
+    }
+
+    public void setVersions(String versions) {
+        this.versions = versions;
+    }
+
     public void setUnit(String unit) {
         this.unit = unit;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
     }
 }

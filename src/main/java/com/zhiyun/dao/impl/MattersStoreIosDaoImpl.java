@@ -46,4 +46,9 @@ public class MattersStoreIosDaoImpl extends BaseDaoImpl<MattersStoreIos, Long> i
     public List<com.zhiyun.internal.plm.MattersStoreDto> queryAllMatters(Long companyId) {
         return this.selectList(getMethodName(), companyId);
     }
+
+    @Override
+    public List<MattersStoreDto> findMatter(MattersStoreIos mattersStoreIos) {
+        return this.selectList(getMethodName(),mattersStoreIos);
+    }
 }

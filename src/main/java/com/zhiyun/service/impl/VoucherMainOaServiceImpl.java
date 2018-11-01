@@ -9,10 +9,11 @@ import com.alibaba.dubbo.common.utils.CollectionUtils;
 import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.exception.BusinessException;
 import com.zhiyun.base.service.BaseServiceImpl;
-import com.zhiyun.base.util.BeanCopyUtil;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.*;
-import com.zhiyun.dto.*;
+import com.zhiyun.dto.CrafworkChangeMainDto;
+import com.zhiyun.dto.CrafworkChangeRecordPlmDto;
+import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.entity.*;
 import com.zhiyun.internal.uniqueid.UniqueIdService;
 import com.zhiyun.service.ProdCrafworkPathPlmService;
@@ -21,15 +22,12 @@ import com.zhiyun.util.ProcessDto;
 import com.zhiyun.util.ResponseStatusConsts;
 import com.zhiyun.util.VoucherEnum;
 import com.zhiyun.util.WorkFlowStateConsts;
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
-import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.sql.SQLOutput;
 import java.util.Date;
 import java.util.List;
 
@@ -163,10 +161,10 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         CrafworkChangeRecordPlmDto change = new CrafworkChangeRecordPlmDto();
         change.setCompanyId(UserHolder.getCompanyId());
         change.setPathNo(pathNo);
-//        List<CrafworkChangeRecordPlmDto> list = crafworkChangeRecordPlmDao.getRecordDetail(change);
-//        if (CollectionUtils.isEmpty(list)) {
-//            throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
-//        }
+        //        List<CrafworkChangeRecordPlmDto> list = crafworkChangeRecordPlmDao.getRecordDetail(change);
+        //        if (CollectionUtils.isEmpty(list)) {
+        //            throw new BusinessException("审核已提交或您对该产品的工艺路线没有进行任何修改！");
+        //        }
         //生成单据号
         String voucherNo = uniqueIdService.mixedId(AUDIT_ID_HEAD, 18, UserHolder.getCompanyId());
         //创建流程
@@ -203,14 +201,14 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         main.setRaiseDate(new Date());
         crafworkChangeMainDao.insert(main);
         // 工艺路线变更申请详情表添加单据号
-//        if (CollectionUtils.isNotEmpty(list)) {
-//            for (CrafworkChangeRecordPlmDto dto : list) {
-//                CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
-//                plm.setId(dto.getId());
-//                plm.setVoucherNo(voucherNo);
-//                crafworkChangeRecordPlmDao.update(plm);
-//            }
-//        }
+        //        if (CollectionUtils.isNotEmpty(list)) {
+        //            for (CrafworkChangeRecordPlmDto dto : list) {
+        //                CrafworkChangeRecordPlm plm = new CrafworkChangeRecordPlm();
+        //                plm.setId(dto.getId());
+        //                plm.setVoucherNo(voucherNo);
+        //                crafworkChangeRecordPlmDao.update(plm);
+        //            }
+        //        }
         if (CollectionUtils.isNotEmpty(paths)) {
             for (ProdCrafworkPathPlmDto prodCrafworkPathPlm : paths) {
                 // 获取调用方法的字段
@@ -263,7 +261,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     Integer oldEmp = null;
                     BigDecimal oldDay = null;
                     // 判断id是否为空
-                    if ( id == 0) {
+                    if (id == 0) {
                         // 为空表示是新增的数据
                         String value = crafworkChangeRecordPlmDao.getMes(plm).get(0).getNewValue();
                         String[] values = value.split(",");
@@ -322,42 +320,42 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                     sub.setCompanyId(UserHolder.getCompanyId());
                     sub.setChangeEmp(UserHolder.getUserName());
                     sub.setUpdDate(new Date());
-                        if (seq != null && !seq.equals(oldSeq)) {
-                            sub.setId(null);
-                            sub.setOldValue(oldSeq + "");
-                            sub.setNewValue(seq + "");
-                            sub.setChangeFlag("调整工艺顺序");
-                            sub.setChangeItem("工艺顺序");
-                            sub.setVoucherNo(voucherNo);
-                            crafworkChangeRecordPlmDao.insert(sub);
-                        }
-                        if (mac != null && !mac.equals(oldMac)) {
-                            sub.setId(null);
-                            sub.setOldValue(oldMac + "");
-                            sub.setNewValue(mac + "");
-                            sub.setChangeFlag("编辑产品工艺");
-                            sub.setChangeItem("设备单耗标准工时");
-                            sub.setVoucherNo(voucherNo);
-                            crafworkChangeRecordPlmDao.insert(sub);
-                        }
-                        if (emp != null && !emp.equals(oldEmp)) {
-                            sub.setId(null);
-                            sub.setOldValue(oldEmp + "");
-                            sub.setNewValue(emp + "");
-                            sub.setChangeFlag("编辑产品工艺");
-                            sub.setChangeItem("人员单耗标准工时");
-                            sub.setVoucherNo(voucherNo);
-                            crafworkChangeRecordPlmDao.insert(sub);
-                        }
-                        if (day != null && !day.equals(oldDay)) {
-                            sub.setId(null);
-                            sub.setOldValue(oldDay + "");
-                            sub.setNewValue(day + "");
-                            sub.setChangeFlag("编辑产品工艺");
-                            sub.setChangeItem("每班标准产量");
-                            sub.setVoucherNo(voucherNo);
-                            crafworkChangeRecordPlmDao.insert(sub);
-                        }
+                    if (seq != null && !seq.equals(oldSeq)) {
+                        sub.setId(null);
+                        sub.setOldValue(oldSeq + "");
+                        sub.setNewValue(seq + "");
+                        sub.setChangeFlag("调整工艺顺序");
+                        sub.setChangeItem("工艺顺序");
+                        sub.setVoucherNo(voucherNo);
+                        crafworkChangeRecordPlmDao.insert(sub);
+                    }
+                    if (mac != null && !mac.equals(oldMac)) {
+                        sub.setId(null);
+                        sub.setOldValue(oldMac + "");
+                        sub.setNewValue(mac + "");
+                        sub.setChangeFlag("编辑产品工艺");
+                        sub.setChangeItem("设备单耗标准工时");
+                        sub.setVoucherNo(voucherNo);
+                        crafworkChangeRecordPlmDao.insert(sub);
+                    }
+                    if (emp != null && !emp.equals(oldEmp)) {
+                        sub.setId(null);
+                        sub.setOldValue(oldEmp + "");
+                        sub.setNewValue(emp + "");
+                        sub.setChangeFlag("编辑产品工艺");
+                        sub.setChangeItem("人员单耗标准工时");
+                        sub.setVoucherNo(voucherNo);
+                        crafworkChangeRecordPlmDao.insert(sub);
+                    }
+                    if (day != null && !day.equals(oldDay)) {
+                        sub.setId(null);
+                        sub.setOldValue(oldDay + "");
+                        sub.setNewValue(day + "");
+                        sub.setChangeFlag("编辑产品工艺");
+                        sub.setChangeItem("每班标准产量");
+                        sub.setVoucherNo(voucherNo);
+                        crafworkChangeRecordPlmDao.insert(sub);
+                    }
                 } else if ("删除".equals(auditMethod)) {
                     Long crafworkId = prodCrafworkPathPlm.getCrafworkId();
                     String midProdNo = prodCrafworkPathPlm.getMidProdNo();
@@ -388,13 +386,12 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             }
         }
 
-
     }
 
     @Override
     @Transactional
     public void examine(String voucherNo, boolean isPass) {
-        pass(voucherNo,isPass);
+        pass(voucherNo, isPass);
         // 添加版本号
         ProdCrafworkMainPlm mainPlm = new ProdCrafworkMainPlm();
         mainPlm.setCompanyId(UserHolder.getCompanyId());
@@ -507,7 +504,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
                         }
                     }
                 }
-                CrafworkStructPlm structPlm =  crafworkStructPlmDao.get(crafWorkId);
+                CrafworkStructPlm structPlm = crafworkStructPlmDao.get(crafWorkId);
                 pathPlm.setQuartersEmp(structPlm.getQuartersEmp());
                 pathPlm.setUnit(structPlm.getUnit());
                 pathPlm.setIsCheck(structPlm.getIsCheck());
@@ -550,7 +547,7 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
         mainPlm.setCompanyId(UserHolder.getCompanyId());
         mainPlm.setVoucherNo(voucherNo);
         mainPlm.setId(mainId);
-        mainPlm.setVersions(String.valueOf(Long.valueOf(version)+1L));
+        mainPlm.setVersions(String.valueOf(Long.valueOf(version) + 1L));
         prodCrafworkMainPlmDao.update(mainPlm);
 
         // 路线详情表更改单据号
@@ -566,6 +563,6 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             }
         }
         // 单据号审批
-        pass(voucherNo,isPass);
+        pass(voucherNo, isPass);
     }
 }

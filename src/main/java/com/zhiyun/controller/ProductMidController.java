@@ -61,7 +61,6 @@ public class ProductMidController extends PublicController {
     /**
      * 分页查询
      *
-     *
      * @param productMidPlm 查询条件
      * @param pager 分页条件
      */
@@ -152,7 +151,7 @@ public class ProductMidController extends PublicController {
 
             }
 
-            if (paraentNo == null || paraentNo == ""){
+            if (paraentNo == null || paraentNo == "") {
                 productMidPlm.setParentNo(productMidPlm.getProdNo());
             }
             productMidPlm = productMidPlmService.insert(productMidPlm);

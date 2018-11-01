@@ -105,6 +105,6 @@ public class ProdTypeCrmServiceImpl extends BaseServiceImpl<ProdTypeCrm, Long> i
 
     @Override
     public DataGrid<ProdTypeCrm> pages(Params params, Pager pager) {
-        return prodTypeCrmDao.pages(params,pager);
+        return prodTypeCrmDao.pages(params, pager);
     }
 }

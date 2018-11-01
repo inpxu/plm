@@ -7,7 +7,6 @@ package com.zhiyun.service;
 
 import com.zhiyun.base.service.BaseService;
 import com.zhiyun.dto.CrafworkChangeMainDto;
-import com.zhiyun.entity.CrafworkChangeMain;
 import com.zhiyun.entity.ProdCrafworkMainPlm;
 import com.zhiyun.entity.VoucherMainOa;
 
@@ -25,9 +24,12 @@ public interface VoucherMainOaService extends BaseService<VoucherMainOa, Long> {
 
     // 路线变更提交审核
     void audit(CrafworkChangeMainDto crafworkChangeMainDto);
+
     // 路线审批
     void examine(String voucherNo, boolean isPass);
+
     void pass(String voucherNo, boolean isPass);
+
     // 路线变更审批
     void changeExamine(String voucherNo, boolean isPass);
 

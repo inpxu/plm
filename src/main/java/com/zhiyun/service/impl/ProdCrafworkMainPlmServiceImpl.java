@@ -13,14 +13,14 @@ import com.zhiyun.base.util.BeanCopyUtil;
 import com.zhiyun.client.UserHolder;
 import com.zhiyun.dao.*;
 import com.zhiyun.dto.ProdCrafworkMainPlmDto;
-import com.zhiyun.dto.ProdCrafworkPathPlmAudDto;
 import com.zhiyun.dto.ProdCrafworkPathPlmDto;
 import com.zhiyun.dto.ProdMidDto;
-import com.zhiyun.entity.*;
+import com.zhiyun.entity.CrafworkChangeRecordPlm;
+import com.zhiyun.entity.ProdCrafworkMainPlm;
+import com.zhiyun.entity.ProdCrafworkPathPlm;
+import com.zhiyun.entity.ProductMidPlm;
 import com.zhiyun.service.ProdCrafworkMainPlmService;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.zookeeper.data.Id;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +58,7 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
     @Transactional
     public void addPathNo(ProdCrafworkMainPlm prodCrafworkMainPlm) {
         String pathNo = prodCrafworkMainPlm.getPathNo();
-        if (pathNo == null || pathNo == ""){
+        if (pathNo == null || pathNo == "") {
             throw new BusinessException("工艺路线号不能为空");
         }
         ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
@@ -156,28 +156,28 @@ public class ProdCrafworkMainPlmServiceImpl extends BaseServiceImpl<ProdCrafwork
         String pathNo = prodCrafworkMainPlmDto.getPathNo();
         ProdCrafworkMainPlm path = new ProdCrafworkMainPlm();
         String t = prodCrafworkMainPlmDto.getEnDis();
-//        ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
-//        plm.setCompanyId(UserHolder.getCompanyId());
-//        plm.setPathNo(pathNo);
-//        List<ProdCrafworkMainPlm> list = prodCrafworkMainPlmDao.find(plm);
-//        if (CollectionUtils.isNotEmpty(list)) {
-//            String status = list.get(0).getStatus();
-//            if (status == null || status.equals("")) {
-//                ProdCrafworkPathPlm pp = new ProdCrafworkPathPlm();
-//                pp.setCompanyId(UserHolder.getCompanyId());
-//                pp.setPathNo(pathNo);
-//                List<ProdCrafworkPathPlm> lp = prodCrafworkPathPlmDao.find(pp);
-//                if (CollectionUtils.isNotEmpty(lp)) {
-//                    for (ProdCrafworkPathPlm l : lp) {
-//                        l.setId(null);
-//                        l.setVoucherNo(null);
-//                        ProdCrafworkPathPlmAud aud = new ProdCrafworkPathPlmAud();
-//                        BeanUtils.copyProperties(l, aud);
-//                        prodCrafworkPathPlmAudDao.insert(aud);
-//                    }
-//                }
-//            }
-//        }
+        //        ProdCrafworkMainPlm plm = new ProdCrafworkMainPlm();
+        //        plm.setCompanyId(UserHolder.getCompanyId());
+        //        plm.setPathNo(pathNo);
+        //        List<ProdCrafworkMainPlm> list = prodCrafworkMainPlmDao.find(plm);
+        //        if (CollectionUtils.isNotEmpty(list)) {
+        //            String status = list.get(0).getStatus();
+        //            if (status == null || status.equals("")) {
+        //                ProdCrafworkPathPlm pp = new ProdCrafworkPathPlm();
+        //                pp.setCompanyId(UserHolder.getCompanyId());
+        //                pp.setPathNo(pathNo);
+        //                List<ProdCrafworkPathPlm> lp = prodCrafworkPathPlmDao.find(pp);
+        //                if (CollectionUtils.isNotEmpty(lp)) {
+        //                    for (ProdCrafworkPathPlm l : lp) {
+        //                        l.setId(null);
+        //                        l.setVoucherNo(null);
+        //                        ProdCrafworkPathPlmAud aud = new ProdCrafworkPathPlmAud();
+        //                        BeanUtils.copyProperties(l, aud);
+        //                        prodCrafworkPathPlmAudDao.insert(aud);
+        //                    }
+        //                }
+        //            }
+        //        }
         path.setStatus(t);
         path.setPathNo(pathNo);
         path.setCompanyId(UserHolder.getCompanyId());

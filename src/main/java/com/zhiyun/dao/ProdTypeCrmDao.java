@@ -9,7 +9,6 @@ import com.zhiyun.base.dao.BaseDao;
 import com.zhiyun.base.model.DataGrid;
 import com.zhiyun.base.model.Pager;
 import com.zhiyun.base.model.Params;
-import com.zhiyun.dto.ProdMidDto;
 import com.zhiyun.entity.ProdTypeCrm;
 
 import java.util.List;

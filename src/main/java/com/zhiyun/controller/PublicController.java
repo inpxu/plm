@@ -207,6 +207,7 @@ public class PublicController extends BaseController {
         }
         return JSON.toJSONString(baseResult);
     }
+
     // 递归查询半成品
     private ProdMidDto findMidTree(ProdMidDto prodMidDto) {
         ProdMidDto prodMidDto1 = new ProdMidDto();

@@ -352,12 +352,12 @@ public class MattersStoreController extends BaseController {
                 } else if ("关闭".equals(status)) {
                     storeDto.setStatusId(2);
                 }
-                String imp = storeDto.getIsMidprod();
-                if ("原料".equals(imp)) {
-                    storeDto.setIsMidprod(String.valueOf(0));
-                } else if ("公用组件".equals(imp)) {
-                    storeDto.setIsMidprod(String.valueOf(1));
-                }
+                //                String imp = storeDto.getIsMidprod();
+                //                if ("原料".equals(imp)) {
+                //                    storeDto.setIsMidprod(String.valueOf(0));
+                //                } else if ("公用组件".equals(imp)) {
+                //                    storeDto.setIsMidprod(String.valueOf(1));
+                //                }
             }
             baseResult.setModel(dataGrid);
         } catch (BusinessException be) {

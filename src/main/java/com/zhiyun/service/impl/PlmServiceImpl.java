@@ -20,7 +20,6 @@ public class PlmServiceImpl implements PlmService {
     @Autowired
     private MattersStoreIosDao mattersStoreIosDao;
 
-
     @Override
     public List<MattersStoreDto> queryAllMatters(Long companyId) {
         return mattersStoreIosDao.queryAllMatters(companyId);

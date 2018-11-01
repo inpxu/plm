@@ -33,7 +33,6 @@ public interface ProdTypeCrmService extends BaseService<ProdTypeCrm, Long> {
     //    产品分类模糊查询下拉
     List<ProdTypeCrm> getType(ProdTypeCrm prodTypeCrm);
 
-
     DataGrid<ProdTypeCrm> pages(Params params, Pager pager);
 
 }

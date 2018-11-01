@@ -58,16 +58,16 @@ public class MattersStoreIos extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "生产厂商字段过长")
     private String factory;
     // 库存数量
-    @Max(value = 999999999L,message = "库存数量超出限制")
+    @Max(value = 999999999L, message = "库存数量超出限制")
     private Double curAmount;
     // 生产预领数量
-    @Max(value = 999999999L,message = "生产预领数量超出限制")
+    @Max(value = 999999999L, message = "生产预领数量超出限制")
     private Double advAmount;
     // 采购预进数量
-    @Max(value = 999999999L,message = "采购预进数量超出限制")
+    @Max(value = 999999999L, message = "采购预进数量超出限制")
     private Double purAmount;
     // 理论重量
-    @Max(value = 999999999L,message = "理论重量超出限制")
+    @Max(value = 999999999L, message = "理论重量超出限制")
     private Double weight;
     // 克重
     @Max(value = 999999999L, message = "克重字段过长")

@@ -107,7 +107,6 @@ public class ProductMidPlmServiceImpl extends BaseServiceImpl<ProductMidPlm, Lon
         return productMidPlmDao.getMidMess(productMidPlm);
     }
 
-
     @Override
     public List<ProductMidPlm> getParentNo(ProductMidPlm productMidPlm) {
         productMidPlm.setCompanyId(UserHolder.getCompanyId());

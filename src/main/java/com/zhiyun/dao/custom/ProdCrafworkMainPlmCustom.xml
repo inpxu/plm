@@ -89,8 +89,8 @@
         WHERE m.company_id = #{companyId,jdbcType=BIGINT}
         AND m.voucher_no is not null
         AND m.path_no NOT IN (SELECT m.path_no FROM crafwork_change_main m
-                              LEFT JOIN voucher_main_oa o ON o.voucher_no = m.voucher_no AND m.company_id = o.company_id AND o.deleted = 'F'
-                              WHERE o.is_finished = 'AS002' AND m.company_id = #{companyId,jdbcType=BIGINT} AND m.deleted = 'F')
+        LEFT JOIN voucher_main_oa o ON o.voucher_no = m.voucher_no AND m.company_id = o.company_id AND o.deleted = 'F'
+        WHERE o.is_finished = 'AS002' AND m.company_id = #{companyId,jdbcType=BIGINT} AND m.deleted = 'F')
         AND o.is_finished != 'AS003'
         AND m.`status` != 'false'
         <if test="pathNo != null and pathNo != ''">
@@ -115,8 +115,8 @@
         WHERE m.company_id = #{companyId,jdbcType=BIGINT}
         AND m.voucher_no is not null
         AND m.path_no NOT IN (SELECT m.path_no FROM crafwork_change_main m
-                              LEFT JOIN voucher_main_oa o ON o.voucher_no = m.voucher_no AND m.company_id = o.company_id AND o.deleted = 'F'
-                              WHERE o.is_finished = 'AS002' AND m.company_id = #{companyId,jdbcType=BIGINT} AND m.deleted = 'F')
+        LEFT JOIN voucher_main_oa o ON o.voucher_no = m.voucher_no AND m.company_id = o.company_id AND o.deleted = 'F'
+        WHERE o.is_finished = 'AS002' AND m.company_id = #{companyId,jdbcType=BIGINT} AND m.deleted = 'F')
         AND o.is_finished != 'AS003'
         AND m.`status` != 'false'
         <if test="prodMsg != null and prodMsg != ''">

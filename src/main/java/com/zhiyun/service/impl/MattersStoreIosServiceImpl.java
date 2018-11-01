@@ -47,7 +47,6 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
     @Resource
     private ProductStorePlmDao productStorePlmDao;
 
-
     @Override
     protected BaseDao<MattersStoreIos, Long> getBaseDao() {
         return this.mattersStoreIosDao;

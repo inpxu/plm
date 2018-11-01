@@ -210,7 +210,7 @@ public class VoucherMainOaController extends BaseController {
     @ResponseBody
     @RequestMapping("changeExamine")
     public Object changeExamine(@RequestParam(value = "voucherNo", required = true) String voucherNo,
-                          @RequestParam(value = "isPass", required = true) boolean isPass) {
+            @RequestParam(value = "isPass", required = true) boolean isPass) {
         BaseResult<CrafworkChangeMain> baseResult = new BaseResult<CrafworkChangeMain>();
         baseResult.setResult(true);
         baseResult.setMessage("审批成功！");

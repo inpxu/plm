@@ -471,12 +471,32 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
         List<ProdBomPlmDto> prodBomPlmDtos = bomPlmDto.getProdBomPlmDtos();
         if (CollectionUtils.isNotEmpty(prodBomPlmDtos)) {
             for (ProdBomPlmDto prodBomDto : prodBomPlmDtos) {
-                prodBomDto.setBomNo(bomPlmDto.getBomNo());
-                prodBomDto.setBomStatus(bomPlmDto.getBomStatus());
-                prodBomDto.setVersions(bomPlmDto.getVersions());
-                upGradeCommonBom(prodBomDto);
+                List<MattersStoreDto> mattersStoreDtos = prodBomDto.getMattersStoreDtos();
+                if (CollectionUtils.isNotEmpty(mattersStoreDtos)) {
+                    for (MattersStoreDto mattersStoreDto : mattersStoreDtos) {
+                        ProdBomDetailPlm prodBomDetailPlm = new ProdBomDetailPlm();
+                        prodBomDetailPlm.setSerial(Long.valueOf(bomPlmDto.getVersions()) + 1L);
+                        prodBomDetailPlm.setMattersNo(mattersStoreDto.getMattersNo());
+                        prodBomDetailPlm.setParentNo(prodBomDto.getMattersNo());
+                        prodBomDetailPlm.setCompanyId(UserHolder.getCompanyId());
+                        prodBomDetailPlm.setAmount(Double.valueOf(mattersStoreDto.getAmount()));
+                        prodBomDetailPlm.setPlmDesc(mattersStoreDto.getPlmDesc());
+                        prodBomDetailPlm.setBackupMatter(mattersStoreDto.getBackUpMatterNo());
+                        prodBomDetailPlm.setBomNo(bomPlmDto.getBomNo());
+                        prodBomDetailPlmDao.insert(prodBomDetailPlm);
+                    }
+                }
             }
         }
+        //更新产品bom版本
+        ProdBomPlm param = new ProdBomPlm();
+        param.setBomNo(bomPlmDto.getBomNo());
+        param.setCompanyId(UserHolder.getCompanyId());
+        List<ProdBomPlm> prodBomPlms = prodBomPlmDao.find(param);
+        ProdBomPlm prodBomPlm = prodBomPlms.get(0);
+        prodBomPlm.setVersions(String.valueOf(Long.valueOf(bomPlmDto.getVersions()) + 1));
+        prodBomPlm.setId(prodBomPlm.getId());
+        prodBomPlmDao.update(prodBomPlm);
 
     }
 

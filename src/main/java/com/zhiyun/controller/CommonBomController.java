@@ -3,7 +3,6 @@ package com.zhiyun.controller;
 import com.alibaba.fastjson.JSON;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
-import com.zhiyun.dto.BomPlmDto;
 import com.zhiyun.dto.MattersStoreDto;
 import com.zhiyun.dto.ProdBomPlmDto;
 import com.zhiyun.dto.ProdDto;
@@ -148,7 +147,8 @@ public class CommonBomController {
     }
 
     /**
-     *  修改产品bom保存
+     * 修改产品bom保存
+     *
      * @param prodDto
      * @return
      */

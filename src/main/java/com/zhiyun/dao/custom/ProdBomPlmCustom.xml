@@ -89,8 +89,8 @@
         select bom_status bomStatus
         from prod_bom_plm
         where deleted = 'F'
-          and company_id = #{companyId}
-          and bom_no = #{bomCode}
+        and company_id = #{companyId}
+        and bom_no = #{bomCode}
         <if test="versions != null and versions!= '' ">
             AND versions = #{versions}
         </if>
@@ -153,7 +153,7 @@
                CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
                CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
                CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
-               matters_store_ios.versions,
+               prod_bom_detail_plm.serial                                                                       versions,
                matters_store_ios.unit,
                matters_store_ios.matters_no                                                                     mattersNo,
                matters_store_ios.is_midprod                                                                     isMidprod
@@ -165,6 +165,11 @@
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
           AND prod_bom_detail_plm.parent_no = #{productNo}
+          AND prod_bom_detail_plm.serial = (SELECT MAX(prod_bom_detail_plm.serial)
+                                            FROM prod_bom_detail_plm
+                                            WHERE prod_bom_detail_plm.company_id = #{companyId}
+                                              AND prod_bom_detail_plm.deleted = 'F'
+                                              AND prod_bom_detail_plm.parent_no = #{productNo})
     </select>
 
     <select id="SearchBeforeAddMatters" parameterType="map" resultType="com.zhiyun.dto.MattersStoreDto">
@@ -421,16 +426,11 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{productNo}
-          AND prod_bom_plm.versions = (
-                                      SELECT
-                                             MAX( prod_bom_plm.versions ) maxversion
-                                      FROM
-                                           prod_bom_plm
-                                      WHERE
-                                              prod_bom_plm.deleted = 'F'
-                                        AND prod_bom_plm.company_id = #{companyId}
-                                        AND prod_bom_plm.prod_no = #{productNo}
-                                      )
+          AND prod_bom_plm.versions = (SELECT MAX(prod_bom_plm.versions) maxversion
+                                       FROM prod_bom_plm
+                                       WHERE prod_bom_plm.deleted = 'F'
+                                         AND prod_bom_plm.company_id = #{companyId}
+                                         AND prod_bom_plm.prod_no = #{productNo})
     </select>
     <resultMap id="formulaMap" type="com.zhiyun.dto.FormulaDto">
         <result column="bomNo" property="bomNo"/>

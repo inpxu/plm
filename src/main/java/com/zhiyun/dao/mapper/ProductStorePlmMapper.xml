@@ -277,13 +277,14 @@
         FROM PRODUCT_STORE_PLM
         WHERE ID = #{id,jdbcType=INTEGER}
         AND DELETED = #{deleted,jdbcType=VARCHAR}
+        AND store_id is null
     </select>
 
     <!-- 查询 -->
     <select id="find" parameterType="com.zhiyun.entity.ProductStorePlm" resultType="com.zhiyun.entity.ProductStorePlm">
         <include refid="selectFieldSQL"/>
         FROM PRODUCT_STORE_PLM
-        <where>
+        <where> store_id is null
             <if test="id != null">
                 AND ID = #{id,jdbcType=INTEGER}
             </if>
@@ -379,11 +380,12 @@
         <include refid="selectFieldSQL"/>
         FROM PRODUCT_STORE_PLM
         WHERE DELETED = #{deleted,jdbcType=VARCHAR}
+        AND store_id is null
     </select>
 
     <!-- 分页查询（条件） -->
     <sql id="page_condition">
-        <where>
+        <where> store_id is null
             <if test="entity.prodNo != null and entity.prodNo != ''">
                 AND PROD_NO = #{entity.prodNo,jdbcType=VARCHAR}
             </if>
@@ -493,13 +495,14 @@
         <include refid="selectFieldSQL"/>
         FROM PRODUCT_STORE_PLM
         WHERE DELETED = "F"
+        AND store_id is null
     </select>
 
     <!-- Map条件查询 -->
     <select id="findMapList" parameterType="map" resultType="map">
         <include refid="selectFieldSQL"/>
         FROM PRODUCT_STORE_PLM
-        <where>
+        <where> store_id is null
             <if test="id != null">
                 AND ID = #{id,jdbcType=INTEGER}
             </if>

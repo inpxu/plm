@@ -17,9 +17,9 @@
                r.new_value                                    newValue,
                r.upd_date                                     updDate
         FROM crafwork_change_record_plm r
-                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND r.company_id = m.company_id AND m.deleted = 'F'
+                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND m.store_id is null AND r.company_id = m.company_id AND m.deleted = 'F'
                  LEFT JOIN voucher_main_oa v ON v.voucher_no = r.voucher_no AND v.company_id = r.company_id AND v.deleted = 'F'
-                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.company_id = r.company_id AND s.deleted = 'F'
+                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.store_id is null AND s.company_id = r.company_id AND s.deleted = 'F'
         WHERE r.prod_no = #{prodNo,jdbcType=VARCHAR}
           AND r.mid_prod_no = #{midProdNo,jdbcType=VARCHAR}
           AND v.is_finished = #{isFinished,jdbcType=VARCHAR}
@@ -44,9 +44,9 @@
                r.new_value                                    newValue,
                r.upd_date                                     updDate
         FROM crafwork_change_record_plm r
-                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND r.company_id = m.company_id AND m.deleted = 'F'
+                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND m.store_id is null AND r.company_id = m.company_id AND m.deleted = 'F'
                  LEFT JOIN crafwork_struct_plm p ON p.id = r.crafwork_id AND p.company_id = r.company_id AND p.deleted = 'F'
-                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.company_id = r.company_id AND s.deleted = 'F'
+                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.store_id is null AND s.company_id = r.company_id AND s.deleted = 'F'
         WHERE r.company_id = #{companyId,jdbcType=BIGINT}
           AND r.VOUCHER_NO = #{voucherNo,jdbcType=VARCHAR}
           AND r.deleted = 'F'
@@ -70,10 +70,10 @@
                r.new_value                                    newValue,
                r.upd_date                                     updDate
         FROM crafwork_change_record_plm r
-                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND r.company_id = m.company_id AND m.deleted = 'F'
+                 LEFT JOIN product_mid_plm m ON r.mid_prod_no = m.mid_prod_no AND m.store_id is null AND r.company_id = m.company_id AND m.deleted = 'F'
                  left join prod_crafwork_main_plm f on f.prod_no = r.prod_no and f.company_id = r.company_id and f.deleted = 'F'
                  LEFT JOIN crafwork_struct_plm p ON p.id = r.crafwork_id AND p.company_id = r.company_id AND p.deleted = 'F'
-                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.company_id = r.company_id AND s.deleted = 'F'
+                 LEFT JOIN product_store_plm s ON s.prod_no = r.prod_no AND s.store_id is null AND s.company_id = r.company_id AND s.deleted = 'F'
         WHERE r.company_id = #{companyId,jdbcType=BIGINT}
           AND r.VOUCHER_NO is null
           and f.path_no = #{pathNo,jdbcType=BIGINT}

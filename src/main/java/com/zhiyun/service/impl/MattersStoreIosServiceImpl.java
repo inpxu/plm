@@ -152,7 +152,7 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
                 if ("2".equals(storeIos.getIsMidprod())) {
                     if (list != null && list.size() == 1) {
                         for (ProductMidPlm plm : list) {
-                            this.delete(plm.getId());
+                            productMidPlmDao.delete(plm.getId());
                         }
                     }
                 }

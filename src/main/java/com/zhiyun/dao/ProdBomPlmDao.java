@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
 
-    ProductStorePlmDto searchForProduct(Map<String, Object> param);
+    List<ProductStorePlmDto> searchForProduct(Map<String, Object> param);
 
     ProdBomPlmDto findBomByPno(Map<String, Object> param);
 
@@ -60,7 +60,7 @@ public interface ProdBomPlmDao extends BaseDao<ProdBomPlm, Long> {
 
     ProdBomPlmDto findCommonBomByMatterNo(Map<String, Object> param);
 
-    DataGrid<Object> customPage(Params entity, Pager pager);
+    DataGrid<ProdBomPlmDto> customPage(Params entity, Pager pager);
 
     FormulaDto findBomByPnoForFormula(Map<String, Object> param);
 

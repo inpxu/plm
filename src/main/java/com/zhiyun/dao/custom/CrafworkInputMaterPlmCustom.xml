@@ -15,8 +15,9 @@
                t.type_name                                    typeName,
                m.input_amt                                    inputAmt,
                concat_ws("/", s.param, s.norms, s.MODEL_DESC) syntheticField,
+               s.norms                                        norms,
                s.unit                                         unit,
-               s.versions                                     version
+               s.versions                                     versions
         FROM crafwork_input_mater_plm m
                  LEFT JOIN matters_store_ios s ON s.matters_no = m.mater_no AND s.company_id = m.company_id AND s.deleted = 'F'
                  AND s.store_id is null

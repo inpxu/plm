@@ -28,6 +28,15 @@ public class MattersStoreDto extends MattersStoreIos implements Serializable {
     private Long serial;
     private String backupMatter;
     private Integer statusId;
+    private String parentNo;
+
+    public String getParentNo() {
+        return parentNo;
+    }
+
+    public void setParentNo(String parentNo) {
+        this.parentNo = parentNo;
+    }
 
     public Integer getStatusId() {
         return statusId;

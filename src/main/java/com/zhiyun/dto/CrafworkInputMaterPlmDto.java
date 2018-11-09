@@ -25,6 +25,16 @@ public class CrafworkInputMaterPlmDto extends CrafworkInputMaterPlm {
 
     private String syntheticField;
 
+    private String norms;
+
+    public String getNorms() {
+        return norms;
+    }
+
+    public void setNorms(String norms) {
+        this.norms = norms;
+    }
+
     public String getSyntheticField() {
         return syntheticField;
     }

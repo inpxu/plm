@@ -13,6 +13,16 @@ public class CarfworkOutputMaterPlmDto extends CarfworkOutputMaterPlm {
     private String unit;
     // 参数/型号/规格
     private String syntheticField;
+    // 参数/型号/规格
+    private String allInfo;
+
+    public String getAllInfo() {
+        return allInfo;
+    }
+
+    public void setAllInfo(String allInfo) {
+        this.allInfo = allInfo;
+    }
 
     public String getProdMsg() {
         return prodMsg;

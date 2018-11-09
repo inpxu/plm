@@ -70,6 +70,14 @@ public class ProductStorePlmServiceImpl extends BaseServiceImpl<ProductStorePlm,
         if (CollectionUtils.isNotEmpty(storeIosList)) {
             throw new BusinessException("产品编码与物料编码重复！");
         }
+
+        ProductMidPlm plm = new ProductMidPlm();
+        plm.setProdNo(prodNo);
+        plm.setCompanyId(UserHolder.getCompanyId());
+        List<ProductMidPlm> plms = productMidPlmDao.find(plm);
+        if (CollectionUtils.isNotEmpty(plms)) {
+            throw new BusinessException("产品编码与半成品编码重复！");
+        }
         ProductStorePlm p = new ProductStorePlm();
         p.setProdNo(prodNo);
         p.setCompanyId(UserHolder.getCompanyId());

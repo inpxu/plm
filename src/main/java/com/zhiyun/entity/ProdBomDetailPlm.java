@@ -32,7 +32,7 @@ public class ProdBomDetailPlm extends BaseEntity<Long> {
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "物料编码字段过长")
     private String mattersNo;
     // 半成品编码
-    @Pattern(regexp = "[\\s\\S]{0,10}", message = "半成品编码字段过长")
+    @Pattern(regexp = "[\\s\\S]{0,30}", message = "半成品编码字段过长")
     private String parentNo;
     // 规格
     @Pattern(regexp = "[\\s\\S]{0,30}", message = "规格字段过长")

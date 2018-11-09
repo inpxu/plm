@@ -81,6 +81,7 @@ public class CarfworkOutputMaterPlmServiceImpl extends BaseServiceImpl<CarfworkO
                     dto.setMidProdMsg(prodMsg);
                     dto.setProdMsg(prodMsg);
                     dto.setUnit(p.getUnit());
+                    dto.setAllInfo(p.getNorms());
                 }
                 return dto;
             } else {
@@ -99,6 +100,7 @@ public class CarfworkOutputMaterPlmServiceImpl extends BaseServiceImpl<CarfworkO
                     dto.setMidProdMsg(midMsg);
                     dto.setProdMsg(prodMsg);
                     dto.setUnit(p.getUnit());
+                    dto.setAllInfo(p.getNorms());
                 }
                 return dto;
             }

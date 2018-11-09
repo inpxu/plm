@@ -34,7 +34,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
      * @author 邓艺
      * @date 2018/10/7 13:36
      */
-    ProductStorePlmDto searchForProduct(String productName, String bomCode);
+    List<ProductStorePlmDto> searchForProduct(String productName, String bomCode);
 
     ProdBomPlmDto findBomByPnoOrMpno(String pNo, String mpno, String versions);
 
@@ -87,7 +87,7 @@ public interface ProdBomPlmService extends BaseService<ProdBomPlm, Long> {
      * @author 邓艺
      * @date 2018/10/14 17:20
      */
-    DataGrid<Object> customPage(Params entity, Pager pager);
+    DataGrid<ProdBomPlmDto> customPage(Params entity, Pager pager);
 
     /**
      * 产品bom唯一性校验，如果存在将会抛出业务异常

@@ -42,14 +42,24 @@ public class BomChangeApplyController {
      */
     @RequestMapping(value = "page", method = RequestMethod.POST)
     @ResponseBody
-    public String page(ProdBomPlmDto prodBomPlmDto, Pager pager) {
+    public Object page(ProdBomPlmDto prodBomPlmDto, Pager pager) {
         if (StringUtils.isBlank(prodBomPlmDto.getVoucherNo())) {
             prodBomPlmDto.setVoucherNo(null);
         }
-        BaseResult<DataGrid<Object>> baseResult = new BaseResult<>();
+        BaseResult<DataGrid<ProdBomPlmDto>> baseResult = new BaseResult<>();
         try {
             prodBomPlmDto.setCompanyId(UserHolder.getCompanyId());
-            DataGrid<Object> entity = prodBomPlmService.customPage(Params.create().add("entity", prodBomPlmDto), pager);
+            DataGrid<ProdBomPlmDto> entity = prodBomPlmService.customPage(Params.create().add("entity", prodBomPlmDto), pager);
+            for (ProdBomPlmDto o : entity.getItems()) {
+                String mattersName = o.getMattersName();
+                String productName = o.getProductName();
+                if (mattersName == null || mattersName == "") {
+                    o.setMattersName("/");
+                }
+                if (productName == null || productName == "") {
+                    o.setProductName("/");
+                }
+            }
             baseResult.setResult(true);
             baseResult.setMessage("查询成功");
             baseResult.setModel(entity);

@@ -59,7 +59,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
-    public ProductStorePlmDto searchForProduct(String productName, String bomCode) {
+    public List<ProductStorePlmDto> searchForProduct(String productName, String bomCode) {
         Map<String, Object> param = new HashMap<>(3);
         param.put("productName", productName);
         param.put("bomCode", bomCode);
@@ -115,6 +115,9 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                 param.put("productNo", prodNo);
                 //查询bom
                 bomByPnor = prodBomPlmDao.findBomByPno(param);
+                if (bomByPnor == null) {
+                    throw new BusinessException("bom编码为空!");
+                }
             }
 
             //通过半成品编码查询r
@@ -216,6 +219,13 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     @Transactional
     public void commit2Approve(String bomCode) {
         String bom = uniqueIdService.mixedId("BOM", 10, UserHolder.getCompanyId());
+        ProdBomDetailPlm prodBomDetailPlm = new ProdBomDetailPlm();
+        prodBomDetailPlm.setBomNo(bom);
+        prodBomDetailPlm.setCompanyId(UserHolder.getCompanyId());
+        List<ProdBomDetailPlm> list = prodBomDetailPlmDao.find(prodBomDetailPlm);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new BusinessException("未添加原料，不能提交审核！");
+        }
         VoucherMainOa voucherMainOa = new VoucherMainOa();
         voucherMainOa.setIsFinished("审批中");
         voucherMainOa.setVoucherNo(bom);
@@ -446,7 +456,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
-    public DataGrid<Object> customPage(Params entity, Pager pager) {
+    public DataGrid<ProdBomPlmDto> customPage(Params entity, Pager pager) {
         return prodBomPlmDao.customPage(entity, pager);
     }
 
@@ -501,6 +511,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     }
 
     @Override
+    @Transactional
     public void upGradeCommonBom(ProdBomPlmDto prodBomPlmDto) {
         //如果存在的版本为空的话，直接允许修改
         if (prodBomPlmDto.getVersions() == null) {

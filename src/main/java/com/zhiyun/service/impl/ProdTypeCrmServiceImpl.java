@@ -67,7 +67,7 @@ public class ProdTypeCrmServiceImpl extends BaseServiceImpl<ProdTypeCrm, Long> i
         pro.setCompanyId(UserHolder.getCompanyId());
         pro.setDeleted("F");
         pro.setTypeDesc(prodTypeCrm.getTypeDesc());
-        List<ProdTypeCrm> lists = prodTypeCrmDao.find(prodTypeCrm);
+        List<ProdTypeCrm> lists = prodTypeCrmDao.find(pro);
         if (CollectionUtils.isNotEmpty(lists) || lists.size() > 0) {
             throw new BusinessException("该分类名称已存在！");
         }

@@ -84,12 +84,12 @@ public class ProdBomPlmController extends BaseController {
     @RequestMapping(value = "searchForProduct", method = RequestMethod.POST)
     @ResponseBody
     public String searchForProduct(String productName, String bomCode) {
-        BaseResult<ProductStorePlmDto> baseResult = new BaseResult<>();
+        BaseResult<List<ProductStorePlmDto>> baseResult = new BaseResult<>();
         try {
             if (StringUtils.isBlank(productName) && StringUtils.isBlank(bomCode)) {
                 throw new BusinessException("查询参数必须输入");
             }
-            ProductStorePlmDto productStorePlmDto = prodBomPlmService.searchForProduct(productName, bomCode);
+            List<ProductStorePlmDto> productStorePlmDto = prodBomPlmService.searchForProduct(productName, bomCode);
             baseResult.setResult(true);
             baseResult.setMessage("查询成功");
             baseResult.setModel(productStorePlmDto);
@@ -189,6 +189,7 @@ public class ProdBomPlmController extends BaseController {
         BaseResult<List<ProdBomDetailPlmDto>> baseResult = new BaseResult<>();
         try {
             List<ProdBomDetailPlmDto> list = prodBomPlmService.addMatters(prodBomDetailPlms);
+
             baseResult.setMessage("新增成功");
             baseResult.setResult(true);
             baseResult.setModel(list);

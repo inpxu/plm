@@ -90,7 +90,11 @@ public class CrafworkInputMaterPlmServiceImpl extends BaseServiceImpl<CrafworkIn
                 for (int j = i + 1; j < crafworkInputMaterPlmsDtos.size(); j++) {
                     String inputNo1 = crafworkInputMaterPlmsDtos.get(j).getInProdNo();
                     String materNo1 = crafworkInputMaterPlmsDtos.get(j).getMaterNo();
-                    if (inputNo == inputNo1 && materNo == materNo1) {
+                    if(inputNo == null && inputNo1 == null && materNo.equals(materNo1)) {
+                        throw new BusinessException("输入信息重复！");
+                    }else if (materNo == null && materNo1 == null && inputNo.equals(inputNo1)) {
+                        throw new BusinessException("输入信息重复！");
+                    }else if (inputNo.equals(inputNo1) && materNo.equals(materNo1)) {
                         throw new BusinessException("输入信息重复！");
                     }
                 }

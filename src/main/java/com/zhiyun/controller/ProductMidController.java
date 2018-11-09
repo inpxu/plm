@@ -111,6 +111,14 @@ public class ProductMidController extends PublicController {
             if (CollectionUtils.isNotEmpty(storeIosList)) {
                 throw new BusinessException("半成品编码与物料编码重复！");
             }
+
+            ProductStorePlm plm = new ProductStorePlm();
+            plm.setProdNo(midProdNo);
+            plm.setCompanyId(UserHolder.getCompanyId());
+            List<ProductStorePlm> plms = productStorePlmService.find(plm);
+            if (CollectionUtils.isNotEmpty(plms)) {
+                throw new BusinessException("半成品编码与产品编码重复！");
+            }
             // 新增半成品
             // 通过产品编码查寻产品信息
             String paraentNo = productMidPlm.getParentNo();

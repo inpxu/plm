@@ -29,10 +29,10 @@ import java.util.Map;
 public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements ProdBomPlmDao {
 
     @Override
-    public ProductStorePlmDto searchForProduct(Map<String, Object> param) {
-        List<Object> objects = this.selectList(getMethodName(), param);
+    public List<ProductStorePlmDto> searchForProduct(Map<String, Object> param) {
+        List<ProductStorePlmDto> objects = this.selectList(getMethodName(), param);
         if (CollectionUtils.isNotEmpty(objects)) {
-            return (ProductStorePlmDto) objects.get(0);
+            return objects;
         } else {
             return null;
         }
@@ -125,7 +125,7 @@ public class ProdBomPlmDaoImpl extends BaseDaoImpl<ProdBomPlm, Long> implements 
     }
 
     @Override
-    public DataGrid<Object> customPage(Params entity, Pager pager) {
+    public DataGrid<ProdBomPlmDto> customPage(Params entity, Pager pager) {
         return this.selectPage(getMethodName(), entity, pager);
     }
 

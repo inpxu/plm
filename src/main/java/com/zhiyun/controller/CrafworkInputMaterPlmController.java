@@ -62,6 +62,7 @@ public class CrafworkInputMaterPlmController extends BaseController {
             if (CollectionUtils.isNotEmpty(list)) {
                 for (CrafworkInputMaterPlmDto dto : list) {
                     dto.setStatus(StatusUtil.matterStatus.map.get(dto.getStatus()));
+                    dto.setAllInfo(dto.getNorms());
                 }
             }
             baseResult.setModel(list);

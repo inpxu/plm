@@ -10,14 +10,19 @@
         product_store_plm
         <!-- LEFT JOIN product_mid_plm ON product_store_plm.prod_no = product_mid_plm.prod_no-->
         <!--  AND product_mid_plm.deleted = 'F'-->
+        LEFT JOIN prod_bom_plm on prod_bom_plm.prod_no = product_store_plm.prod_no and prod_bom_plm.company_id = product_store_plm.company_id
+              and prod_bom_plm.deleted = 'F'
         WHERE
         product_store_plm.company_id = #{companyId}
+
         AND product_store_plm.store_id is null
         AND product_store_plm.deleted = 'F'
-        AND product_store_plm.prod_name like concat('%',#{productName},'%')
-        <!--<if test="bomCode!=null and bomCode!= '' ">-->
-        <!--OR product_mid_plm.mid_prod_no = #{bomCode}-->
-        <!--</if>-->
+        <if test="productName!=null and productName!= '' ">
+            AND product_store_plm.prod_name like concat('%',#{productName},'%')
+        </if>
+        <if test="bomCode!=null and bomCode!= '' ">
+        and prod_bom_plm.bom_no like concat('%',#{bomCode},'%')
+        </if>
     </select>
     <!--<resultMap id="searchMap" type="com.zhiyun.dto.ProductStorePlmDto">-->
     <!--<id javaType="long" column="id" property="id"/>-->
@@ -145,7 +150,10 @@
 
 
     <select id="findAllMidProductByPno" parameterType="map" resultType="com.zhiyun.dto.ProductMidPlmDto">
-        SELECT product_mid_plm.id, product_mid_plm.mid_prod_no midProdNo, product_mid_plm.mid_prod_name midProdName, product_mid_plm.amount
+        SELECT product_mid_plm.id,
+        product_mid_plm.mid_prod_no midProdNo,
+        product_mid_plm.mid_prod_name midProdName,
+        product_mid_plm.amount
         FROM product_mid_plm
         WHERE deleted = 'F'
           AND company_id = #{companyId}
@@ -157,10 +165,16 @@
         SELECT prod_bom_detail_plm.id,
                prod_bom_detail_plm.amount,
                prod_bom_detail_plm.plm_desc                                                                     plmDesc,
-               backMatter.MATTERS_NO                                                                            backUpMatterNo,
-               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
+	           prod_bom_detail_plm.backup_matter                                                                backUpMatterNo,
+	            (SELECT CONCAT(backMatter.MATTERS_NO,'/',backMatter.MATTERS_NAME)
+	                FROM matters_store_ios AS backMatter
+	                WHERE prod_bom_detail_plm.backup_matter = backMatter.matters_no
+                      AND backMatter.deleted = 'F'
+                      AND backMatter.company_id = #{companyId}
+                      AND backMatter.store_id is null
+                )                                                                                               backMattersInfo,
                CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
-               CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
+               matters_store_ios.NORMS                                                                          allInfo,
                prod_bom_detail_plm.serial                                                                       versions,
                matters_store_ios.unit,
                matters_store_ios.matters_no                                                                     mattersNo,
@@ -169,8 +183,6 @@
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F'
                                                      AND matters_store_ios.store_id is null
-                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
-                                                                   AND matters_store_ios.deleted = 'F'
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
           AND matters_store_ios.store_id is null
@@ -186,7 +198,7 @@
         SELECT s.ID                                             id,
                CONCAT(s.MATTERS_NO, '/', s.MATTERS_NAME)        mattersInfo,
                s.MATTERS_NO                                     mattersNo,
-               CONCAT(s.NORMS, '/', s.PARAM, '/', s.MODEL_DESC) allInfo,
+               s.NORMS allInfo,
                s.UNIT                                           unit,
                s.WEIGHT                                         weight,
                t.type_name                                      typeName
@@ -196,7 +208,10 @@
         WHERE s.deleted = 'F'
           and s.is_midprod != 2
           AND s.company_id = #{companyId}
-          AND (s.matters_no LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%') OR s.matters_name LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%'))
+          <if test="codeOrName != null and codeOrName != ''">
+            AND (s.matters_no LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%')
+              OR s.matters_name LIKE CONCAT('%', #{codeOrName,jdbcType=VARCHAR}, '%'))
+          </if>
           AND s.matters_no != #{parentNo}
           AND s.store_id is null ;
 
@@ -206,10 +221,17 @@
                prod_bom_detail_plm.amount,
                prod_bom_detail_plm.serial,
                prod_bom_detail_plm.plm_desc                                                                     plmDesc,
-               backMatter.MATTERS_NO                                                                            backUpMatterNo,
-               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
+	           prod_bom_detail_plm.backup_matter                                                                backUpMatterNo,
+	            (SELECT CONCAT(backMatter.MATTERS_NO,'/',backMatter.MATTERS_NAME)
+	                FROM matters_store_ios AS backMatter
+	                WHERE prod_bom_detail_plm.backup_matter = backMatter.matters_no
+                      AND backMatter.deleted = 'F'
+                      AND backMatter.company_id = #{companyId}
+                      AND backMatter.is_midprod != 2
+                      AND backMatter.store_id is null
+                )                                                                                               backMattersInfo,
                CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
-               CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
+               matters_store_ios.NORMS allInfo,
                matters_store_ios.versions,
                matters_store_ios.unit,
                matters_store_ios.is_midprod                                                                     isMidprod,
@@ -218,13 +240,9 @@
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}
                                                       AND matters_store_ios.store_id is null
-                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
-                                                                   AND backMatter.deleted = 'F'
-                                                                   and backMatter.company_id = #{companyId}
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
           and matters_store_ios.is_midprod != 2
-          and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{matterNo}
           and prod_bom_detail_plm.serial = #{serial}
           AND matters_store_ios.store_id is null
@@ -346,7 +364,7 @@
         WHERE prod_bom_plm.deleted = 'F'
           AND prod_bom_plm.company_id = #{companyId}
           AND prod_bom_plm.prod_no = #{matterNo}
-          AND prod_bom_plm.versions = (SELECT MAX(prod_bom_plm.versions)
+          AND prod_bom_plm.versions = (SELECT max(cast(prod_bom_plm.versions as UNSIGNED))
                                        FROM prod_bom_plm
                                        WHERE prod_bom_plm.deleted = 'F'
                                          AND prod_bom_plm.company_id = #{companyId}
@@ -373,6 +391,7 @@
         WHERE
         prod_bom_plm.deleted = 'F'
         AND prod_bom_plm.company_id = #{entity.companyId}
+        AND matters_store_ios.store_id is null
         AND product_store_plm.store_id is null
         <if test="entity.voucherNo != null and entity.voucherNo != ''">
             AND prod_bom_plm.voucher_no = #{entity.voucherNo,jdbcType=VARCHAR}
@@ -380,11 +399,8 @@
         <if test="entity.bomNo != null and entity.bomNo != ''">
             AND prod_bom_plm.bom_no = #{entity.bomNo,jdbcType=VARCHAR}
         </if>
-        <if test="entity.prodNo != null and entity.prodNo != ''">
-            AND prod_bom_plm.prod_no = #{entity.prodNo,jdbcType=VARCHAR}
-        </if>
-        <if test="entity.mattersNo != null and entity.mattersNo != ''">
-            OR prod_bom_plm.prod_no = #{entity.mattersNo,jdbcType=VARCHAR}
+        <if test="entity.mattersName != null and entity.mattersName != ''">
+            and prod_bom_plm.prod_no LIKE CONCAT('%', #{entity.mattersName,jdbcType=VARCHAR}, '%')
         </if>
     </select>
 
@@ -423,11 +439,8 @@
         <if test="entity.bomNo != null and entity.bomNo != ''">
             AND prod_bom_plm.bom_no = #{entity.bomNo,jdbcType=VARCHAR}
         </if>
-        <if test="entity.prodNo != null and entity.prodNo != ''">
-            AND prod_bom_plm.prod_no = #{entity.prodNo,jdbcType=VARCHAR}
-        </if>
-        <if test="entity.mattersNo != null and entity.mattersNo != ''">
-            OR prod_bom_plm.prod_no = #{entity.mattersNo,jdbcType=VARCHAR}
+        <if test="entity.mattersName != null and entity.mattersName != ''">
+            and prod_bom_plm.prod_no LIKE CONCAT('%', #{entity.mattersName,jdbcType=VARCHAR}, '%')
         </if>
         order by prod_bom_plm.id desc
         <include refid="mybatis.pageEndSQL"/>
@@ -497,10 +510,17 @@
                prod_bom_detail_plm.amount,
                prod_bom_detail_plm.serial,
                prod_bom_detail_plm.plm_desc                                                                     plmDesc,
-               backMatter.MATTERS_NO                                                                            backUpMatterNo,
-               CONCAT(backMatter.MATTERS_NO, '/', backMatter.MATTERS_NAME)                                      backMattersInfo,
+	           prod_bom_detail_plm.backup_matter                                                                backUpMatterNo,
+	            (SELECT CONCAT(backMatter.MATTERS_NO,'/',backMatter.MATTERS_NAME)
+	                FROM matters_store_ios AS backMatter
+	                WHERE prod_bom_detail_plm.backup_matter = backMatter.matters_no
+                      AND backMatter.deleted = 'F'
+                      AND backMatter.company_id = #{companyId}
+                      AND backMatter.is_midprod != 2
+                      AND backMatter.store_id is null
+                )                                                                                               backMattersInfo,
                CONCAT(matters_store_ios.MATTERS_NO, '/', matters_store_ios.MATTERS_NAME)                        mattersInfo,
-               CONCAT(matters_store_ios.NORMS, '/', matters_store_ios.PARAM, '/', matters_store_ios.MODEL_DESC) allInfo,
+               matters_store_ios.NORMS                                                                          allInfo,
                matters_store_ios.versions,
                matters_store_ios.unit,
                matters_store_ios.is_midprod                                                                     isMidprod,
@@ -509,13 +529,9 @@
                  INNER JOIN matters_store_ios ON prod_bom_detail_plm.matters_no = matters_store_ios.matters_no
                                                      AND matters_store_ios.deleted = 'F' and matters_store_ios.company_id = #{companyId}
                                                      AND matters_store_ios.store_id is null
-                 INNER JOIN matters_store_ios AS backMatter ON prod_bom_detail_plm.backup_matter = backMatter.matters_no
-                                                                   AND backMatter.deleted = 'F'
-                                                                   and backMatter.company_id = #{companyId} AND matters_store_ios.store_id is null
         WHERE prod_bom_detail_plm.company_id = #{companyId}
           AND prod_bom_detail_plm.deleted = 'F'
           and matters_store_ios.is_midprod != 2
-          and backMatter.is_midprod != 2
           AND prod_bom_detail_plm.parent_no = #{paranetNo}
           and prod_bom_detail_plm.serial = #{serial}
           AND matters_store_ios.store_id is null

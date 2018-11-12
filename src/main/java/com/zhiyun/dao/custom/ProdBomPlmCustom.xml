@@ -472,6 +472,8 @@
                                        WHERE prod_bom_plm.deleted = 'F'
                                          AND prod_bom_plm.company_id = #{companyId}
                                          AND prod_bom_plm.prod_no = #{productNo})
+
+        order by prod_bom_plm.id desc
     </select>
     <resultMap id="formulaMap" type="com.zhiyun.dto.FormulaDto">
         <result column="bomNo" property="bomNo"/>

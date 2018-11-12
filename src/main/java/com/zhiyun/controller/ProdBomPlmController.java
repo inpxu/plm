@@ -5,6 +5,7 @@
 package com.zhiyun.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.zhiyun.base.controller.BaseController;
 import com.zhiyun.base.dto.BaseResult;
 import com.zhiyun.base.exception.BusinessException;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -116,7 +118,7 @@ public class ProdBomPlmController extends BaseController {
      */
     @RequestMapping(value = "findBomByPnoOrMpno", method = RequestMethod.POST)
     @ResponseBody
-    public String findBomByPnoOrMpno(String pNo, String mpno, String versions) {
+    public Object findBomByPnoOrMpno(String pNo, String mpno, String versions) {
         BaseResult<ProdBomPlmDto> baseResult = new BaseResult<>();
         try {
             ProdBomPlmDto prodBomPlmDto = prodBomPlmService.findBomByPnoOrMpno(pNo, mpno, versions);
@@ -137,7 +139,7 @@ public class ProdBomPlmController extends BaseController {
             baseResult.setResult(false);
             baseResult.setMessage("系统异常");
         }
-        return JSON.toJSONString(baseResult);
+        return JSON.toJSONString(baseResult,SerializerFeature.WriteMapNullValue);
     }
 
     /**

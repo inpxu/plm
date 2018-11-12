@@ -29,6 +29,15 @@ public class MattersStoreDto extends MattersStoreIos implements Serializable {
     private String backupMatter;
     private Integer statusId;
     private String parentNo;
+    private String isMidprodName;
+
+    public String getIsMidprodName() {
+        return isMidprodName;
+    }
+
+    public void setIsMidprodName(String isMidprodName) {
+        this.isMidprodName = isMidprodName;
+    }
 
     public String getParentNo() {
         return parentNo;

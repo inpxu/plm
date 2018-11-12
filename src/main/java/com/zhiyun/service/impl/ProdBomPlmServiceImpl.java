@@ -26,6 +26,7 @@ import com.zhiyun.service.ProdBomPlmService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.zookeeper.data.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -190,8 +191,32 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     @Transactional
     public List<ProdBomDetailPlmDto> addMatters(ProdBomDetailPlmDto[] mattersStoreIos) {
         List<ProdBomDetailPlmDto> list = new ArrayList<>();
+        if (ArrayUtils.isEmpty(mattersStoreIos)) {
+            throw new BusinessException("请添加需要新增的内容！");
+        }
+        // 新增的物料不能重复
+        for(int i = 0;i < mattersStoreIos.length-1;i++){ //循环开始元素
+            String matterNo1 = mattersStoreIos[i].getMatterNo();
+            for(int j = i + 1;j < mattersStoreIos.length;j++){ //循环后续所有元素
+                String matterNo2 = mattersStoreIos[j].getMatterNo();
+                if(matterNo1.equals(matterNo2)){
+                    throw new BusinessException("添加的物料信息重复！");
+                }
+            }
+        }
         if (ArrayUtils.isNotEmpty(mattersStoreIos)) {
             for (ProdBomDetailPlmDto mattersStoreIo : mattersStoreIos) {
+                // 新增的物料不能与原有物料重复
+                ProdBomDetailPlm prodBom = new ProdBomDetailPlm();
+                prodBom.setMattersNo(mattersStoreIo.getMatterNo());
+                prodBom.setCompanyId(UserHolder.getCompanyId());
+                prodBom.setParentNo(mattersStoreIo.getParentNo());
+                prodBom.setBomNo(mattersStoreIo.getBomNo());
+                List<ProdBomDetailPlm> list2 = prodBomDetailPlmDao.find(prodBom);
+                if (CollectionUtils.isNotEmpty(list2)) {
+                    throw new BusinessException("添加的物料与已有物料重复！");
+                }
+
                 //保证自己不能添加自己
                 if (mattersStoreIo.getMattersNo().equals(mattersStoreIo.getParentNo())) {
                     throw new BusinessException("物料不能递归添加");
@@ -220,7 +245,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
     public void commit2Approve(String bomCode) {
         String bom = uniqueIdService.mixedId("BOM", 10, UserHolder.getCompanyId());
         ProdBomDetailPlm prodBomDetailPlm = new ProdBomDetailPlm();
-        prodBomDetailPlm.setBomNo(bom);
+        prodBomDetailPlm.setBomNo(bomCode);
         prodBomDetailPlm.setCompanyId(UserHolder.getCompanyId());
         List<ProdBomDetailPlm> list = prodBomDetailPlmDao.find(prodBomDetailPlm);
         if (CollectionUtils.isEmpty(list)) {

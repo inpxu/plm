@@ -513,7 +513,12 @@ public class VoucherMainOaServiceImpl extends BaseServiceImpl<VoucherMainOa, Lon
             }
 
             // 获取id
-            List<ProdCrafworkPathPlm> plmList = prodCrafworkPathPlmDao.find(pathPlm);
+            ProdCrafworkPathPlm palm = new ProdCrafworkPathPlm();
+            palm.setCompanyId(UserHolder.getCompanyId());
+            palm.setPathNo(pathNo);
+            palm.setMidProdNo(midProdNo);
+            palm.setCrafworkId(crafWorkId);
+            List<ProdCrafworkPathPlm> plmList = prodCrafworkPathPlmDao.find(palm);
             if (CollectionUtils.isEmpty(plmList)) {
                 throw new BusinessException("数据有误，审批失败！");
             }

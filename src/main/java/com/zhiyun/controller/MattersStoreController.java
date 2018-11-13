@@ -181,13 +181,13 @@ public class MattersStoreController extends BaseController {
      */
     @RequestMapping("/insetStore")
     @ResponseBody
-    public Object insetStore(@Valid MattersStoreIos mattersStoreIos, BindingResult bindingResultn) {
+    public Object insetStore(@Valid MattersStoreDto mattersStoreDto, BindingResult bindingResultn) {
         BaseResult<String> baseResult = new BaseResult<String>();
         baseResult.setResult(true);
         baseResult.setMessage("新增成功");
         try {
             vaildParamsDefault(baseResult, bindingResultn);
-            this.mattersStoreIosService.insertStore(mattersStoreIos);
+            this.mattersStoreIosService.insertStore(mattersStoreDto);
         } catch (BusinessException be) {
             logger.debug("业务异常" + be);
             baseResult.setResult(false);

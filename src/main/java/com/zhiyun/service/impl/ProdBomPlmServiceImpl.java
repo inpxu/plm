@@ -85,6 +85,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                 List<ProductMidPlmDto> list = prodBomPlmDao.findAllMidProductByPno(param);
                 if (CollectionUtils.isNotEmpty(list)) {
                     for (ProductMidPlmDto productMidPlmDto : list) {
+                        productMidPlmDto.setAmount(null);
                         param.put("productNo", productMidPlmDto.getMidProdNo());
                         List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersFroProduct(param);
                         List<ProductMidPlmDto> list1 = prodBomPlmDao.findAllMidProductByPno(param);
@@ -233,7 +234,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
                     param.put("id", prodBomDetailPlm.getId());
                     param.put("companyId", UserHolder.getCompanyId());
                     ProdBomDetailPlmDto prodBomDetailPlmDto = prodBomDetailPlmDao.returnInfoForFront(param);
-                    list.add(prodBomDetailPlmDto);
+                    list.add(mattersStoreIo);
                 }
             }
         }
@@ -671,6 +672,7 @@ public class ProdBomPlmServiceImpl extends BaseServiceImpl<ProdBomPlm, Long> imp
             List<ProductMidPlmDto> list = prodBomPlmDao.findAllMidProductByPno(param);
             if (CollectionUtils.isNotEmpty(list)) {
                 for (ProductMidPlmDto productMidPlmDto : list) {
+                    productMidPlmDto.setAmount(null);
                     param.put("productNo", productMidPlmDto.getMidProdNo());
                     List<MattersStoreDto> mattersStoreIosLists = prodBomPlmDao.findAllMattersFroProduct(param);
                     List<ProductMidPlmDto> list1 = prodBomPlmDao.findAllMidProductByPno(param);

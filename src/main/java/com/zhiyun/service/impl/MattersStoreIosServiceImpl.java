@@ -54,8 +54,8 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
 
     @Transactional
     @Override
-    public void insertStore(MattersStoreIos mattersStoreIos) {
-        String mattersNo = mattersStoreIos.getMattersNo();
+    public void insertStore(MattersStoreDto mattersStoreDto) {
+        String mattersNo = mattersStoreDto.getMattersNo();
         if (StringUtil.isBlank(mattersNo)) {
             throw new BusinessException("物料编码不能为空");
         }
@@ -75,15 +75,15 @@ public class MattersStoreIosServiceImpl extends BaseServiceImpl<MattersStoreIos,
         }
         //唯一校验
         MattersStoreIos storeIos = new MattersStoreIos();
-        storeIos.setMattersNo(mattersStoreIos.getMattersNo());
+        storeIos.setMattersNo(mattersStoreDto.getMattersNo());
         List<MattersStoreIos> mattersStoreIosList = this.mattersStoreIosDao.find(storeIos);
         if (mattersStoreIosList != null && mattersStoreIosList.size() > 0) {
             throw new BusinessException("该物料编码已重复，请重新输入");
         }
-        mattersStoreIos.setCompanyId(UserHolder.getCompanyId());
-        //        mattersStoreIos.setStatus(mattersStoreIos.getStatusId());
+        mattersStoreDto.setCompanyId(UserHolder.getCompanyId());
+        mattersStoreDto.setStatus(String.valueOf(mattersStoreDto.getStatusId()));
         //新增
-        this.mattersStoreIosDao.insert(mattersStoreIos);
+        this.mattersStoreIosDao.insert(mattersStoreDto);
     }
 
     @Transactional

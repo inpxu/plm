@@ -23,7 +23,7 @@ import java.util.List;
  */
 public interface MattersStoreIosService extends BaseService<MattersStoreIos, Long> {
     //新增物料库
-    void insertStore(MattersStoreIos mattersStoreIos);
+    void insertStore(MattersStoreDto mattersStoreDto);
 
     //编辑物料库
     void updateStore(MattersStoreDto mattersStoreIos);
